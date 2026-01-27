@@ -544,6 +544,13 @@
             border-bottom-color: var(--color-action-primary);
         }
         
+        /* AI tabs (Rent Calculation and Estimation Summary) use violet style */
+        .tab[data-tab="underlying-comps"].active,
+        .tab[data-tab="estimated-summary"].active {
+            color: var(--color-violet-400);
+            border-bottom-color: var(--color-violet-400);
+        }
+        
         /* Tab Content Area */
         .tab-content-wrapper {
             flex: 1;
@@ -2261,8 +2268,8 @@
             <!-- Tabs -->
             <div class="tabs">
                 <button class="tab active" data-tab="transaction-details">Transaction Details</button>
-                <button class="tab" data-tab="underlying-comps">Rent Calculation</button>
-                <button class="tab" data-tab="estimated-summary">Estimated Summary</button>
+                <button class="tab" data-tab="underlying-comps">Rent Calculation <span style="opacity: 0.7;">✨</span></button>
+                <button class="tab" data-tab="estimated-summary">Estimation Summary <span style="opacity: 0.7;">✨</span></button>
             </div>
             
             <!-- Tab Content Wrapper -->
@@ -2478,7 +2485,7 @@
                 <!-- Underlying Comps Tab -->
                 <div id="underlying-comps" class="tab-content">
                     <div class="underlying-comps-header">
-                        <h2 class="underlying-comps-title">Rent Calculation</h2>
+                        <h2 class="underlying-comps-title">Rent Calculation <span style="opacity: 0.7;">✨</span></h2>
                         <p class="underlying-comps-subtitle">See how 50 comparable leases are adjusted and weighted to produce Est. Starting Rent Today.</p>
                     </div>
                     
@@ -2583,7 +2590,7 @@
                         <div class="estimated-summary-left-column">
                             <!-- 1. Estimation Summary -->
                             <div class="dashboard-card est-starting-rent-card est-summary-card">
-                                <h3 class="est-rent-title">Estimation Summary</h3>
+                                <h3 class="est-rent-title">Estimation Summary <span style="opacity: 0.7;">✨</span></h3>
                                 <p class="est-summary-description">
                                     This estimate represents what the starting rent would likely be if this lease were signed today based on current market conditions and trends.
                                 </p>
@@ -2652,21 +2659,23 @@
                                             </linearGradient>
                                         </defs>
                                         <!-- Y-axis label -->
-                                        <text class="chart-axis-label" x="20" y="140" font-size="12" text-anchor="middle" transform="rotate(-90 20 140)">Starting Rent</text>
-                                        <!-- Horizontal grid lines -->
+                                        <text class="chart-axis-label" x="10" y="140" font-size="12" text-anchor="middle" transform="rotate(-90 10 140)">Starting Rent PSF</text>
+                                        <!-- Horizontal grid lines ($2.50 increments, $50-$65) -->
                                         <line class="chart-grid" x1="60" y1="50" x2="480" y2="50"/>
-                                        <line class="chart-grid" x1="60" y1="100" x2="480" y2="100"/>
-                                        <line class="chart-grid" x1="60" y1="150" x2="480" y2="150"/>
-                                        <line class="chart-grid" x1="60" y1="200" x2="480" y2="200"/>
-                                        <line class="chart-grid" x1="60" y1="250" x2="480" y2="250"/>
-                                        <!-- Y-axis labels -->
-                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="54" font-size="11" text-anchor="end">$120</text>
-                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="104" font-size="11" text-anchor="end">$100</text>
-                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="154" font-size="11" text-anchor="end">$80</text>
-                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="204" font-size="11" text-anchor="end">$60</text>
-                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="254" font-size="11" text-anchor="end">$40</text>
-                                        <!-- X-axis label -->
-                                        <text class="chart-axis-label" x="270" y="275" font-size="12" text-anchor="middle">Year</text>
+                                        <line class="chart-grid" x1="60" y1="83" x2="480" y2="83"/>
+                                        <line class="chart-grid" x1="60" y1="116" x2="480" y2="116"/>
+                                        <line class="chart-grid" x1="60" y1="149" x2="480" y2="149"/>
+                                        <line class="chart-grid" x1="60" y1="182" x2="480" y2="182"/>
+                                        <line class="chart-grid" x1="60" y1="215" x2="480" y2="215"/>
+                                        <line class="chart-grid" x1="60" y1="248" x2="480" y2="248"/>
+                                        <!-- Y-axis labels ($2.50 increments, $50-$65) -->
+                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="54" font-size="11" text-anchor="end">$65</text>
+                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="87" font-size="11" text-anchor="end">$62.50</text>
+                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="120" font-size="11" text-anchor="end">$60</text>
+                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="153" font-size="11" text-anchor="end">$57.50</text>
+                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="186" font-size="11" text-anchor="end">$55</text>
+                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="219" font-size="11" text-anchor="end">$52.50</text>
+                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="252" font-size="11" text-anchor="end">$50</text>
                                         <!-- X-axis labels -->
                                         <text class="chart-axis-label" x="120" y="265" font-size="11" text-anchor="middle">2020</text>
                                         <text class="chart-axis-label" x="180" y="265" font-size="11" text-anchor="middle">2021</text>
@@ -2675,16 +2684,27 @@
                                         <text class="chart-axis-label" x="360" y="265" font-size="11" text-anchor="middle">2024</text>
                                         <text class="chart-axis-label" x="420" y="265" font-size="11" text-anchor="middle">2025</text>
                                         <text class="chart-axis-label" x="480" y="265" font-size="11" text-anchor="middle">2026</text>
-                                        <!-- Data points: approximate values for trend -->
-                                        <polyline class="chart-area" points="120,200 180,190 240,180 300,160 360,140 420,120 480,100 480,250 120,250"/>
-                                        <polyline class="chart-line" points="120,200 180,190 240,180 300,160 360,140 420,120 480,100"/>
-                                        <circle class="chart-dot" cx="120" cy="200" r="5"/>
-                                        <circle class="chart-dot" cx="180" cy="190" r="5"/>
-                                        <circle class="chart-dot" cx="240" cy="180" r="5"/>
-                                        <circle class="chart-dot" cx="300" cy="160" r="5"/>
-                                        <circle class="chart-dot" cx="360" cy="140" r="5"/>
-                                        <circle class="chart-dot" cx="420" cy="120" r="5"/>
-                                        <circle class="chart-dot" cx="480" cy="100" r="5"/>
+                                        <!-- X-axis label -->
+                                        <text class="chart-axis-label" x="270" y="290" font-size="12" text-anchor="middle">Year</text>
+                                        <!-- Data points: y = 54 + (65 - rent) * 198/15 for $50-$65 range. Year, starting rent -->
+                                        <!-- Updated to show trend: 2024=$55.00 (base), 2026=$60.50 (+10%) -->
+                                        <!-- Formula: y = 54 + (65 - rent) * 13.2 -->
+                                        <!-- 2020: $52 → y = 54 + 13*13.2 = 225.6 ≈ 226 -->
+                                        <!-- 2021: $53 → y = 54 + 12*13.2 = 212.4 ≈ 212 -->
+                                        <!-- 2022: $54 → y = 54 + 11*13.2 = 199.2 ≈ 199 -->
+                                        <!-- 2023: $54.5 → y = 54 + 10.5*13.2 = 192.6 ≈ 193 -->
+                                        <!-- 2024: $55 → y = 54 + 10*13.2 = 186 -->
+                                        <!-- 2025: $57.75 → y = 54 + 7.25*13.2 = 149.7 ≈ 150 -->
+                                        <!-- 2026: $60.50 → y = 54 + 4.5*13.2 = 113.4 ≈ 113 -->
+                                        <polyline class="chart-area" points="120,226 180,212 240,199 300,193 360,186 420,150 480,113 480,250 120,250"/>
+                                        <polyline class="chart-line" points="120,226 180,212 240,199 300,193 360,186 420,150 480,113"/>
+                                        <circle class="chart-dot" cx="120" cy="226" r="5" data-year="2020" data-rent="52.00" data-pct="-5.5"/>
+                                        <circle class="chart-dot" cx="180" cy="212" r="5" data-year="2021" data-rent="53.00" data-pct="-3.6"/>
+                                        <circle class="chart-dot" cx="240" cy="199" r="5" data-year="2022" data-rent="54.00" data-pct="-1.8"/>
+                                        <circle class="chart-dot" cx="300" cy="193" r="5" data-year="2023" data-rent="54.50" data-pct="-0.9"/>
+                                        <circle class="chart-dot" cx="360" cy="186" r="5" data-year="2024" data-rent="55.00" data-pct="0"/>
+                                        <circle class="chart-dot" cx="420" cy="150" r="5" data-year="2025" data-rent="57.75" data-pct="5.0"/>
+                                        <circle class="chart-dot" cx="480" cy="113" r="5" data-year="2026" data-rent="60.50" data-pct="10.0"/>
                                     </svg>
                                 </div>
                             </div>
