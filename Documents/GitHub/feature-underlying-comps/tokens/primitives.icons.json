@@ -1,0 +1,17 @@
+{
+  "_meta": {
+    "type": "primitives.icons",
+    "rules_reference": "../rules/components.rules.mdc",
+    "version": "1.0.0",
+    "source_of_truth": "Material Icons",
+    "notes": "This file defines the icon library used in the design system. All icons reference Material Icons. Usage rules are defined in components.rules.mdc."
+  },
+  "library": {
+    "name": "Material Icons",
+    "version": "latest",
+    "url": "https://fonts.google.com/icons",
+    "cdn": "https://fonts.googleapis.com/icon?family=Material+Icons",
+    "notes": "Material Icons is the primary icon library for this design system. All icons should use Material Icons naming conventions and be referenced by their official Material Icons name."
+  }
+}
+

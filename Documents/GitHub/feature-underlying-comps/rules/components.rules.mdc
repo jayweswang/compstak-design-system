@@ -1,0 +1,37 @@
+---
+description: Component token usage rules and enforcement
+alwaysApply: false
+---
+
+# Component Token Rules
+
+## Token Hierarchy
+
+1. **Primitives** (`tokens/primitives.*.json`) - Raw values only
+2. **Semantic** (`tokens/semantic.*.json`) - Meaningful mappings
+3. **Components** (`tokens/components.tokens.json`) - Component-specific assignments
+
+## Naming Conventions
+
+### Component Tokens
+- Use component name as prefix (e.g., `button.primary.bg`, `card.padding`)
+- Must reference semantic tokens, never primitives directly
+- Group by component, then by variant/state
+
+## Allowed Usage
+
+- Component tokens MUST reference semantic tokens only
+- Component tokens provide component-specific overrides or compositions
+- Use semantic tokens as the default; component tokens for exceptions
+
+## Prohibited Usage
+
+- ❌ No direct primitive token references in component tokens
+- ❌ No hard-coded values in component tokens
+- ❌ No component tokens that duplicate semantic token functionality
+
+## Enforcement
+
+- All component tokens must reference `tokens/semantic.*.json`
+- Component tokens are optional - prefer semantic tokens when possible
+- Component tokens should only exist when component needs unique token composition

@@ -1,0 +1,43 @@
+---
+description: Color token usage rules and enforcement
+alwaysApply: false
+---
+
+# Color Token Rules
+
+## Token Hierarchy
+
+1. **Primitives** (`tokens/primitives.colors.json`) - Raw color values only
+2. **Semantic** (`tokens/semantics.colors.json`) - Meaningful color mappings
+3. **Components** (`tokens/components.tokens.json`) - Component-specific color assignments
+
+## Naming Conventions
+
+### Primitive Colors
+- Use descriptive color names (e.g., `blue`, `gray`, `red`)
+- Include full scale (50-900) when applicable
+- No semantic meaning in names
+
+### Semantic Colors
+- Use purpose-based names (e.g., `brand.primary`, `text.primary`, `state.success`)
+- Must reference primitive colors, not raw hex values
+- Group by category (brand, text, background, state, etc.)
+
+## Allowed Usage
+
+- Components MUST use semantic tokens only
+- Semantic tokens MUST reference primitive tokens
+- Primitive tokens contain canonical color values
+
+## Prohibited Usage
+
+- ❌ No hard-coded hex values in components
+- ❌ No direct use of primitive tokens in components
+- ❌ No arbitrary color values outside token system
+- ❌ No color values in rule files (values belong in JSON only)
+
+## Enforcement
+
+- All color values must come from `tokens/primitives.colors.json`
+- All component colors must use `tokens/semantics.colors.json`
+- Component-specific colors go in `tokens/components.tokens.json` and reference semantic tokens
