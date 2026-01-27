@@ -1563,7 +1563,14 @@
         }
         
         .est-summary-card .est-rent-title {
-            font-size: var(--type-heading-lg-size);
+            font-size: var(--type-heading-md-size);
+            margin-bottom: var(--space-3);
+        }
+        
+        .est-summary-section-title {
+            font-size: var(--type-heading-md-size);
+            font-weight: var(--type-heading-md-weight);
+            color: var(--color-content-primary-text);
             margin-bottom: var(--space-3);
         }
 
@@ -1816,10 +1823,11 @@
 
         .confidence-badge {
             display: inline-block;
-            padding: var(--space-2) var(--space-4);
+            padding: var(--space-1) var(--space-3);
             background: var(--color-yellow-500);
             color: var(--color-neutral-0);
             border-radius: 999px;
+            font-size: var(--font-size-1);
             font-size: var(--font-size-2);
             font-weight: var(--font-weight-600);
         }
@@ -1828,7 +1836,13 @@
             font-size: var(--font-size-2);
             color: var(--color-content-secondary-text);
             line-height: var(--line-height-3);
+            margin-top: 0;
             margin-bottom: var(--space-4);
+        }
+        
+        /* Ensure consistent spacing between header and description in Estimation Summary */
+        .est-summary-section-title + .section-description {
+            margin-top: 0;
         }
 
         /* Est. Starting Rent Today Section (for Transaction Details) */
@@ -1903,7 +1917,11 @@
 
         .calculation-breakdown-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid var(--color-content-secondary-border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
         }
 
         .calculation-breakdown-table th {
@@ -1911,8 +1929,17 @@
             font-size: var(--font-size-2);
             font-weight: var(--font-weight-600);
             color: var(--color-content-primary-text);
-            padding: var(--space-3) 0;
+            padding: var(--space-3) var(--space-4);
+            background: var(--color-surface-raised);
             border-bottom: 1px solid var(--color-content-tertiary-border);
+        }
+        
+        .calculation-breakdown-table th:first-child {
+            border-top-left-radius: var(--radius-sm);
+        }
+        
+        .calculation-breakdown-table th:last-child {
+            border-top-right-radius: var(--radius-sm);
         }
 
         .calculation-breakdown-table th:last-child {
@@ -1920,7 +1947,7 @@
         }
 
         .calculation-breakdown-table td {
-            padding: var(--space-3) 0;
+            padding: var(--space-3) var(--space-4);
             font-size: var(--font-size-2);
             border-bottom: 1px solid var(--color-content-tertiary-border);
         }
@@ -1928,31 +1955,36 @@
         .calculation-breakdown-table td:last-child {
             text-align: right;
             font-family: var(--font-family-numeric);
-            font-weight: var(--font-weight-600);
             color: var(--color-content-primary-text);
         }
 
         .calculation-row-label {
-            color: var(--color-content-secondary-text);
-        }
-
-        .calculation-row-value {
-            font-family: var(--font-family-numeric);
-            font-weight: var(--font-weight-600);
             color: var(--color-content-primary-text);
         }
 
-        .calculation-final-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: var(--space-6);
-            margin-top: var(--space-4);
-            padding-top: var(--space-4);
-            border-top: 1px solid var(--color-content-tertiary-border);
+        .calculation-breakdown-table td:last-child:not(.calculation-final-value) {
+            font-weight: var(--font-weight-600);
         }
 
-        .calculation-final-left {
+        .calculation-final-row {
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .calculation-final-row td {
+            border-bottom: none;
+            padding-top: var(--space-4);
+            padding-bottom: var(--space-4);
+        }
+        
+        .calculation-final-row td:first-child {
+            border-bottom-left-radius: var(--radius-sm);
+        }
+        
+        .calculation-final-row td:last-child {
+            border-bottom-right-radius: var(--radius-sm);
+        }
+
+        .calculation-final-cell {
             display: flex;
             flex-direction: column;
             gap: var(--space-1);
@@ -1960,8 +1992,8 @@
 
         .calculation-final-label {
             font-size: var(--font-size-2);
+            font-weight: var(--font-weight-600);
             color: var(--color-violet-400);
-            font-weight: var(--type-heading-md-weight);
         }
 
         .calculation-final-formula {
@@ -1971,9 +2003,10 @@
         }
 
         .calculation-final-value {
-            font-size: var(--type-heading-lg-size);
-            font-weight: var(--type-heading-lg-weight);
+            font-size: var(--font-size-2);
+            font-weight: var(--font-weight-600);
             font-family: var(--font-family-numeric);
+            color: var(--color-violet-400);
             color: var(--color-violet-400);
             flex-shrink: 0;
         }
@@ -2586,24 +2619,9 @@
                 <!-- Estimated Summary Tab -->
                 <div id="estimated-summary" class="tab-content">
                     <div class="estimated-summary-layout">
-                        <!-- Left Column: Estimation Summary and Calculation Breakdown -->
+                        <!-- Left Column: Calculation Breakdown -->
                         <div class="estimated-summary-left-column">
-                            <!-- 1. Estimation Summary -->
-                            <div class="dashboard-card est-starting-rent-card est-summary-card">
-                                <h3 class="est-rent-title">Estimation Summary <span style="opacity: 0.7;">✨</span></h3>
-                                <p class="est-summary-description">
-                                    This estimate represents what the starting rent would likely be if this lease were signed today based on current market conditions and trends.
-                                </p>
-                                <div class="est-summary-value-container">
-                                    <div>
-                                        <span class="est-summary-value-large">$60.50</span>
-                                        <span class="est-summary-value-appendage">(Ann.)</span>
-                                    </div>
-                                    <span class="confidence-badge">Medium Confidence</span>
-                                </div>
-                            </div>
-
-                            <!-- 2. Calculation Breakdown -->
+                            <!-- Calculation Breakdown -->
                             <div class="dashboard-card calculation-breakdown-card">
                                 <h3 class="est-summary-section-title">Calculation Breakdown</h3>
                                 <p class="section-description">
@@ -2619,26 +2637,26 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td class="calculation-row-label">Original Starting Rent (Jan 2024)</td>
+                                                <td class="calculation-row-label">Original Starting Rent (Sep 2022)</td>
                                                 <td>$55.00</td>
                                             </tr>
                                             <tr>
-                                                <td class="calculation-row-label">Market Rent Today (Feb 2026)</td>
+                                                <td class="calculation-row-label">Market Rent Today (Jan 2026)</td>
                                                 <td>$60.50</td>
                                             </tr>
                                             <tr>
-                                                <td class="calculation-row-label">Market Change over 2 Years</td>
+                                                <td class="calculation-row-label">Market Change over 3+ Years</td>
                                                 <td>+10%</td>
+                                            </tr>
+                                            <tr class="calculation-final-row">
+                                                <td class="calculation-final-cell">
+                                                    <div class="calculation-final-label">Estimated Starting Rent Today <span style="opacity: 0.7;">✨</span></div>
+                                                    <div class="calculation-final-formula">($55.00 × 1.10)</div>
+                                                </td>
+                                                <td class="calculation-final-value">$60.50</td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="calculation-final-row">
-                                        <div class="calculation-final-left">
-                                            <span class="calculation-final-label">Estimated Starting Rent Today*</span>
-                                            <span class="calculation-final-formula">($55.00 × 1.10)</span>
-                                        </div>
-                                        <div class="calculation-final-value">$60.50</div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2759,9 +2777,11 @@
                 { transQtr: '2023-Q4', tenant: 'Finance Partners LLC', isSubject: false, sqft: 30000, currentRent: '$55.50', estRent: '$58.00', rentSpread: '+4.50%', adjustment: '$2.50' }
             ]},
             { address: '580 6th Avenue', lat: 40.7430, lng: -73.9905, isSubject: false, pinLabel: 'A', city: 'New York', state: 'NY', zip: '10018', spaceType: 'OFFICE', buildingClass: 'CLASS B', propertySize: 285000, floors: 8, sqftExpiring12Mo: 12500, avgLeaseSize: 19800, lastSalePrice: '$42.5M', leases: [
-                { transQtr: '2024-Q1', tenant: 'TechFlow Solutions', isSubject: false, sqft: 18250, currentRent: '$52.00', estRent: '$54.00', rentSpread: '+3.85%', adjustment: '$2.00' },
+                { transQtr: '2024-Q1', tenant: 'TechFlow Solutions', isSubject: false, sqft: 18250, currentRent: '$52.00', estRent: '$52.75', rentSpread: '+1.44%', adjustment: '$0.75' },
                 { transQtr: '2024-Q1', tenant: 'Digital Ventures Inc', isSubject: false, sqft: 21400, currentRent: '$51.50', estRent: '$53.50', rentSpread: '+3.88%', adjustment: '$2.00' },
-                { transQtr: '2024-Q2', tenant: 'CloudSync Technologies', isSubject: false, sqft: 19800, currentRent: '$52.25', estRent: '$54.25', rentSpread: '+3.83%', adjustment: '$2.00' }
+                { transQtr: '2024-Q2', tenant: 'CloudSync Technologies', isSubject: false, sqft: 19800, currentRent: '$52.25', estRent: '$54.25', rentSpread: '+3.83%', adjustment: '$2.00' },
+                { transQtr: '2024-Q2', tenant: 'Premium Office Solutions', isSubject: false, sqft: 16500, currentRent: '$48.00', estRent: '$56.00', rentSpread: '+16.67%', adjustment: '$8.00' },
+                { transQtr: '2023-Q4', tenant: 'Enterprise Realty Group', isSubject: false, sqft: 19500, currentRent: '$46.00', estRent: '$58.50', rentSpread: '+27.17%', adjustment: '$12.50' }
             ]},
             { address: '100 Park Avenue', lat: 40.7430, lng: -73.9885, isSubject: false, pinLabel: 'B', city: 'New York', state: 'NY', zip: '10017', spaceType: 'OFFICE', buildingClass: 'CLASS A', propertySize: 450000, floors: 12, sqftExpiring12Mo: 18500, avgLeaseSize: 18975, lastSalePrice: '$125.0M', leases: [
                 { transQtr: '2023-Q3', tenant: 'Meridian Capital Group', isSubject: false, sqft: 18750, currentRent: '$58.00', estRent: '$61.00', rentSpread: '+5.17%', adjustment: '$3.00' },
@@ -2841,20 +2861,29 @@
             const adjustment = Math.abs(parseFloat(adjustmentStr.replace('$', '')));
             // Inverse relationship: smaller adjustment = higher impact
             // Use a formula that gives higher impact to smaller adjustments
-            // Impact ranges from ~5% to ~50% based on adjustment size
-            // Adjustments from $0-$2 get highest impact (~40-50%)
-            // Adjustments from $2-$5 get medium impact (~20-40%)
-            // Adjustments above $5 get lower impact (~5-20%)
-            if (adjustment <= 2) {
-                return 40 + (2 - adjustment) * 5; // 40-50% for $0-$2
+            // Impact ranges from ~1% to ~75% based on adjustment size (wider range)
+            // Very small adjustments ($0-$1) get highest impact (~60-75%)
+            // Small adjustments ($1-$2) get high impact (~45-60%)
+            // Medium adjustments ($2-$5) get medium impact (~20-45%)
+            // Larger adjustments ($5-$10) get lower impact (~5-20%)
+            // Very large adjustments ($10+) get minimal but still valuable impact (~1-5%)
+            // Formula ensures perfect inverse relationship: as adjustment increases, impact decreases
+            if (adjustment <= 1) {
+                return 60 + (1 - adjustment) * 15; // 60-75% for $0-$1 (smaller = higher)
+            } else if (adjustment <= 2) {
+                return 45 + (2 - adjustment) * 15; // 45-60% for $1-$2 (smaller = higher)
             } else if (adjustment <= 5) {
-                return 20 + (5 - adjustment) * 6.67; // 20-40% for $2-$5
+                return 20 + (5 - adjustment) * 8.33; // 20-45% for $2-$5 (smaller = higher)
+            } else if (adjustment <= 10) {
+                return 5 + (10 - adjustment) * 3; // 5-20% for $5-$10 (smaller = higher)
             } else {
-                return Math.max(5, 20 - (adjustment - 5) * 2); // 5-20% for $5+
+                return Math.max(1, 5 - (adjustment - 10) * 0.4); // 1-5% for $10+ (smaller = higher, still valuable but minimal)
             }
         }
         
         // Normalize impact percentages so they sum to 100%
+        // This preserves the inverse relationship: smaller adjustments = higher impact
+        // After normalization, if adjustment A < adjustment B, then impact A > impact B
         function normalizeImpacts(comps) {
             const totalImpact = comps.reduce((sum, comp) => {
                 const impact = calculateImpact(comp.lease.adjustment);
