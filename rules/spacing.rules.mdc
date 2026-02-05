@@ -1,0 +1,43 @@
+---
+description: Spacing token usage rules and enforcement
+alwaysApply: false
+---
+
+# Spacing Token Rules
+
+## Token Hierarchy
+
+1. **Primitives** (`tokens/primitives.spacing.json`) - Raw spacing units only
+2. **Semantic** (`tokens/semantics.layout.json`) - Meaningful spacing mappings (spacing section)
+3. **Components** (`tokens/components.tokens.json`) - Component-specific spacing assignments
+
+## Naming Conventions
+
+### Primitive Spacing
+- Use numeric scale (e.g., `1`, `2`, `4`, `8`, `16`)
+- Base unit should be defined (typically 4px)
+- No semantic meaning in names
+
+### Semantic Spacing
+- Use purpose-based names (e.g., `component.padding`, `layout.gap`, `content.margin`)
+- Must reference primitive spacing, not raw px values
+- Group by category (component, layout, content, etc.)
+
+## Allowed Usage
+
+- Components MUST use semantic tokens only
+- Semantic tokens MUST reference primitive tokens
+- Primitive tokens contain canonical spacing values
+
+## Prohibited Usage
+
+- ❌ No hard-coded px values in components
+- ❌ No direct use of primitive tokens in components
+- ❌ No arbitrary spacing values outside token system
+- ❌ No spacing values in rule files (values belong in JSON only)
+
+## Enforcement
+
+- All spacing values must come from `tokens/primitives.spacing.json`
+- All component spacing must use `tokens/semantics.layout.json` (spacing section)
+- Component-specific spacing goes in `tokens/components.tokens.json` and references semantic tokens
