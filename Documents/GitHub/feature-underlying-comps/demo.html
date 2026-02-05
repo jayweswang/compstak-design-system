@@ -1138,6 +1138,16 @@
             vertical-align: middle;
         }
         
+        .comps-table .adjustment-cell {
+            padding-left: var(--space-6);
+            padding-right: var(--space-6);
+        }
+        
+        .adjustment-amount-tertiary {
+            color: var(--color-content-tertiary-text);
+            font-size: var(--font-size-1);
+        }
+        
         .comps-table .lease-row.has-expanded-breakdown td {
             border-bottom: none;
         }
@@ -1524,7 +1534,7 @@
         .estimated-summary-layout {
             display: grid;
             grid-template-columns: 1fr 1.25fr;
-            gap: var(--space-8);
+            gap: var(--space-4);
             align-items: start;
         }
 
@@ -1542,6 +1552,10 @@
 
         .estimated-summary-layout .dashboard-card {
             width: 100%;
+        }
+        
+        .market-rent-graph-card {
+            padding-top: var(--space-4);
         }
 
         /* Est. Starting Rent Today Card */
@@ -1844,6 +1858,17 @@
         .est-summary-section-title + .section-description {
             margin-top: 0;
         }
+        
+        .market-rent-graph-card .est-summary-section-title {
+            margin-bottom: var(--space-2);
+        }
+        
+        .market-rent-graph-card .section-description {
+            margin-bottom: 0;
+            margin-top: 0;
+            line-height: 1.2;
+            padding-bottom: 0;
+        }
 
         /* Est. Starting Rent Today Section (for Transaction Details) */
         .est-starting-rent-section {
@@ -1860,8 +1885,9 @@
         }
 
         .market-rent-graph-card .market-rent-chart-container {
-            min-height: 540px;
-            padding: var(--space-6);
+            min-height: 680px;
+            padding: 0 var(--space-6) var(--space-6) var(--space-6);
+            margin-top: calc(var(--space-4) * -1);
         }
 
         .market-rent-line-chart {
@@ -1871,9 +1897,10 @@
         }
         
         .market-rent-graph-card .market-rent-line-chart {
-            min-height: 500px;
+            height: 600px;
+            min-height: 600px;
         }
-
+        
         .market-rent-line-chart .chart-grid {
             stroke: var(--color-content-tertiary-border);
             stroke-width: 0.5;
@@ -1897,6 +1924,11 @@
             stroke-linecap: round;
             stroke-linejoin: round;
         }
+        
+        .market-rent-line-chart .chart-line-projected {
+            stroke-dasharray: 4, 4;
+            opacity: 0.7;
+        }
 
         .market-rent-line-chart .chart-area {
             fill: url(#rent-line-gradient);
@@ -1905,10 +1937,59 @@
 
         .market-rent-line-chart .chart-dot {
             fill: var(--color-blue-500);
+            cursor: pointer;
+            pointer-events: all;
+            transition: r 0.2s;
+        }
+        
+        .market-rent-line-chart .chart-dot:hover {
+            r: 7;
+        }
+        
+        .market-rent-line-chart .chart-dot-projected {
+            opacity: 0.7;
+        }
+        
+        .market-rent-line-chart .chart-dot-projected:hover {
+            opacity: 1;
         }
 
         .market-rent-line-chart .chart-gradient-stop {
             stop-color: var(--color-blue-500);
+        }
+        
+        /* Chart Tooltip */
+        .chart-tooltip {
+            position: absolute;
+            background: var(--color-neutral-800);
+            color: var(--color-neutral-0);
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-1);
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .chart-tooltip.visible {
+            opacity: 1;
+        }
+        
+        .chart-tooltip-line {
+            display: block;
+            margin-top: var(--space-1);
+        }
+        
+        .chart-tooltip-value {
+            font-weight: var(--font-weight-600);
+            font-family: var(--font-family-numeric);
+        }
+        
+        .chart-tooltip-percentage {
+            color: var(--color-green-500);
         }
         
         .calculation-breakdown {
@@ -1922,6 +2003,7 @@
             border: 1px solid var(--color-content-secondary-border);
             border-radius: var(--radius-sm);
             overflow: hidden;
+            background: var(--color-neutral-0);
         }
 
         .calculation-breakdown-table th {
@@ -1930,7 +2012,7 @@
             font-weight: var(--font-weight-600);
             color: var(--color-content-primary-text);
             padding: var(--space-3) var(--space-4);
-            background: var(--color-surface-raised);
+            background: var(--color-neutral-0);
             border-bottom: 1px solid var(--color-content-tertiary-border);
         }
         
@@ -1950,6 +2032,11 @@
             padding: var(--space-3) var(--space-4);
             font-size: var(--font-size-2);
             border-bottom: 1px solid var(--color-content-tertiary-border);
+            background: var(--color-neutral-0);
+        }
+        
+        .calculation-breakdown-table td.calculation-final-value {
+            font-size: var(--type-heading-lg-size) !important;
         }
 
         .calculation-breakdown-table td:last-child {
@@ -1974,6 +2061,7 @@
             border-bottom: none;
             padding-top: var(--space-4);
             padding-bottom: var(--space-4);
+            background: rgba(139, 92, 246, 0.05);
         }
         
         .calculation-final-row td:first-child {
@@ -2003,10 +2091,9 @@
         }
 
         .calculation-final-value {
-            font-size: var(--font-size-2);
-            font-weight: var(--font-weight-600);
+            font-size: var(--type-heading-lg-size) !important;
+            font-weight: var(--type-heading-lg-weight);
             font-family: var(--font-family-numeric);
-            color: var(--color-violet-400);
             color: var(--color-violet-400);
             flex-shrink: 0;
         }
@@ -2618,7 +2705,8 @@
                                     <th class="sortable" data-sort="tenant">Tenant<span class="sort-indicator"></span></th>
                                     <th class="numeric sortable" data-sort="sqft">Transaction SqFt<span class="sort-indicator"></span></th>
                                     <th class="numeric sortable" data-sort="currentRent">Starting Rent<span class="sort-indicator"></span></th>
-                                    <th class="numeric sortable" data-sort="adjustment">Adjustment (PSF)<span class="sort-indicator"></span></th>
+                                    <th class="numeric sortable" data-sort="adjustment">Adjustment ($)<span class="sort-indicator"></span></th>
+                                    <th class="numeric sortable" data-sort="similarity">Similarity Score<span class="sort-indicator"></span></th>
                                     <th class="numeric sortable" data-sort="impact">Impact (%)<span class="sort-indicator"></span></th>
                                     <th>Details</th>
                                 </tr>
@@ -2655,8 +2743,12 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td class="calculation-row-label">Original Starting Rent (Sep 2022)</td>
+                                                <td class="calculation-row-label">Original Starting Rent</td>
                                                 <td>$55.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="calculation-row-label">Market Rent at Lease Execution</td>
+                                                <td>$54.75</td>
                                             </tr>
                                             <tr>
                                                 <td class="calculation-row-label">Market Rent Today (Jan 2026)</td>
@@ -2664,12 +2756,12 @@
                                             </tr>
                                             <tr>
                                                 <td class="calculation-row-label">Market Change over 3+ Years</td>
-                                                <td>+10%</td>
+                                                <td style="color: var(--color-green-500);">+10.5%</td>
                                             </tr>
                                             <tr class="calculation-final-row">
                                                 <td class="calculation-final-cell">
                                                     <div class="calculation-final-label">Estimated Starting Rent Today <span style="opacity: 0.7;">✨</span></div>
-                                                    <div class="calculation-final-formula">($55.00 × 1.10)</div>
+                                                    <div class="calculation-final-formula">($55.00 × 1.105)</div>
                                                 </td>
                                                 <td class="calculation-final-value">$60.50</td>
                                             </tr>
@@ -2687,7 +2779,7 @@
                                     Track how market starting rent has evolved since the original lease was signed. This trend reflects overall market movement in the Chicago for office spaces.
                                 </p>
                                 <div class="market-rent-chart-container">
-                                    <svg class="market-rent-line-chart" viewBox="0 0 500 280" preserveAspectRatio="xMidYMid meet">
+                                    <svg class="market-rent-line-chart" viewBox="0 0 650 400" preserveAspectRatio="xMidYMid meet">
                                         <defs>
                                             <linearGradient id="rent-line-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
                                                 <stop offset="0%" class="chart-gradient-stop" stop-opacity="0.2"/>
@@ -2695,52 +2787,53 @@
                                             </linearGradient>
                                         </defs>
                                         <!-- Y-axis label -->
-                                        <text class="chart-axis-label" x="10" y="140" font-size="12" text-anchor="middle" transform="rotate(-90 10 140)">Starting Rent PSF</text>
-                                        <!-- Horizontal grid lines ($2.50 increments, $50-$65) -->
-                                        <line class="chart-grid" x1="60" y1="50" x2="480" y2="50"/>
-                                        <line class="chart-grid" x1="60" y1="83" x2="480" y2="83"/>
-                                        <line class="chart-grid" x1="60" y1="116" x2="480" y2="116"/>
-                                        <line class="chart-grid" x1="60" y1="149" x2="480" y2="149"/>
-                                        <line class="chart-grid" x1="60" y1="182" x2="480" y2="182"/>
-                                        <line class="chart-grid" x1="60" y1="215" x2="480" y2="215"/>
-                                        <line class="chart-grid" x1="60" y1="248" x2="480" y2="248"/>
-                                        <!-- Y-axis labels ($2.50 increments, $50-$65) -->
-                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="54" font-size="11" text-anchor="end">$65</text>
-                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="87" font-size="11" text-anchor="end">$62.50</text>
-                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="120" font-size="11" text-anchor="end">$60</text>
-                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="153" font-size="11" text-anchor="end">$57.50</text>
-                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="186" font-size="11" text-anchor="end">$55</text>
-                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="219" font-size="11" text-anchor="end">$52.50</text>
-                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="252" font-size="11" text-anchor="end">$50</text>
+                                        <text class="chart-axis-label" x="10" y="200" font-size="12" text-anchor="middle" transform="rotate(-90 10 200)">Starting Rent PSF</text>
+                                        <!-- Horizontal grid lines ($2.50 increments, $50-$65) - scaled for 400 height -->
+                                        <line class="chart-grid" x1="60" y1="72" x2="600" y2="72"/>
+                                        <line class="chart-grid" x1="60" y1="119" x2="600" y2="119"/>
+                                        <line class="chart-grid" x1="60" y1="166" x2="600" y2="166"/>
+                                        <line class="chart-grid" x1="60" y1="213" x2="600" y2="213"/>
+                                        <line class="chart-grid" x1="60" y1="260" x2="600" y2="260"/>
+                                        <line class="chart-grid" x1="60" y1="307" x2="600" y2="307"/>
+                                        <line class="chart-grid" x1="60" y1="354" x2="600" y2="354"/>
+                                        <!-- Y-axis labels ($2.50 increments, $50-$65) - scaled for 400 height -->
+                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="77" font-size="11" text-anchor="end">$65</text>
+                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="124" font-size="11" text-anchor="end">$62.50</text>
+                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="171" font-size="11" text-anchor="end">$60</text>
+                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="218" font-size="11" text-anchor="end">$57.50</text>
+                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="265" font-size="11" text-anchor="end">$55</text>
+                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="312" font-size="11" text-anchor="end">$52.50</text>
+                                        <text class="chart-axis-label chart-axis-label-numeric" x="55" y="359" font-size="11" text-anchor="end">$50</text>
                                         <!-- X-axis labels -->
-                                        <text class="chart-axis-label" x="120" y="265" font-size="11" text-anchor="middle">2020</text>
-                                        <text class="chart-axis-label" x="180" y="265" font-size="11" text-anchor="middle">2021</text>
-                                        <text class="chart-axis-label" x="240" y="265" font-size="11" text-anchor="middle">2022</text>
-                                        <text class="chart-axis-label" x="300" y="265" font-size="11" text-anchor="middle">2023</text>
-                                        <text class="chart-axis-label" x="360" y="265" font-size="11" text-anchor="middle">2024</text>
-                                        <text class="chart-axis-label" x="420" y="265" font-size="11" text-anchor="middle">2025</text>
-                                        <text class="chart-axis-label" x="480" y="265" font-size="11" text-anchor="middle">2026</text>
+                                        <text class="chart-axis-label" x="120" y="380" font-size="11" text-anchor="middle">2020</text>
+                                        <text class="chart-axis-label" x="180" y="380" font-size="11" text-anchor="middle">2021</text>
+                                        <text class="chart-axis-label" x="240" y="380" font-size="11" text-anchor="middle">2022</text>
+                                        <text class="chart-axis-label" x="300" y="380" font-size="11" text-anchor="middle">2023</text>
+                                        <text class="chart-axis-label" x="360" y="380" font-size="11" text-anchor="middle">2024</text>
+                                        <text class="chart-axis-label" x="420" y="380" font-size="11" text-anchor="middle">2025</text>
+                                        <text class="chart-axis-label" x="480" y="380" font-size="11" text-anchor="middle">2026</text>
+                                        <text class="chart-axis-label" x="540" y="380" font-size="11" text-anchor="middle">2027</text>
+                                        <text class="chart-axis-label" x="600" y="380" font-size="11" text-anchor="middle">2028</text>
                                         <!-- X-axis label -->
-                                        <text class="chart-axis-label" x="270" y="290" font-size="12" text-anchor="middle">Year</text>
-                                        <!-- Data points: y = 54 + (65 - rent) * 198/15 for $50-$65 range. Year, starting rent -->
-                                        <!-- Updated to show trend: 2024=$55.00 (base), 2026=$60.50 (+10%) -->
-                                        <!-- Formula: y = 54 + (65 - rent) * 13.2 -->
-                                        <!-- 2020: $52 → y = 54 + 13*13.2 = 225.6 ≈ 226 -->
-                                        <!-- 2021: $53 → y = 54 + 12*13.2 = 212.4 ≈ 212 -->
-                                        <!-- 2022: $54 → y = 54 + 11*13.2 = 199.2 ≈ 199 -->
-                                        <!-- 2023: $54.5 → y = 54 + 10.5*13.2 = 192.6 ≈ 193 -->
-                                        <!-- 2024: $55 → y = 54 + 10*13.2 = 186 -->
-                                        <!-- 2025: $57.75 → y = 54 + 7.25*13.2 = 149.7 ≈ 150 -->
-                                        <!-- 2026: $60.50 → y = 54 + 4.5*13.2 = 113.4 ≈ 113 -->
-                                        <polyline class="chart-area" points="120,226 180,212 240,199 300,193 360,186 420,150 480,113 480,250 120,250"/>
-                                        <polyline class="chart-line" points="120,226 180,212 240,199 300,193 360,186 420,150 480,113"/>
-                                        <circle class="chart-dot" cx="120" cy="226" r="5" data-year="2020" data-rent="52.00" data-pct="-5.5"/>
-                                        <circle class="chart-dot" cx="180" cy="212" r="5" data-year="2021" data-rent="53.00" data-pct="-3.6"/>
-                                        <circle class="chart-dot" cx="240" cy="199" r="5" data-year="2022" data-rent="54.00" data-pct="-1.8"/>
-                                        <circle class="chart-dot" cx="300" cy="193" r="5" data-year="2023" data-rent="54.50" data-pct="-0.9"/>
-                                        <circle class="chart-dot" cx="360" cy="186" r="5" data-year="2024" data-rent="55.00" data-pct="0"/>
-                                        <circle class="chart-dot" cx="420" cy="150" r="5" data-year="2025" data-rent="57.75" data-pct="5.0"/>
-                                        <circle class="chart-dot" cx="480" cy="113" r="5" data-year="2026" data-rent="60.50" data-pct="10.0"/>
+                                        <text class="chart-axis-label" x="330" y="395" font-size="12" text-anchor="middle">Year</text>
+                                        <!-- Data points: scaled for 400 height viewBox (multiply Y by 400/280 = 1.429) -->
+                                        <!-- Historical data (2020-2026) -->
+                                        <polyline class="chart-area" points="120,323 180,303 240,284 300,276 360,266 420,214 480,161 540,114 600,87 600,354 120,354"/>
+                                        <!-- Solid line for historical data (2020-2026) -->
+                                        <polyline class="chart-line" points="120,323 180,303 240,284 300,276 360,266 420,214 480,161"/>
+                                        <!-- Dotted line for projected data (2027-2028) -->
+                                        <polyline class="chart-line chart-line-projected" points="480,161 540,114 600,87"/>
+                                        <!-- Historical data points -->
+                                        <circle class="chart-dot" cx="120" cy="323" r="5" data-year="2020" data-rent="52.00" data-pct="-5.5"/>
+                                        <circle class="chart-dot" cx="180" cy="303" r="5" data-year="2021" data-rent="53.00" data-pct="-3.6"/>
+                                        <circle class="chart-dot" cx="240" cy="284" r="5" data-year="2022" data-rent="54.00" data-pct="-1.8"/>
+                                        <circle class="chart-dot" cx="300" cy="276" r="5" data-year="2023" data-rent="54.50" data-pct="-0.9"/>
+                                        <circle class="chart-dot" cx="360" cy="266" r="5" data-year="2024" data-rent="55.00" data-pct="0"/>
+                                        <circle class="chart-dot" cx="420" cy="214" r="5" data-year="2025" data-rent="57.75" data-pct="5.0"/>
+                                        <circle class="chart-dot" cx="480" cy="161" r="5" data-year="2026" data-rent="60.50" data-pct="10.0"/>
+                                        <!-- Projected data points (future years) -->
+                                        <circle class="chart-dot chart-dot-projected" cx="540" cy="114" r="5" data-year="2027" data-rent="63.00" data-pct="projected"/>
+                                        <circle class="chart-dot chart-dot-projected" cx="600" cy="87" r="5" data-year="2028" data-rent="64.50" data-pct="projected"/>
                                     </svg>
                                 </div>
                             </div>
@@ -2767,6 +2860,11 @@
                 targetTab.classList.add('active');
                 targetContent.classList.add('active');
                 
+                // Initialize chart tooltips when Estimation Summary tab is shown
+                if (tabId === 'estimated-summary') {
+                    setTimeout(() => initChartTooltips(), 100);
+                }
+                
                 if (tabId === 'underlying-comps') {
                     requestAnimationFrame(() => {
                         initCompsMapIfNeeded();
@@ -2789,87 +2887,87 @@
         const COMPs_PER_PAGE = 10;
         const compsProperties = [
             { address: '675 Avenue of the Americas', lat: 40.7419, lng: -73.9897, isSubject: true, pinLabel: null, city: 'New York', state: 'NY', zip: '10010', spaceType: 'OFFICE', buildingClass: 'CLASS A', propertySize: 311000, floors: 6, sqftExpiring12Mo: null, avgLeaseSize: 34500, lastSalePrice: '$89.0M', leases: [
-                { transQtr: '2022-Q4', tenant: 'CompStak', isSubject: true, sqft: 25644, currentRent: '$55.17', estRent: '$60.50', rentSpread: '+10.50%', adjustment: '$5.33' },
-                { transQtr: '2024-Q1', tenant: 'TechCorp Solutions', isSubject: false, sqft: 28000, currentRent: '$56.00', estRent: '$58.50', rentSpread: '+4.46%', adjustment: '$2.50' },
-                { transQtr: '2024-Q2', tenant: 'Digital Innovations Inc', isSubject: false, sqft: 22000, currentRent: '$57.00', estRent: '$59.50', rentSpread: '+4.39%', adjustment: '$2.50' },
-                { transQtr: '2023-Q4', tenant: 'Finance Partners LLC', isSubject: false, sqft: 30000, currentRent: '$55.50', estRent: '$58.00', rentSpread: '+4.50%', adjustment: '$2.50' }
+                { transQtr: '2022-Q4', tenant: 'CompStak', isSubject: true, sqft: 25644, currentRent: '$55.17', estRent: '$60.50', rentSpread: '+10.50%', adjustment: '$5.33', similarity: 100 },
+                { transQtr: '2024-Q1', tenant: 'TechCorp Solutions', isSubject: false, sqft: 28000, currentRent: '$56.00', estRent: '$58.50', rentSpread: '+4.46%', adjustment: '$2.50', similarity: 87 },
+                { transQtr: '2024-Q2', tenant: 'Digital Innovations Inc', isSubject: false, sqft: 22000, currentRent: '$57.00', estRent: '$59.50', rentSpread: '+4.39%', adjustment: '$2.50', similarity: 82 },
+                { transQtr: '2023-Q4', tenant: 'Finance Partners LLC', isSubject: false, sqft: 30000, currentRent: '$55.50', estRent: '$58.00', rentSpread: '+4.50%', adjustment: '$2.50', similarity: 89 }
             ]},
             { address: '580 6th Avenue', lat: 40.7430, lng: -73.9905, isSubject: false, pinLabel: 'A', city: 'New York', state: 'NY', zip: '10018', spaceType: 'OFFICE', buildingClass: 'CLASS B', propertySize: 285000, floors: 8, sqftExpiring12Mo: 12500, avgLeaseSize: 19800, lastSalePrice: '$42.5M', leases: [
-                { transQtr: '2024-Q1', tenant: 'TechFlow Solutions', isSubject: false, sqft: 18250, currentRent: '$52.00', estRent: '$52.75', rentSpread: '+1.44%', adjustment: '$0.75' },
-                { transQtr: '2024-Q1', tenant: 'Digital Ventures Inc', isSubject: false, sqft: 21400, currentRent: '$51.50', estRent: '$53.50', rentSpread: '+3.88%', adjustment: '$2.00' },
-                { transQtr: '2024-Q2', tenant: 'CloudSync Technologies', isSubject: false, sqft: 19800, currentRent: '$52.25', estRent: '$54.25', rentSpread: '+3.83%', adjustment: '$2.00' },
-                { transQtr: '2024-Q2', tenant: 'Premium Office Solutions', isSubject: false, sqft: 16500, currentRent: '$48.00', estRent: '$56.00', rentSpread: '+16.67%', adjustment: '$8.00' },
-                { transQtr: '2023-Q4', tenant: 'Enterprise Realty Group', isSubject: false, sqft: 19500, currentRent: '$46.00', estRent: '$58.50', rentSpread: '+27.17%', adjustment: '$12.50' }
+                { transQtr: '2024-Q1', tenant: 'TechFlow Solutions', isSubject: false, sqft: 18250, currentRent: '$52.00', estRent: '$52.75', rentSpread: '+1.44%', adjustment: '$0.75', similarity: 76 },
+                { transQtr: '2024-Q1', tenant: 'Digital Ventures Inc', isSubject: false, sqft: 21400, currentRent: '$51.50', estRent: '$53.50', rentSpread: '+3.88%', adjustment: '$2.00', similarity: 74 },
+                { transQtr: '2024-Q2', tenant: 'CloudSync Technologies', isSubject: false, sqft: 19800, currentRent: '$52.25', estRent: '$54.25', rentSpread: '+3.83%', adjustment: '$2.00', similarity: 75 },
+                { transQtr: '2024-Q2', tenant: 'Premium Office Solutions', isSubject: false, sqft: 16500, currentRent: '$48.00', estRent: '$56.00', rentSpread: '+16.67%', adjustment: '$8.00', similarity: 68 },
+                { transQtr: '2023-Q4', tenant: 'Enterprise Realty Group', isSubject: false, sqft: 19500, currentRent: '$46.00', estRent: '$58.50', rentSpread: '+27.17%', adjustment: '$12.50', similarity: 62 }
             ]},
             { address: '100 Park Avenue', lat: 40.7430, lng: -73.9885, isSubject: false, pinLabel: 'B', city: 'New York', state: 'NY', zip: '10017', spaceType: 'OFFICE', buildingClass: 'CLASS A', propertySize: 450000, floors: 12, sqftExpiring12Mo: 18500, avgLeaseSize: 18975, lastSalePrice: '$125.0M', leases: [
-                { transQtr: '2023-Q3', tenant: 'Meridian Capital Group', isSubject: false, sqft: 18750, currentRent: '$58.00', estRent: '$61.00', rentSpread: '+5.17%', adjustment: '$3.00' },
-                { transQtr: '2023-Q4', tenant: 'Summit Financial Advisors', isSubject: false, sqft: 19200, currentRent: '$57.50', estRent: '$60.50', rentSpread: '+5.22%', adjustment: '$3.00' }
+                { transQtr: '2023-Q3', tenant: 'Meridian Capital Group', isSubject: false, sqft: 18750, currentRent: '$58.00', estRent: '$61.00', rentSpread: '+5.17%', adjustment: '$3.00', similarity: 79 },
+                { transQtr: '2023-Q4', tenant: 'Summit Financial Advisors', isSubject: false, sqft: 19200, currentRent: '$57.50', estRent: '$60.50', rentSpread: '+5.22%', adjustment: '$3.00', similarity: 80 }
             ]},
             { address: '200 Broadway', lat: 40.7405, lng: -73.9910, isSubject: false, pinLabel: 'C', city: 'New York', state: 'NY', zip: '10007', spaceType: 'OFFICE', buildingClass: 'CLASS B', propertySize: 320000, floors: 10, sqftExpiring12Mo: 30000, avgLeaseSize: 30000, lastSalePrice: '$68.5M', leases: [
-                { transQtr: '2024-Q2', tenant: 'LegalEdge Partners', isSubject: false, sqft: 32000, currentRent: '$48.00', estRent: '$51.00', rentSpread: '+6.25%', adjustment: '$3.00' },
-                { transQtr: '2024-Q2', tenant: 'Corporate Law Associates', isSubject: false, sqft: 28000, currentRent: '$49.00', estRent: '$52.00', rentSpread: '+6.12%', adjustment: '$3.00' }
+                { transQtr: '2024-Q2', tenant: 'LegalEdge Partners', isSubject: false, sqft: 32000, currentRent: '$48.00', estRent: '$51.00', rentSpread: '+6.25%', adjustment: '$3.00', similarity: 71 },
+                { transQtr: '2024-Q2', tenant: 'Corporate Law Associates', isSubject: false, sqft: 28000, currentRent: '$49.00', estRent: '$52.00', rentSpread: '+6.12%', adjustment: '$3.00', similarity: 72 }
             ]},
             { address: '350 West 42nd Street', lat: 40.7420, lng: -73.9890, isSubject: false, pinLabel: 'D', city: 'New York', state: 'NY', zip: '10036', spaceType: 'OFFICE', buildingClass: 'CLASS B', propertySize: 420000, floors: 15, sqftExpiring12Mo: 35000, avgLeaseSize: 35000, lastSalePrice: '$95.0M', leases: [
-                { transQtr: '2023-Q2', tenant: 'MediaWorks International', isSubject: false, sqft: 42000, currentRent: '$54.00', estRent: '$56.50', rentSpread: '+4.63%', adjustment: '$2.50' },
-                { transQtr: '2023-Q2', tenant: 'Creative Studios LLC', isSubject: false, sqft: 38000, currentRent: '$55.00', estRent: '$57.50', rentSpread: '+4.55%', adjustment: '$2.50' },
-                { transQtr: '2023-Q3', tenant: 'Brand Strategy Group', isSubject: false, sqft: 25000, currentRent: '$53.00', estRent: '$55.50', rentSpread: '+4.72%', adjustment: '$2.50' }
+                { transQtr: '2023-Q2', tenant: 'MediaWorks International', isSubject: false, sqft: 42000, currentRent: '$54.00', estRent: '$56.50', rentSpread: '+4.63%', adjustment: '$2.50', similarity: 73 },
+                { transQtr: '2023-Q2', tenant: 'Creative Studios LLC', isSubject: false, sqft: 38000, currentRent: '$55.00', estRent: '$57.50', rentSpread: '+4.55%', adjustment: '$2.50', similarity: 74 },
+                { transQtr: '2023-Q3', tenant: 'Brand Strategy Group', isSubject: false, sqft: 25000, currentRent: '$53.00', estRent: '$55.50', rentSpread: '+4.72%', adjustment: '$2.50', similarity: 75 }
             ]},
             { address: '460 West 34th Street', lat: 40.7425, lng: -73.9900, isSubject: false, pinLabel: 'E', city: 'New York', state: 'NY', zip: '10001', spaceType: 'OFFICE', buildingClass: 'CLASS B', propertySize: 380000, floors: 12, sqftExpiring12Mo: 28000, avgLeaseSize: 18633, lastSalePrice: '$72.0M', leases: [
-                { transQtr: '2024-Q1', tenant: 'DataSync Analytics', isSubject: false, sqft: 15000, currentRent: '$56.00', estRent: '$58.50', rentSpread: '+4.46%', adjustment: '$2.50' },
-                { transQtr: '2024-Q1', tenant: 'Insight Metrics Corp', isSubject: false, sqft: 16800, currentRent: '$55.50', estRent: '$58.00', rentSpread: '+4.50%', adjustment: '$2.50' },
-                { transQtr: '2024-Q2', tenant: 'Business Intelligence Co', isSubject: false, sqft: 22000, currentRent: '$54.00', estRent: '$56.50', rentSpread: '+4.63%', adjustment: '$2.50' },
-                { transQtr: '2024-Q2', tenant: 'Analytics Pro Solutions', isSubject: false, sqft: 19500, currentRent: '$55.00', estRent: '$57.50', rentSpread: '+4.55%', adjustment: '$2.50' },
-                { transQtr: '2024-Q2', tenant: 'DataViz Technologies', isSubject: false, sqft: 20500, currentRent: '$55.50', estRent: '$58.00', rentSpread: '+4.50%', adjustment: '$2.50' },
-                { transQtr: '2024-Q3', tenant: 'Metrics & Insights LLC', isSubject: false, sqft: 18800, currentRent: '$54.50', estRent: '$57.00', rentSpread: '+4.59%', adjustment: '$2.50' }
+                { transQtr: '2024-Q1', tenant: 'DataSync Analytics', isSubject: false, sqft: 15000, currentRent: '$56.00', estRent: '$58.50', rentSpread: '+4.46%', adjustment: '$2.50', similarity: 77 },
+                { transQtr: '2024-Q1', tenant: 'Insight Metrics Corp', isSubject: false, sqft: 16800, currentRent: '$55.50', estRent: '$58.00', rentSpread: '+4.50%', adjustment: '$2.50', similarity: 78 },
+                { transQtr: '2024-Q2', tenant: 'Business Intelligence Co', isSubject: false, sqft: 22000, currentRent: '$54.00', estRent: '$56.50', rentSpread: '+4.63%', adjustment: '$2.50', similarity: 76 },
+                { transQtr: '2024-Q2', tenant: 'Analytics Pro Solutions', isSubject: false, sqft: 19500, currentRent: '$55.00', estRent: '$57.50', rentSpread: '+4.55%', adjustment: '$2.50', similarity: 77 },
+                { transQtr: '2024-Q2', tenant: 'DataViz Technologies', isSubject: false, sqft: 20500, currentRent: '$55.50', estRent: '$58.00', rentSpread: '+4.50%', adjustment: '$2.50', similarity: 78 },
+                { transQtr: '2024-Q3', tenant: 'Metrics & Insights LLC', isSubject: false, sqft: 18800, currentRent: '$54.50', estRent: '$57.00', rentSpread: '+4.59%', adjustment: '$2.50', similarity: 77 }
             ]},
             { address: '7 World Trade Center', lat: 40.7400, lng: -73.9880, isSubject: false, pinLabel: 'F', city: 'New York', state: 'NY', zip: '10007', spaceType: 'OFFICE', buildingClass: 'CLASS A', propertySize: 1700000, floors: 52, sqftExpiring12Mo: 50000, avgLeaseSize: 50000, lastSalePrice: '$385.0M', leases: [
-                { transQtr: '2023-Q4', tenant: 'Global Finance Partners', isSubject: false, sqft: 52000, currentRent: '$62.00', estRent: '$65.00', rentSpread: '+4.84%', adjustment: '$3.00' },
-                { transQtr: '2024-Q1', tenant: 'Investment Advisory Group', isSubject: false, sqft: 48000, currentRent: '$61.50', estRent: '$64.50', rentSpread: '+4.88%', adjustment: '$3.00' }
+                { transQtr: '2023-Q4', tenant: 'Global Finance Partners', isSubject: false, sqft: 52000, currentRent: '$62.00', estRent: '$65.00', rentSpread: '+4.84%', adjustment: '$3.00', similarity: 81 },
+                { transQtr: '2024-Q1', tenant: 'Investment Advisory Group', isSubject: false, sqft: 48000, currentRent: '$61.50', estRent: '$64.50', rentSpread: '+4.88%', adjustment: '$3.00', similarity: 82 }
             ]},
             { address: '250 West 55th Street', lat: 40.7435, lng: -73.9895, isSubject: false, pinLabel: 'G', city: 'New York', state: 'NY', zip: '10019', spaceType: 'OFFICE', buildingClass: 'CLASS A', propertySize: 520000, floors: 20, sqftExpiring12Mo: 29000, avgLeaseSize: 29167, lastSalePrice: '$145.0M', leases: [
-                { transQtr: '2023-Q1', tenant: 'Consulting Partners Inc', isSubject: false, sqft: 31000, currentRent: '$59.00', estRent: '$62.00', rentSpread: '+5.08%', adjustment: '$3.00' },
-                { transQtr: '2023-Q2', tenant: 'Strategic Advisors LLC', isSubject: false, sqft: 27500, currentRent: '$58.50', estRent: '$61.50', rentSpread: '+5.13%', adjustment: '$3.00' },
-                { transQtr: '2023-Q3', tenant: 'Management Consulting Group', isSubject: false, sqft: 29000, currentRent: '$59.50', estRent: '$62.50', rentSpread: '+5.04%', adjustment: '$3.00' }
+                { transQtr: '2023-Q1', tenant: 'Consulting Partners Inc', isSubject: false, sqft: 31000, currentRent: '$59.00', estRent: '$62.00', rentSpread: '+5.08%', adjustment: '$3.00', similarity: 83 },
+                { transQtr: '2023-Q2', tenant: 'Strategic Advisors LLC', isSubject: false, sqft: 27500, currentRent: '$58.50', estRent: '$61.50', rentSpread: '+5.13%', adjustment: '$3.00', similarity: 84 },
+                { transQtr: '2023-Q3', tenant: 'Management Consulting Group', isSubject: false, sqft: 29000, currentRent: '$59.50', estRent: '$62.50', rentSpread: '+5.04%', adjustment: '$3.00', similarity: 85 }
             ]},
             { address: '120 Broadway', lat: 40.7410, lng: -73.9905, isSubject: false, pinLabel: 'H', city: 'New York', state: 'NY', zip: '10005', spaceType: 'OFFICE', buildingClass: 'CLASS B', propertySize: 360000, floors: 11, sqftExpiring12Mo: 34000, avgLeaseSize: 32667, lastSalePrice: '$78.5M', leases: [
-                { transQtr: '2024-Q1', tenant: 'Real Estate Ventures', isSubject: false, sqft: 36000, currentRent: '$50.00', estRent: '$52.50', rentSpread: '+5.00%', adjustment: '$2.50' },
-                { transQtr: '2024-Q2', tenant: 'Property Management Co', isSubject: false, sqft: 34000, currentRent: '$50.50', estRent: '$53.00', rentSpread: '+4.95%', adjustment: '$2.50' },
-                { transQtr: '2024-Q2', tenant: 'Commercial Realty Group', isSubject: false, sqft: 28000, currentRent: '$51.00', estRent: '$53.50', rentSpread: '+4.90%', adjustment: '$2.50' }
+                { transQtr: '2024-Q1', tenant: 'Real Estate Ventures', isSubject: false, sqft: 36000, currentRent: '$50.00', estRent: '$52.50', rentSpread: '+5.00%', adjustment: '$2.50', similarity: 70 },
+                { transQtr: '2024-Q2', tenant: 'Property Management Co', isSubject: false, sqft: 34000, currentRent: '$50.50', estRent: '$53.00', rentSpread: '+4.95%', adjustment: '$2.50', similarity: 71 },
+                { transQtr: '2024-Q2', tenant: 'Commercial Realty Group', isSubject: false, sqft: 28000, currentRent: '$51.00', estRent: '$53.50', rentSpread: '+4.90%', adjustment: '$2.50', similarity: 72 }
             ]},
             { address: '1633 Broadway', lat: 40.7428, lng: -73.9888, isSubject: false, pinLabel: 'I', city: 'New York', state: 'NY', zip: '10019', spaceType: 'OFFICE', buildingClass: 'CLASS A', propertySize: 750000, floors: 25, sqftExpiring12Mo: 39400, avgLeaseSize: 39400, lastSalePrice: '$210.0M', leases: [
-                { transQtr: '2022-Q4', tenant: 'Entertainment Media Corp', isSubject: false, sqft: 44000, currentRent: '$57.00', estRent: '$60.00', rentSpread: '+5.26%', adjustment: '$3.00' },
-                { transQtr: '2023-Q1', tenant: 'Broadcast Networks LLC', isSubject: false, sqft: 41000, currentRent: '$56.50', estRent: '$59.50', rentSpread: '+5.31%', adjustment: '$3.00' },
-                { transQtr: '2023-Q2', tenant: 'Digital Media Holdings', isSubject: false, sqft: 39000, currentRent: '$57.50', estRent: '$60.50', rentSpread: '+5.22%', adjustment: '$3.00' },
-                { transQtr: '2023-Q3', tenant: 'Content Production Studios', isSubject: false, sqft: 35000, currentRent: '$56.00', estRent: '$59.00', rentSpread: '+5.36%', adjustment: '$3.00' },
-                { transQtr: '2023-Q4', tenant: 'Streaming Services Inc', isSubject: false, sqft: 38000, currentRent: '$58.00', estRent: '$61.00', rentSpread: '+5.17%', adjustment: '$3.00' }
+                { transQtr: '2022-Q4', tenant: 'Entertainment Media Corp', isSubject: false, sqft: 44000, currentRent: '$57.00', estRent: '$60.00', rentSpread: '+5.26%', adjustment: '$3.00', similarity: 86 },
+                { transQtr: '2023-Q1', tenant: 'Broadcast Networks LLC', isSubject: false, sqft: 41000, currentRent: '$56.50', estRent: '$59.50', rentSpread: '+5.31%', adjustment: '$3.00', similarity: 85 },
+                { transQtr: '2023-Q2', tenant: 'Digital Media Holdings', isSubject: false, sqft: 39000, currentRent: '$57.50', estRent: '$60.50', rentSpread: '+5.22%', adjustment: '$3.00', similarity: 86 },
+                { transQtr: '2023-Q3', tenant: 'Content Production Studios', isSubject: false, sqft: 35000, currentRent: '$56.00', estRent: '$59.00', rentSpread: '+5.36%', adjustment: '$3.00', similarity: 85 },
+                { transQtr: '2023-Q4', tenant: 'Streaming Services Inc', isSubject: false, sqft: 38000, currentRent: '$58.00', estRent: '$61.00', rentSpread: '+5.17%', adjustment: '$3.00', similarity: 86 }
             ]},
             { address: '11 Times Square', lat: 40.7432, lng: -73.9892, isSubject: false, pinLabel: 'J', city: 'New York', state: 'NY', zip: '10036', spaceType: 'OFFICE', buildingClass: 'CLASS A', propertySize: 680000, floors: 40, sqftExpiring12Mo: 24800, avgLeaseSize: 24633, lastSalePrice: '$195.0M', leases: [
-                { transQtr: '2024-Q1', tenant: 'Advertising Agency Partners', isSubject: false, sqft: 27000, currentRent: '$60.00', estRent: '$63.00', rentSpread: '+5.00%', adjustment: '$3.00' },
-                { transQtr: '2024-Q2', tenant: 'Marketing Solutions Group', isSubject: false, sqft: 24500, currentRent: '$59.50', estRent: '$62.50', rentSpread: '+5.04%', adjustment: '$3.00' },
-                { transQtr: '2024-Q2', tenant: 'Brand Communications LLC', isSubject: false, sqft: 26000, currentRent: '$60.50', estRent: '$63.50', rentSpread: '+4.96%', adjustment: '$3.00' },
-                { transQtr: '2024-Q3', tenant: 'Creative Marketing Agency', isSubject: false, sqft: 22000, currentRent: '$58.00', estRent: '$61.00', rentSpread: '+5.17%', adjustment: '$3.00' },
-                { transQtr: '2024-Q3', tenant: 'Public Relations Firm', isSubject: false, sqft: 23500, currentRent: '$59.00', estRent: '$62.00', rentSpread: '+5.08%', adjustment: '$3.00' },
-                { transQtr: '2024-Q3', tenant: 'Digital Marketing Co', isSubject: false, sqft: 24800, currentRent: '$59.50', estRent: '$62.50', rentSpread: '+5.04%', adjustment: '$3.00' }
+                { transQtr: '2024-Q1', tenant: 'Advertising Agency Partners', isSubject: false, sqft: 27000, currentRent: '$60.00', estRent: '$63.00', rentSpread: '+5.00%', adjustment: '$3.00', similarity: 88 },
+                { transQtr: '2024-Q2', tenant: 'Marketing Solutions Group', isSubject: false, sqft: 24500, currentRent: '$59.50', estRent: '$62.50', rentSpread: '+5.04%', adjustment: '$3.00', similarity: 87 },
+                { transQtr: '2024-Q2', tenant: 'Brand Communications LLC', isSubject: false, sqft: 26000, currentRent: '$60.50', estRent: '$63.50', rentSpread: '+4.96%', adjustment: '$3.00', similarity: 88 },
+                { transQtr: '2024-Q3', tenant: 'Creative Marketing Agency', isSubject: false, sqft: 22000, currentRent: '$58.00', estRent: '$61.00', rentSpread: '+5.17%', adjustment: '$3.00', similarity: 87 },
+                { transQtr: '2024-Q3', tenant: 'Public Relations Firm', isSubject: false, sqft: 23500, currentRent: '$59.00', estRent: '$62.00', rentSpread: '+5.08%', adjustment: '$3.00', similarity: 88 },
+                { transQtr: '2024-Q3', tenant: 'Digital Marketing Co', isSubject: false, sqft: 24800, currentRent: '$59.50', estRent: '$62.50', rentSpread: '+5.04%', adjustment: '$3.00', similarity: 87 }
             ]},
             { address: '1 Penn Plaza', lat: 40.7412, lng: -73.9902, isSubject: false, pinLabel: 'K', city: 'New York', state: 'NY', zip: '10119', spaceType: 'OFFICE', buildingClass: 'CLASS A', propertySize: 2400000, floors: 57, sqftExpiring12Mo: 332000, avgLeaseSize: 47214, lastSalePrice: '$550.0M', leases: [
-                { transQtr: '2023-Q2', tenant: 'Healthcare Systems Inc', isSubject: false, sqft: 50000, currentRent: '$53.00', estRent: '$55.50', rentSpread: '+4.72%', adjustment: '$2.50' },
-                { transQtr: '2023-Q3', tenant: 'Medical Services Group', isSubject: false, sqft: 47000, currentRent: '$52.50', estRent: '$55.00', rentSpread: '+4.76%', adjustment: '$2.50' },
-                { transQtr: '2023-Q4', tenant: 'Pharmaceutical Research Co', isSubject: false, sqft: 51000, currentRent: '$53.50', estRent: '$56.00', rentSpread: '+4.67%', adjustment: '$2.50' },
-                { transQtr: '2024-Q1', tenant: 'Biotech Innovations LLC', isSubject: false, sqft: 49000, currentRent: '$54.00', estRent: '$56.50', rentSpread: '+4.63%', adjustment: '$2.50' },
-                { transQtr: '2024-Q1', tenant: 'HealthTech Solutions', isSubject: false, sqft: 45500, currentRent: '$53.50', estRent: '$56.00', rentSpread: '+4.67%', adjustment: '$2.50' },
-                { transQtr: '2024-Q1', tenant: 'Clinical Research Partners', isSubject: false, sqft: 46500, currentRent: '$53.75', estRent: '$56.25', rentSpread: '+4.65%', adjustment: '$2.50' },
-                { transQtr: '2024-Q2', tenant: 'Medical Device Corp', isSubject: false, sqft: 43000, currentRent: '$54.00', estRent: '$56.50', rentSpread: '+4.63%', adjustment: '$2.50' }
+                { transQtr: '2023-Q2', tenant: 'Healthcare Systems Inc', isSubject: false, sqft: 50000, currentRent: '$53.00', estRent: '$55.50', rentSpread: '+4.72%', adjustment: '$2.50', similarity: 69 },
+                { transQtr: '2023-Q3', tenant: 'Medical Services Group', isSubject: false, sqft: 47000, currentRent: '$52.50', estRent: '$55.00', rentSpread: '+4.76%', adjustment: '$2.50', similarity: 70 },
+                { transQtr: '2023-Q4', tenant: 'Pharmaceutical Research Co', isSubject: false, sqft: 51000, currentRent: '$53.50', estRent: '$56.00', rentSpread: '+4.67%', adjustment: '$2.50', similarity: 69 },
+                { transQtr: '2024-Q1', tenant: 'Biotech Innovations LLC', isSubject: false, sqft: 49000, currentRent: '$54.00', estRent: '$56.50', rentSpread: '+4.63%', adjustment: '$2.50', similarity: 70 },
+                { transQtr: '2024-Q1', tenant: 'HealthTech Solutions', isSubject: false, sqft: 45500, currentRent: '$53.50', estRent: '$56.00', rentSpread: '+4.67%', adjustment: '$2.50', similarity: 69 },
+                { transQtr: '2024-Q1', tenant: 'Clinical Research Partners', isSubject: false, sqft: 46500, currentRent: '$53.75', estRent: '$56.25', rentSpread: '+4.65%', adjustment: '$2.50', similarity: 70 },
+                { transQtr: '2024-Q2', tenant: 'Medical Device Corp', isSubject: false, sqft: 43000, currentRent: '$54.00', estRent: '$56.50', rentSpread: '+4.63%', adjustment: '$2.50', similarity: 70 }
             ]},
             { address: '55 Water Street', lat: 40.7408, lng: -73.9915, isSubject: false, pinLabel: 'L', city: 'New York', state: 'NY', zip: '10041', spaceType: 'OFFICE', buildingClass: 'CLASS B', propertySize: 330000, floors: 8, sqftExpiring12Mo: 31400, avgLeaseSize: 31400, lastSalePrice: '$62.0M', leases: [
-                { transQtr: '2024-Q1', tenant: 'Insurance Services Group', isSubject: false, sqft: 33000, currentRent: '$47.00', estRent: '$49.50', rentSpread: '+5.32%', adjustment: '$2.50' },
-                { transQtr: '2024-Q2', tenant: 'Risk Management Advisors', isSubject: false, sqft: 29800, currentRent: '$47.50', estRent: '$50.00', rentSpread: '+5.26%', adjustment: '$2.50' }
+                { transQtr: '2024-Q1', tenant: 'Insurance Services Group', isSubject: false, sqft: 33000, currentRent: '$47.00', estRent: '$49.50', rentSpread: '+5.32%', adjustment: '$2.50', similarity: 67 },
+                { transQtr: '2024-Q2', tenant: 'Risk Management Advisors', isSubject: false, sqft: 29800, currentRent: '$47.50', estRent: '$50.00', rentSpread: '+5.26%', adjustment: '$2.50', similarity: 68 }
             ]},
             { address: '1325 Avenue of the Americas', lat: 40.7438, lng: -73.9882, isSubject: false, pinLabel: 'M', city: 'New York', state: 'NY', zip: '10019', spaceType: 'OFFICE', buildingClass: 'CLASS A', propertySize: 890000, floors: 18, sqftExpiring12Mo: 25500, avgLeaseSize: 24200, lastSalePrice: '$245.0M', leases: [
-                { transQtr: '2023-Q1', tenant: 'Investment Banking Firm', isSubject: false, sqft: 24000, currentRent: '$64.00', estRent: '$67.00', rentSpread: '+4.69%', adjustment: '$3.00' },
-                { transQtr: '2023-Q2', tenant: 'Private Equity Partners', isSubject: false, sqft: 26500, currentRent: '$63.50', estRent: '$66.50', rentSpread: '+4.72%', adjustment: '$3.00' },
-                { transQtr: '2023-Q3', tenant: 'Wealth Management Group', isSubject: false, sqft: 23000, currentRent: '$64.50', estRent: '$67.50', rentSpread: '+4.65%', adjustment: '$3.00' },
-                { transQtr: '2023-Q4', tenant: 'Asset Management Co', isSubject: false, sqft: 25500, currentRent: '$63.75', estRent: '$66.75', rentSpread: '+4.71%', adjustment: '$3.00' },
-                { transQtr: '2024-Q1', tenant: 'Financial Advisory Services', isSubject: false, sqft: 22000, currentRent: '$64.50', estRent: '$67.50', rentSpread: '+4.65%', adjustment: '$3.00' }
+                { transQtr: '2023-Q1', tenant: 'Investment Banking Firm', isSubject: false, sqft: 24000, currentRent: '$64.00', estRent: '$67.00', rentSpread: '+4.69%', adjustment: '$3.00', similarity: 90 },
+                { transQtr: '2023-Q2', tenant: 'Private Equity Partners', isSubject: false, sqft: 26500, currentRent: '$63.50', estRent: '$66.50', rentSpread: '+4.72%', adjustment: '$3.00', similarity: 91 },
+                { transQtr: '2023-Q3', tenant: 'Wealth Management Group', isSubject: false, sqft: 23000, currentRent: '$64.50', estRent: '$67.50', rentSpread: '+4.65%', adjustment: '$3.00', similarity: 90 },
+                { transQtr: '2023-Q4', tenant: 'Asset Management Co', isSubject: false, sqft: 25500, currentRent: '$63.75', estRent: '$66.75', rentSpread: '+4.71%', adjustment: '$3.00', similarity: 91 },
+                { transQtr: '2024-Q1', tenant: 'Financial Advisory Services', isSubject: false, sqft: 22000, currentRent: '$64.50', estRent: '$67.50', rentSpread: '+4.65%', adjustment: '$3.00', similarity: 90 }
             ]}
         ];
 
@@ -2932,7 +3030,7 @@
         const compsTotalPages = Math.ceil(compsFlat.length / COMPs_PER_PAGE);
 
         function pinSvg(color, label) {
-            const L = label ? `<text x="12" y="16" text-anchor="middle" fill="white" font-size="10" font-weight="bold">${label}</text>` : '<circle cx="12" cy="12" r="5" fill="white"/>';
+            const L = label ? `<text x="12" y="18" text-anchor="middle" fill="white" font-size="14" font-weight="bold">${label}</text>` : '<circle cx="12" cy="12" r="5" fill="white"/>';
             return `<svg viewBox="0 0 24 36" width="28" height="36" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 9 12 24 12 24s12-15 12-24C24 5.37 18.63 0 12 0z" fill="${color}"/>${L}</svg>`;
         }
 
@@ -3354,8 +3452,17 @@
                         valB = parseFloat(leaseB.currentRent.replace('$', ''));
                         break;
                     case 'adjustment':
-                        valA = parseFloat(leaseA.adjustment.replace('$', ''));
-                        valB = parseFloat(leaseB.adjustment.replace('$', ''));
+                        // Sort by total adjusted value (currentRent + adjustment)
+                        const rentA = parseFloat(leaseA.currentRent.replace('$', ''));
+                        const adjA = parseFloat(leaseA.adjustment.replace('$', ''));
+                        const rentB = parseFloat(leaseB.currentRent.replace('$', ''));
+                        const adjB = parseFloat(leaseB.adjustment.replace('$', ''));
+                        valA = rentA + adjA;
+                        valB = rentB + adjB;
+                        break;
+                    case 'similarity':
+                        valA = leaseA.similarity || 0;
+                        valB = leaseB.similarity || 0;
                         break;
                     default:
                         return 0;
@@ -3390,7 +3497,7 @@
                     const prop = compsProperties[propIndex];
                     const pinColor = prop.isSubject ? '#E91E8C' : '#228FFF';
                     const pinHtml = prop.pinLabel
-                        ? `<svg class="comps-map-pin" viewBox="0 0 24 36" width="20" height="26"><path d="M12 0C5.37 0 0 5.37 0 12c0 9 12 24 12 24s12-15 12-24C24 5.37 18.63 0 12 0z" fill="${pinColor}"/><text x="12" y="16" text-anchor="middle" fill="white" font-size="9" font-weight="bold">${prop.pinLabel}</text></svg>`
+                        ? `<svg class="comps-map-pin" viewBox="0 0 24 36" width="20" height="26"><path d="M12 0C5.37 0 0 5.37 0 12c0 9 12 24 12 24s12-15 12-24C24 5.37 18.63 0 12 0z" fill="${pinColor}"/><text x="12" y="18" text-anchor="middle" fill="white" font-size="14" font-weight="bold">${prop.pinLabel}</text></svg>`
                         : `<svg class="comps-map-pin" viewBox="0 0 24 36" width="20" height="26"><path d="M12 0C5.37 0 0 5.37 0 12c0 9 12 24 12 24s12-15 12-24C24 5.37 18.63 0 12 0z" fill="${pinColor}"/><circle cx="12" cy="12" r="5" fill="white"/></svg>`;
                     
                     const tenantClass = lease.isSubject ? 'subject-tenant' : '';
@@ -3406,9 +3513,17 @@
                         ? '<td></td>'
                         : `<td><button type="button" class="see-why-btn" data-breakdown-id="${breakdownId}"><span class="btn-text">See Why</span> <span class="btn-arrow">▾</span></button></td>`;
                     
-                    html += `<tr class="lease-row" id="${rowId}">${addressCell}<td>${lease.transQtr}</td><td class="${tenantClass}">${tenantHtml}</td><td class="numeric">${lease.sqft.toLocaleString()}</td><td class="numeric">${lease.currentRent}</td><td class="numeric">${lease.adjustment}</td><td class="numeric">${impactValue.toFixed(1)}%</td>${detailsCell}</tr>`;
+                    // Format adjustment: "$60.00 (+$2.00)" where 60.00 is total adjusted value
+                    const currentRentNum = parseFloat(lease.currentRent.replace('$', ''));
+                    const adjustmentNum = parseFloat(lease.adjustment.replace('$', ''));
+                    const totalAdjusted = currentRentNum + adjustmentNum;
+                    const adjustmentSign = adjustmentNum >= 0 ? '+' : '';
+                    const adjustmentFormatted = `$${totalAdjusted.toFixed(2)} <span class="adjustment-amount-tertiary">(${adjustmentSign}$${Math.abs(adjustmentNum).toFixed(2)})</span>`;
+                    const similarityScore = lease.similarity || 0;
+                    
+                    html += `<tr class="lease-row" id="${rowId}">${addressCell}<td>${lease.transQtr}</td><td class="${tenantClass}">${tenantHtml}</td><td class="numeric">${lease.sqft.toLocaleString()}</td><td class="numeric">${lease.currentRent}</td><td class="numeric adjustment-cell">${adjustmentFormatted}</td><td class="numeric">${similarityScore}</td><td class="numeric">${impactValue.toFixed(1)}%</td>${detailsCell}</tr>`;
                     if (!lease.isSubject) {
-                        html += `<tr class="adjustment-breakdown-row" id="${breakdownId}"><td class="adjustment-breakdown-cell" colspan="8">${generateAdjustmentBreakdown(lease)}</td></tr>`;
+                        html += `<tr class="adjustment-breakdown-row" id="${breakdownId}"><td class="adjustment-breakdown-cell" colspan="9">${generateAdjustmentBreakdown(lease)}</td></tr>`;
                     }
                 });
             } else {
@@ -3428,7 +3543,7 @@
                     const { prop, leases } = byProp[propIndex];
                     const pinColor = prop.isSubject ? '#E91E8C' : '#228FFF';
                     const pinHtml = prop.pinLabel
-                        ? `<svg class="comps-map-pin" viewBox="0 0 24 36" width="20" height="26"><path d="M12 0C5.37 0 0 5.37 0 12c0 9 12 24 12 24s12-15 12-24C24 5.37 18.63 0 12 0z" fill="${pinColor}"/><text x="12" y="16" text-anchor="middle" fill="white" font-size="9" font-weight="bold">${prop.pinLabel}</text></svg>`
+                        ? `<svg class="comps-map-pin" viewBox="0 0 24 36" width="20" height="26"><path d="M12 0C5.37 0 0 5.37 0 12c0 9 12 24 12 24s12-15 12-24C24 5.37 18.63 0 12 0z" fill="${pinColor}"/><text x="12" y="18" text-anchor="middle" fill="white" font-size="14" font-weight="bold">${prop.pinLabel}</text></svg>`
                         : `<svg class="comps-map-pin" viewBox="0 0 24 36" width="20" height="26"><path d="M12 0C5.37 0 0 5.37 0 12c0 9 12 24 12 24s12-15 12-24C24 5.37 18.63 0 12 0z" fill="${pinColor}"/><circle cx="12" cy="12" r="5" fill="white"/></svg>`;
                     
                     leases.forEach(({ lease: l, impact: impactValue }, leaseIndex) => {
@@ -3448,9 +3563,17 @@
                             ? '<td></td>'
                             : `<td><button type="button" class="see-why-btn" data-breakdown-id="${breakdownId}"><span class="btn-text">See Why</span> <span class="btn-arrow">▾</span></button></td>`;
                         
-                        html += `<tr class="lease-row ${groupClass}" id="${rowId}">${addressCell}<td>${l.transQtr}</td><td class="${tenantClass}">${tenantHtml}</td><td class="numeric">${l.sqft.toLocaleString()}</td><td class="numeric">${l.currentRent}</td><td class="numeric">${l.adjustment}</td><td class="numeric">${(impactValue || 0).toFixed(1)}%</td>${detailsCell}</tr>`;
+                        // Format adjustment: "$60.00 (+$2.00)" where 60.00 is total adjusted value
+                        const currentRentNum = parseFloat(l.currentRent.replace('$', ''));
+                        const adjustmentNum = parseFloat(l.adjustment.replace('$', ''));
+                        const totalAdjusted = currentRentNum + adjustmentNum;
+                        const adjustmentSign = adjustmentNum >= 0 ? '+' : '';
+                        const adjustmentFormatted = `$${totalAdjusted.toFixed(2)} <span class="adjustment-amount-tertiary">(${adjustmentSign}$${Math.abs(adjustmentNum).toFixed(2)})</span>`;
+                        const similarityScore = l.similarity || 0;
+                        
+                        html += `<tr class="lease-row ${groupClass}" id="${rowId}">${addressCell}<td>${l.transQtr}</td><td class="${tenantClass}">${tenantHtml}</td><td class="numeric">${l.sqft.toLocaleString()}</td><td class="numeric">${l.currentRent}</td><td class="numeric adjustment-cell">${adjustmentFormatted}</td><td class="numeric">${similarityScore}</td><td class="numeric">${(impactValue || 0).toFixed(1)}%</td>${detailsCell}</tr>`;
                         if (!l.isSubject) {
-                            html += `<tr class="adjustment-breakdown-row ${groupClass}" id="${breakdownId}"><td class="adjustment-breakdown-cell" colspan="8">${generateAdjustmentBreakdown(l)}</td></tr>`;
+                            html += `<tr class="adjustment-breakdown-row ${groupClass}" id="${breakdownId}"><td class="adjustment-breakdown-cell" colspan="9">${generateAdjustmentBreakdown(l)}</td></tr>`;
                         }
                     });
                 });
@@ -3640,6 +3763,9 @@
             window.addEventListener('scroll', updateStickyEstRentCard);
             window.addEventListener('resize', updateStickyEstRentCard);
             
+            // Initialize chart tooltips
+            initChartTooltips();
+            
             // Handle "See Transaction Details" button click
             const stickyButton = document.querySelector('.sticky-est-rent-button');
             if (stickyButton) {
@@ -3653,6 +3779,82 @@
                 });
             }
         });
+        
+        // Initialize chart tooltips for Market Starting Rent Trend
+        let chartTooltipsInitialized = false;
+        function initChartTooltips() {
+            if (chartTooltipsInitialized) return;
+            
+            const chartContainer = document.querySelector('.market-rent-chart-container');
+            if (!chartContainer) return;
+            
+            // Create tooltip element if it doesn't exist
+            let tooltip = document.getElementById('chart-tooltip');
+            if (!tooltip) {
+                tooltip = document.createElement('div');
+                tooltip.className = 'chart-tooltip';
+                tooltip.id = 'chart-tooltip';
+                chartContainer.style.position = 'relative';
+                chartContainer.appendChild(tooltip);
+            }
+            
+            const originalRent = 55.00; // Original Starting Rent
+            
+            // Add event listeners to all chart dots (use event delegation to handle dynamically)
+            const chartSvg = document.querySelector('.market-rent-line-chart');
+            if (!chartSvg) return;
+            
+            chartSvg.addEventListener('mouseenter', (e) => {
+                const dot = e.target.closest('.chart-dot');
+                if (!dot) return;
+                
+                const rent = parseFloat(dot.getAttribute('data-rent'));
+                const year = dot.getAttribute('data-year');
+                
+                if (rent && !isNaN(rent)) {
+                    // Calculate % change from original rent
+                    const percentChange = ((rent - originalRent) / originalRent) * 100;
+                    const sign = percentChange >= 0 ? '+' : '';
+                    const colorClass = percentChange >= 0 ? 'chart-tooltip-percentage' : '';
+                    
+                    // Update tooltip content
+                    tooltip.innerHTML = `
+                        <div><span class="chart-tooltip-value">$${rent.toFixed(2)}</span></div>
+                        <div class="chart-tooltip-line"><span class="${colorClass}">${sign}${percentChange.toFixed(1)}%</span> vs. original</div>
+                    `;
+                    
+                    // Position tooltip
+                    const rect = dot.getBoundingClientRect();
+                    const containerRect = chartContainer.getBoundingClientRect();
+                    
+                    // Calculate position relative to container
+                    const x = rect.left - containerRect.left + (rect.width / 2);
+                    const y = rect.top - containerRect.top - 10;
+                    
+                    tooltip.style.left = `${x}px`;
+                    tooltip.style.top = `${y}px`;
+                    tooltip.style.transform = 'translate(-50%, -100%)';
+                    tooltip.classList.add('visible');
+                }
+            }, true);
+            
+            chartSvg.addEventListener('mouseleave', (e) => {
+                const dot = e.target.closest('.chart-dot');
+                if (dot) {
+                    tooltip.classList.remove('visible');
+                }
+            }, true);
+            
+            // Also handle mouseout on dots directly
+            const chartDots = document.querySelectorAll('.market-rent-line-chart .chart-dot');
+            chartDots.forEach(dot => {
+                dot.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+            
+            chartTooltipsInitialized = true;
+        }
     </script>
 </body>
 </html>
