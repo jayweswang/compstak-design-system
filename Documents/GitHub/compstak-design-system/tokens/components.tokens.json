@@ -1,0 +1,432 @@
+{
+  "_meta": {
+    "type": "components.tokens",
+    "rules_reference": "../rules/components.rules.mdc",
+    "version": "1.0.0",
+    "source_of_truth": "Figma Variables",
+    "notes": "This file contains component-specific token mappings that reference semantic tokens from semantics.colors.json, semantics.typography.json, and semantics.layout.json. Component tokens must reference semantic tokens, never primitives directly. Usage rules are defined in components.rules.mdc."
+  },
+  "components": {
+    "button": {
+      "base": {
+        "font-family": "type/label/default/font-family",
+        "font-size": "type/label/default/font-size",
+        "line-height": "type/label/default/line-height",
+        "letter-spacing": "type/label/default/letter-spacing",
+        "font-weight": "font-weight/400"
+      },
+      "intent": {
+        "primary": {
+          "solid": {
+            "fill-default": "action/primary/default",
+            "fill-hovered": "action/primary/hovered",
+            "fill-pressed": "action/primary/pressed",
+            "on-fill": "content/on-dark",
+            "disabled": "status/disabled"
+          },
+          "outline": {
+            "surface-hovered": "surface/interactive/hovered",
+            "surface-pressed": "surface/interactive/selected",
+            "ink": "action/primary/default",
+            "disabled": "status/disabled",
+            "border": "action/primary/default"
+          },
+          "ghost": {
+            "ink": "action/primary/default",
+            "surface-hovered": "surface/interactive/hovered",
+            "surface-pressed": "surface/interactive/selected",
+            "disabled": "status/disabled"
+          },
+          "link": {
+            "ink": "action/primary/default",
+            "ink-hovered": "action/primary/hovered",
+            "ink-pressed": "action/primary/pressed",
+            "disabled": "status/disabled"
+          }
+        },
+        "secondary": {
+          "solid": {
+            "fill-default": "action/secondary/default",
+            "fill-hovered": "action/secondary/hovered",
+            "fill-pressed": "action/secondary/pressed",
+            "on-fill": "content/on-dark",
+            "disabled": "status/disabled"
+          },
+          "outline": {
+            "ink": "content/primary/text",
+            "border": "action/secondary/default",
+            "surface-hovered": "action/tertiary/hovered",
+            "surface-pressed": "action/tertiary/pressed",
+            "disabled": "status/disabled"
+          },
+          "ghost": {
+            "ink": "content/primary/text",
+            "surface-hovered": "action/tertiary/hovered",
+            "surface-pressed": "action/tertiary/pressed",
+            "disabled": "status/disabled"
+          }
+        },
+        "tertiary": {
+          "fill-default": "action/tertiary/default",
+          "fill-hovered": "action/tertiary/hovered",
+          "fill-pressed": "action/tertiary/pressed",
+          "on-fill": "content/primary/text",
+          "disabled": "status/disabled",
+          "on-fill-disabled": "content/on-dark"
+        },
+        "cancel": {
+          "fill-default": "action/cancel/default",
+          "fill-hovered": "action/cancel/hovered",
+          "fill-pressed": "action/cancel/pressed",
+          "on-fill": "content/primary/text",
+          "disabled": "status/disabled",
+          "on-fill-disabled": "content/on-dark"
+        },
+        "destructive": {
+          "fill-default": "action/destructive/default",
+          "fill-hovered": "action/destructive/hovered",
+          "fill-pressed": "action/destructive/pressed",
+          "on-fill": "content/on-dark",
+          "disabled": "status/disabled"
+        },
+        "unlock": {
+          "fill-default": "action/unlock/default",
+          "fill-hovered": "action/unlock/hovered",
+          "fill-pressed": "action/unlock/pressed",
+          "on-fill": "content/on-dark",
+          "disabled": "status/disabled"
+        },
+        "alert": {
+          "fill-default": "action/alert/default",
+          "fill-hovered": "action/alert/hovered",
+          "fill-pressed": "action/alert/pressed",
+          "on-fill": "content/primary/text",
+          "disabled": "status/disabled",
+          "on-fill-disabled": "content/on-dark"
+        }
+      },
+      "style": {
+        "solid": {
+          "border-width": 0,
+          "container-fill": "true"
+        },
+        "outline": {
+          "container-fill": "false",
+          "border-width": 1,
+          "container-hover-fill": "true"
+        },
+        "ghost": {
+          "container-fill": "false",
+          "border-width": 0,
+          "container-hover-fill": "true"
+        },
+        "link": {
+          "container-fill": "false",
+          "container-hover-fill": "false",
+          "border-width": 0
+        }
+      },
+      "size": {
+        "default": {
+          "min-height": "components/button/min-height",
+          "radius": "components/button/radius",
+          "icon-size": "components/button/icon-size",
+          "gap": "components/button/gap",
+          "padding-y": "components/button/padding-y",
+          "padding-x": "components/button/padding-x"
+        },
+        "sm": {
+          "min-height": "components/button/min-height",
+          "padding-x": "components/button/padding-x",
+          "padding-y": "components/button/padding-y",
+          "gap": "components/button/gap",
+          "radius": "components/button/radius",
+          "icon-size": "components/button/icon-size"
+        }
+      }
+    },
+    "input": {
+      "state": {
+        "default": {
+          "background": "surface/interactive/default"
+        },
+        "text-color": "content/primary/text",
+        "hovered": {
+          "background": "surface/interactive/hovered"
+        },
+        "focused": {
+          "background": "surface/interactive/selected",
+          "border": "accent/highlight"
+        },
+        "error": {
+          "border": "status/error",
+          "adornment-color": "status/error",
+          "text-color": "status/error",
+          "background": "surface/interactive/error"
+        },
+        "disabled": {
+          "background": "surface/interactive/disabled",
+          "text-color": "status/disabled",
+          "adornment-color": "status/disabled"
+        },
+        "border": "content/tertiary/border",
+        "adornment-color": "content/primary/text",
+        "placeholder-color": "content/tertiary/text"
+      },
+      "size": {
+        "default": {
+          "padding-x": "components/input/padding-x",
+          "icon-size": "components/input/icon-size",
+          "gap": "components/input/gap",
+          "padding-y": "components/input/padding-y",
+          "min-height": "components/input/min-height"
+        },
+        "sm": {
+          "padding-x": "components/input/padding-x",
+          "padding-y": "components/input/padding-y",
+          "icon-size": "components/input/icon-size",
+          "gap": "components/input/gap",
+          "min-height": "components/input/min-height"
+        }
+      },
+      "field": {
+        "font-size": "context/form/input/value/font-size",
+        "placeholder": {
+          "font-style": "font-style/italic"
+        },
+        "letter-spacing": "context/form/input/value/letter-spacing",
+        "line-height": "context/form/input/value/line-height",
+        "font-weight": "context/form/input/value/font-weight",
+        "font-family": "context/form/input/value/font-family",
+        "helper": {
+          "font-family": "context/form/input/helper/font-family",
+          "font-weight": "context/form/input/helper/font-weight",
+          "font-size": "context/form/input/helper/font-size",
+          "line-height": "context/form/input/helper/line-height",
+          "letter-spacing": "context/form/input/helper/letter-spacing"
+        }
+      },
+      "container": {
+        "border": {
+          "border-width": 1,
+          "border-radius": "radius/xs"
+        },
+        "constraints": {
+          "max-width": "constraints/control/max-width"
+        }
+      }
+    },
+    "navigation": {
+      "primary": {
+        "container": {
+          "gap": "space/2",
+          "background": "surface/inverse",
+          "padding-y": "space/2",
+          "padding-x-leading": "space/4",
+          "padding-x-trailing": "space/0",
+          "height": 60
+        },
+        "item": {
+          "intent": {
+            "default": {
+              "default": {
+                "text": "content/on-dark",
+                "background": "transparent",
+                "icon": "content/on-dark"
+              },
+              "hovered": {
+                "text": "action/primary/hovered",
+                "background": "transparent",
+                "icon": "action/primary/hovered"
+              },
+              "selected": {
+                "text": "content/on-dark",
+                "background": "action/primary/default",
+                "icon": "content/on-dark"
+              },
+              "selected-hovered": {
+                "text": "content/on-dark",
+                "background": "action/primary/hovered",
+                "icon": "content/on-dark"
+              }
+            },
+            "ai": {
+              "default": {
+                "text": "content/on-dark",
+                "background": "transparent",
+                "icon": "ai-adornment/color/on-dark"
+              },
+              "hovered": {
+                "text": "action/ai/hovered",
+                "background": "transparent",
+                "icon": "ai-adornment/color/on-dark"
+              },
+              "selected": {
+                "text": "content/on-dark",
+                "background": "action/ai/on-dark",
+                "icon": "content/on-dark"
+              },
+              "selected-hovered": {
+                "text": "content/on-dark",
+                "background": "action/ai/hovered",
+                "icon": "content/on-dark"
+              }
+            }
+          },
+          "layout": {
+            "padding-y": "space/2",
+            "padding-x": "space/1",
+            "radius": "radius/pill"
+          }
+        }
+      },
+      "secondary": {
+        "container": {
+          "background": "surface/subtle",
+          "padding-x": "space/4",
+          "padding-y": "space/2",
+          "gap": "space/2"
+        },
+        "item": {
+          "layout": {
+            "padding-x": "space/1",
+            "padding-y": "space/2",
+            "radius": "radius/xs",
+            "gap": "space/1",
+            "icon-size": "size/sm"
+          },
+          "state": {
+            "default": {
+              "text": "button/intent/primary/link/ink",
+              "background": "transparent",
+              "icon": "button/intent/primary/link/ink"
+            },
+            "hovered": {
+              "text": "button/intent/primary/link/ink-hovered",
+              "icon": "button/intent/primary/link/ink-hovered",
+              "background": "surface/interactive/hovered"
+            },
+            "disabled": {
+              "text": "status/disabled",
+              "icon": "status/disabled",
+              "background": "transparent"
+            }
+          }
+        },
+        "context": {
+          "text": "content/primary/text",
+          "link": "accent/brand"
+        },
+        "show-label": "components/navigation/show-label"
+      },
+      "tertiary": {
+        "container": {
+          "padding-x": "space/4",
+          "padding-y": "space/0",
+          "background": "surface/canvas",
+          "border-bottom": "content/tertiary/border",
+          "gap": "space/2",
+          "border-width": 1
+        },
+        "tab": {
+          "layout": {
+            "padding-x": "space/4",
+            "padding-y": "space/2",
+            "gap": "space/1",
+            "height": 40
+          },
+          "intent": {
+            "default": {
+              "text": {
+                "default": "content/secondary/text",
+                "hovered": "action/primary/hovered",
+                "selected": "action/primary/default"
+              },
+              "background": {
+                "default": "transparent",
+                "hovered": "surface/interactive/hovered",
+                "selected": "surface/canvas"
+              }
+            },
+            "ai": {
+              "text": {
+                "default": "content/secondary/text",
+                "hovered": "action/ai/hovered",
+                "selected": "ai/default"
+              },
+              "background": {
+                "default": "transparent",
+                "hovered": "surface/interactive/hovered",
+                "selected": "surface/canvas"
+              },
+              "icon": {
+                "default": "ai/default",
+                "hovered": "action/ai/hovered"
+              }
+            }
+          }
+        },
+        "indicator": {
+          "color": {
+            "default": "accent/brand",
+            "ai": "ai/default"
+          },
+          "thickness": 4,
+          "gap": "space/0"
+        }
+      }
+    },
+    "ai-adornment": {
+      "color": {
+        "on-light": "ai/default",
+        "on-dark": "ai/on-dark"
+      },
+      "size": {
+        "default": 10,
+        "sm": 8
+      },
+      "placement": "String value"
+    },
+    "modal": {
+      "dialog": {
+        "container": {
+          "container": "surface/canvas",
+          "border-color": "content/tertiary/border",
+          "border-width": 1,
+          "radius": "radius/xs",
+          "padding-x": "constraints/modal/dialog/padding-x",
+          "padding-y": "constraints/modal/dialog/padding-y",
+          "gap": "components/modal/dialog/container/gap",
+          "max-width": "constraints/modal/dialog/max-width",
+          "min-width": "constraints/modal/dialog/min-width"
+        },
+        "overlay": {
+          "background": "surface/inverse",
+          "opacity": 0.6000000238418579
+        },
+        "header": {
+          "gap": "components/modal/dialog/header/gap",
+          "padding-bottom": "components/modal/dialog/header/padding-bottom",
+          "close-button": {
+            "size": "components/modal/dialog/header/close-button/size",
+            "color": "content/primary/text"
+          },
+          "title": {
+            "color": "content/primary/text"
+          },
+          "description": {
+            "color": "content/secondary/text"
+          }
+        },
+        "body": {
+          "gap": "components/modal/dialog/body/gap",
+          "padding-y": "components/modal/dialog/body/padding-y"
+        },
+        "footer": {
+          "gap": "components/modal/dialog/footer/gap",
+          "padding-top": "components/modal/dialog/footer/padding-top"
+        }
+      }
+    }
+  }
+}

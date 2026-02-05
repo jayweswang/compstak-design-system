@@ -1,0 +1,64 @@
+{
+  "_meta": {
+    "type": "primitives.typography",
+    "rules_reference": "../rules/typography.rules.mdc",
+    "version": "1.0.0",
+    "source_of_truth": "Figma Variables",
+    "notes": "This file contains raw typography primitives only. Font sizes and line-heights converted from px to rem (1rem = 16px). Letter-spacing values are in em units. Usage rules are defined in typography.rules.mdc."
+  },
+  "tokens": {
+    "font-family": {
+      "numeric": "Open Sans",
+      "text": "Gotham"
+    },
+    "font-weight": {
+      "700": "Bold",
+      "400": "Book",
+      "600": "Medium"
+    },
+    "font-style": {
+      "italic": "italic",
+      "normal": "normal",
+      "italic fg": "Book Italic"
+    },
+    "font-size": {
+      "10": "2.75rem",
+      "9": "2.5rem",
+      "8": "2.25rem",
+      "7": "2.0rem",
+      "1": "0.75rem",
+      "6": "1.75rem",
+      "12": "3.25rem",
+      "5": "1.5rem",
+      "4": "1.25rem",
+      "15": "4.0rem",
+      "3": "1.0rem",
+      "14": "3.75rem",
+      "13": "3.5rem",
+      "11": "3.0rem",
+      "2": "0.875rem"
+    },
+    "line-height": {
+      "11": "3.5rem",
+      "9": "3.0rem",
+      "6": "2.25rem",
+      "1": "1.0rem",
+      "5": "2.0rem",
+      "3": "1.5rem",
+      "2": "1.25rem",
+      "4": "1.75rem",
+      "7": "2.5rem",
+      "8": "2.75rem",
+      "10": "3.25rem"
+    },
+    "letter-spacing": {
+      "1": "-0.1599999964237213em",
+      "2": "0em",
+      "3": "0.3199999928474426em"
+    },
+    "font-feature": {
+      "tabular": "tabular-nums",
+      "default": "normal"
+    }
+  }
+}

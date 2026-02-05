@@ -1,0 +1,238 @@
+{
+  "_meta": {
+    "type": "semantics.typography",
+    "rules_reference": "../rules/typography.rules.mdc",
+    "version": "1.0.0",
+    "source_of_truth": "Figma Variables",
+    "notes": "This file contains semantic typography tokens that compose primitive typography tokens and type-scale from semantics.layout.json. Font-size and line-height reference type-scale in semantics.layout.json. Usage rules are defined in typography.rules.mdc. Prefer type/heading (sm|md|lg) for product UI; use type/display only for hero/marketing."
+  },
+  "tokens": {
+    "type": {
+      "heading": {
+        "md": {
+          "font-size": "type-scale/heading/md/font-size",
+          "font-weight": "type-scale/heading/md/font-weight",
+          "font-family": "type-scale/heading/md/font-family",
+          "line-height": "type-scale/heading/md/line-height",
+          "letter-spacing": "type-scale/heading/md/letter-spacing"
+        },
+        "lg": {
+          "line-height": "type-scale/heading/lg/line-height",
+          "letter-spacing": "type-scale/heading/lg/letter-spacing",
+          "font-size": "type-scale/heading/lg/font-size",
+          "font-family": "type-scale/heading/lg/font-family",
+          "font-weight": "type-scale/heading/lg/font-weight"
+        },
+        "sm": {
+          "font-size": "type-scale/heading/sm/font-size",
+          "line-height": "type-scale/heading/sm/line-height",
+          "font-family": "type-scale/heading/sm/font-family",
+          "letter-spacing": "type-scale/heading/sm/letter-spacing",
+          "font-weight": "type-scale/heading/sm/font-weight"
+        }
+      },
+      "body": {
+        "default": {
+          "letter-spacing": "type-scale/body/default/letter-spacing",
+          "line-height": "type-scale/body/default/line-height",
+          "font-size": "type-scale/body/default/font-size",
+          "font-weight": "type-scale/body/default/font-weight",
+          "font-family": "type-scale/body/default/font-family"
+        },
+        "sm": {
+          "font-family": "type-scale/body/sm/font-family",
+          "font-weight": "type-scale/body/sm/font-weight",
+          "font-size": "type-scale/body/sm/font-size",
+          "line-height": "type-scale/body/sm/line-height",
+          "letter-spacing": "type-scale/body/sm/letter-spacing"
+        },
+        "xs": {
+          "font-family": "type-scale/body/xs/font-family",
+          "font-weight": "type-scale/body/xs/font-weight",
+          "font-size": "type-scale/body/xs/font-size",
+          "line-height": "type-scale/body/xs/line-height",
+          "letter-spacing": "type-scale/body/xs/letter-spacing"
+        }
+      },
+      "display": {
+        "lg": {
+          "font-family": "type-scale/display/lg/font-family",
+          "font-weight": "type-scale/display/lg/font-weight",
+          "font-size": "type-scale/display/lg/font-size",
+          "line-height": "type-scale/display/lg/line-height",
+          "letter-spacing": "type-scale/display/lg/letter-spacing"
+        },
+        "md": {
+          "font-family": "type-scale/display/md/font-family",
+          "font-weight": "type-scale/display/md/font-weight",
+          "font-size": "type-scale/display/md/font-size",
+          "line-height": "type-scale/display/md/line-height",
+          "letter-spacing": "type-scale/display/md/letter-spacing"
+        },
+        "sm": {
+          "font-family": "type-scale/display/sm/font-family",
+          "font-weight": "type-scale/display/sm/font-weight",
+          "font-size": "type-scale/display/sm/font-size",
+          "line-height": "type-scale/display/sm/line-height",
+          "letter-spacing": "type-scale/display/sm/letter-spacing"
+        }
+      },
+      "label": {
+        "default": {
+          "font-family": "type-scale/label/default/font-family",
+          "font-weight": "type-scale/label/default/font-weight",
+          "font-size": "type-scale/label/default/font-size",
+          "line-height": "type-scale/label/default/line-height",
+          "letter-spacing": "type-scale/label/default/letter-spacing"
+        },
+        "sm": {
+          "font-family": "type-scale/label/sm/font-family",
+          "font-weight": "type-scale/label/sm/font-weight",
+          "font-size": "type-scale/label/sm/font-size",
+          "line-height": "type-scale/label/sm/line-height",
+          "letter-spacing": "type-scale/label/sm/letter-spacing"
+        },
+        "xs": {
+          "font-family": "type-scale/label/xs/font-family",
+          "font-weight": "type-scale/label/xs/font-weight",
+          "font-size": "type-scale/label/xs/font-size",
+          "line-height": "type-scale/label/xs/line-height",
+          "letter-spacing": "type-scale/label/xs/letter-spacing"
+        }
+      },
+      "action": {
+        "label": {
+          "default": {
+            "font-family": "type-scale/action/label/default/font-family",
+            "font-weight": "type-scale/action/label/default/font-weight",
+            "font-size": "type-scale/action/label/default/font-size",
+            "line-height": "type-scale/action/label/default/line-height",
+            "letter-spacing": "type-scale/action/label/default/letter-spacing"
+          },
+          "sm": {
+            "font-family": "type-scale/action/label/sm/font-family",
+            "font-weight": "type-scale/action/label/sm/font-weight",
+            "font-size": "type-scale/action/label/sm/font-size",
+            "line-height": "type-scale/action/label/sm/line-height",
+            "letter-spacing": "type-scale/action/label/sm/letter-spacing"
+          },
+          "lg": {
+            "font-family": "type-scale/action/label/lg/font-weight",
+            "font-weight": "type-scale/action/label/lg/font-weight",
+            "font-size": "type-scale/action/label/lg/font-size",
+            "line-height": "type-scale/action/label/lg/line-height",
+            "letter-spacing": "type-scale/action/label/lg/letter-spacing"
+          }
+        },
+        "link": {
+          "default": {
+            "font-family": "type-scale/action/link/default/font-family",
+            "font-weight": "type-scale/action/link/default/font-weight",
+            "font-size": "type-scale/action/link/default/font-size",
+            "line-height": "type-scale/action/link/default/line-height",
+            "letter-spacing": "type-scale/action/link/default/letter-spacing"
+          },
+          "sm": {
+            "font-family": "type-scale/action/link/sm/font-family",
+            "font-weight": "type-scale/action/link/sm/font-weight",
+            "font-size": "type-scale/action/link/sm/font-size",
+            "line-height": "type-scale/action/link/sm/line-height",
+            "letter-spacing": "type-scale/action/link/sm/letter-spacing"
+          },
+          "lg": {
+            "font-family": "type-scale/action/link/lg/font-family",
+            "font-weight": "type-scale/action/link/lg/font-weight",
+            "font-size": "type-scale/action/link/lg/font-size",
+            "line-height": "type-scale/action/link/lg/line-height",
+            "letter-spacing": "type-scale/action/link/lg/letter-spacing"
+          }
+        }
+      }
+    },
+    "context": {
+      "data": {
+        "table": {
+          "value": {
+            "font-family": "type-scale/context/data/table/value/font-family",
+            "font-weight": "type-scale/context/data/table/value/font-weight",
+            "font-size": "type-scale/context/data/table/value/font-size",
+            "line-height": "type-scale/context/data/table/value/line-height",
+            "letter-spacing": "type-scale/context/data/table/value/letter-spacing"
+          },
+          "subtext": {
+            "font-family": "type-scale/context/data/table/subtext/font-family",
+            "font-weight": "type-scale/context/data/table/subtext/font-weight",
+            "font-size": "type-scale/context/data/table/subtext/font-size",
+            "line-height": "type-scale/context/data/table/subtext/line-height",
+            "letter-spacing": "type-scale/context/data/table/subtext/letter-spacing"
+          },
+          "placeholder": {
+            "font-family": "type-scale/context/data/table/placeholder/font-family",
+            "font-weight": "type-scale/context/data/table/placeholder/font-weight",
+            "font-size": "type-scale/context/data/table/placeholder/font-size",
+            "line-height": "type-scale/context/data/table/placeholder/line-height",
+            "letter-spacing": "type-scale/context/data/table/placeholder/letter-spacing",
+            "font-style": "type-scale/context/data/table/placeholder/font-style"
+          }
+        },
+        "metric": {
+          "value": {
+            "font-family": "type-scale/context/data/metric/value/font-family",
+            "font-weight": "type-scale/context/data/metric/value/font-weight",
+            "font-size": "type-scale/context/data/metric/value/font-size",
+            "line-height": "type-scale/context/data/metric/value/line-height",
+            "letter-spacing": "type-scale/context/data/metric/value/letter-spacing"
+          },
+          "subtext": {
+            "font-family": "type-scale/context/data/metric/subtext/font-family",
+            "font-weight": "type-scale/context/data/metric/subtext/font-weight",
+            "font-size": "type-scale/context/data/metric/subtext/font-size",
+            "line-height": "type-scale/context/data/metric/subtext/line-height",
+            "letter-spacing": "type-scale/context/data/metric/subtext/letter-spacing"
+          },
+          "placeholder": {
+            "font-family": "type-scale/context/data/metric/placeholder/font-family",
+            "font-weight": "type-scale/context/data/metric/placeholder/font-weight",
+            "font-size": "type-scale/context/data/metric/placeholder/font-size",
+            "line-height": "type-scale/context/data/metric/placeholder/line-height",
+            "letter-spacing": "type-scale/context/data/metric/placeholder/letter-spacing",
+            "font-style": "type-scale/context/data/metric/placeholder/font-style"
+          }
+        }
+      },
+      "form": {
+        "input": {
+          "label": {
+            "font-family": "type-scale/context/form/input/label/font-family",
+            "font-weight": "type-scale/context/form/input/label/font-weight",
+            "font-size": "type-scale/context/form/input/label/font-size",
+            "line-height": "type-scale/context/form/input/label/line-height",
+            "letter-spacing": "type-scale/context/form/input/label/letter-spacing"
+          },
+          "value": {
+            "font-family": "type-scale/context/form/input/value/font-family",
+            "font-weight": "type-scale/context/form/input/value/font-weight",
+            "font-size": "type-scale/context/form/input/value/font-size",
+            "line-height": "type-scale/context/form/input/value/line-height",
+            "letter-spacing": "type-scale/context/form/input/value/letter-spacing"
+          },
+          "placeholder": {
+            "font-family": "type-scale/context/form/input/placeholder/font-family",
+            "font-weight": "type-scale/context/form/input/placeholder/font-weight",
+            "font-size": "type-scale/context/form/input/placeholder/font-size",
+            "line-height": "type-scale/context/form/input/placeholder/line-height",
+            "letter-spacing": "type-scale/context/form/input/placeholder/letter-spacing",
+            "font-style": "type-scale/context/form/input/placeholder/font-style"
+          },
+          "helper": {
+            "font-family": "type-scale/context/form/input/helper/font-family",
+            "font-weight": "type-scale/context/form/input/helper/font-weight",
+            "font-size": "type-scale/context/form/input/helper/font-size",
+            "line-height": "type-scale/context/form/input/helper/line-height",
+            "letter-spacing": "type-scale/context/form/input/helper/letter-spacing"
+          }
+        }
+      }
+    }
+  }
+}
