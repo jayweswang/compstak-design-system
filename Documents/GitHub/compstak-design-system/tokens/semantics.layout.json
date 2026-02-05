@@ -1,0 +1,87 @@
+{
+  "_meta": {
+    "type": "semantics.layout",
+    "rules_reference": "../rules/spacing.rules.mdc",
+    "version": "1.0.0",
+    "source_of_truth": "Figma Variables",
+    "notes": "This file contains semantic layout tokens including type-scale, spacing, and constraints across responsive breakpoints. Type-scale references primitives.typography.json and is consumed by semantics.typography.json. Spacing references primitives.spacing.json. Constraints use px values. Usage rules are defined in spacing.rules.mdc."
+  },
+  "tokens": {
+    "viewports": {
+      "grid": {
+        "gutter": "viewports/grid/gutter",
+        "margin": "viewports/grid/margin"
+      },
+      "content": {
+        "max-width": "viewports/content/max-width"
+      },
+      "breakpoints": {
+        "min-width": "viewports/breakpoints/min-width",
+        "max-width": "viewports/breakpoints/max-width"
+      }
+    },
+    "spacing": {
+      "form": {
+        "section-to-section": "space/4",
+        "field-to-field": "space/4",
+        "input-to-header": "space/1",
+        "label-to-input": "space/1"
+      },
+      "text": {
+        "heading-to-body": "space/2",
+        "subheading-to-body": "space/1",
+        "comp-columns": 3,
+        "paragraph-to-paragraph": "space/2",
+        "heading-to-subheading": "spacing/text/heading-to-subheading",
+        "label-to-helper": "space/1"
+      },
+      "layout": {
+        "card-gap": "space/6",
+        "section-gap": "space/10",
+        "sidebar-gap": "space/6",
+        "page-padding-y": "space/8",
+        "row-gap": "space/6",
+        "page-padding-x": "space/6",
+        "column-gap": "space/6"
+      },
+      "table": {
+        "row-to-row": "space/0",
+        "header-to-row": "space/0",
+        "group-gap": "space/6"
+      },
+      "navigation": {
+        "tab-to-tab": "space/2",
+        "context-to-tab": "space/4"
+      },
+      "side-nav-visible": true
+    },
+    "defaults": {
+      "input-size": "default",
+      "button-size": "default"
+    },
+    "constraints": {
+      "modal": {
+        "dialog": {
+          "min-width": "constraints/modal/dialog/min-width",
+          "max-width": "constraints/modal/dialog/max-width",
+          "padding-y": "constraints/modal/dialog/padding-y",
+          "min-height": "constraints/modal/dialog/min-height",
+          "padding-x": "constraints/modal/dialog/padding-x"
+        },
+        "fullscreen": {
+          "padding-y": "constraints/modal/fullscreen/padding-y",
+          "padding-x": "constraints/modal/fullscreen/padding-x"
+        }
+      },
+      "control": {
+        "max-width": "constraints/control/max-width"
+      }
+    },
+    "density": {
+      "padding-y": "space/10",
+      "min-width": 200,
+      "max-width": 400,
+      "padding-x": "space/10"
+    }
+  }
+}
