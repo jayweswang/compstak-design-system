@@ -1,6 +1,6 @@
 ---
 name: design-review
-description: Review design files and code implementation against the Compstak design system. Check token compliance, color usage, typography, component rules, spacing, and accessibility. Can automatically fix violations with selective exclusion. Use when reviewing Figma designs, HTML/CSS/JS code, when the user asks to check design system compliance, review a component, validate implementation, or fix violations.
+description: Review Figma designs or HTML/CSS/JS code for design system compliance. Identifies violations in tokens, typography, spacing, components, and accessibility. Auto-fix all at once or step-by-step by category.
 ---
 
 # Design Review
@@ -503,7 +503,7 @@ For each violation found:
 
 ### Step 5: Provide Summary
 
-Organize violations by category for clarity:
+Organize violations in tables by impact level, then by category:
 
 ```markdown
 ## Design Review Summary
@@ -516,90 +516,88 @@ Organize violations by category for clarity:
 - 🟡 [# warnings]
 - 🟢 [# suggestions]
 
+**Compliance Score:** [%]
+
 ---
 
-## Violations by Category
+## 🔴 Critical Issues ([#] total)
 
-### 🎨 Token Hierarchy & Colors ([#] issues)
+### 🎨 Colors ([#] issues)
 
-🔴 **#1. Hard-coded hex color: Button background**
-- **Location:** Line 25
-- **Issue:** `background: #0066CC;`
-- **Fix:** `background: var(--color-action-primary-default);`
-
-🔴 **#2. Hard-coded rgba: Overlay**
-- **Location:** Line 38
-- **Issue:** `background: rgba(0, 0, 0, 0.6);`
-- **Fix:** Define as token and use `var(--color-overlay-background);`
+| # | Issue | Description | Impact | Fix |
+|---|-------|-------------|--------|-----|
+| 1 | Hard-coded hex: Body background | Using `#F5F5F5` instead of semantic token | Inconsistent colors, hard to maintain | `var(--color-surface-raised)` |
+| 2 | Generic color: Button text | Using `white` instead of semantic token | Theme changes won't work | `var(--color-content-on-dark)` |
+| 3 | Hard-coded hex: Button background | Using `#0066CC` instead of semantic token | Brand colors not centralized | `var(--color-action-primary-default)` |
 
 ### ✏️ Typography ([#] issues)
 
-🔴 **#3. Wrong font stack**
-- **Location:** Line 13
-- **Issue:** `font-family: Arial;` (missing Gotham, fallback)
-- **Fix:** `font-family: Gotham, Arial, sans-serif;`
-
-🔴 **#4. Modal title using Display style**
-- **Location:** Lines 67-68
-- **Issue:** 32px/700 weight (Display Large)
-- **Fix:** Use Heading Large: 24px/500 weight
+| # | Issue | Description | Impact | Fix |
+|---|-------|-------------|--------|-----|
+| 10 | Incomplete font stack | `Arial` missing Gotham and fallback | Font won't load correctly | `Gotham, Arial, sans-serif` |
+| 11 | Modal title using Display style | 32px/700 instead of Heading Large | Too bold for app UI | Use Heading Large: 24px/500 |
+| 12 | Wrong font weight: Body text | Using 500 instead of 400 | Text too bold | Change to 400 |
 
 ### 📏 Spacing ([#] issues)
 
-🔴 **#5. Hard-coded padding**
-- **Location:** Line 21
-- **Issue:** `padding: 12px 24px;`
-- **Fix:** `padding: var(--space-2) var(--space-4);`
+| # | Issue | Description | Impact | Fix |
+|---|-------|-------------|--------|-----|
+| 20 | Hard-coded padding: Body | `20px` instead of token | Inconsistent spacing scale | `var(--space-4)` |
+| 21 | Hard-coded padding: Button | `12px 24px` instead of tokens | Buttons don't match system | `var(--space-2) var(--space-4)` |
 
 ### 🧩 Component Rules ([#] issues)
 
-🔴 **#6. Modal has 4 buttons (exceeds max 3)**
-- **Location:** Lines 218-224
-- **Issue:** Save, Cancel, Download, Delete buttons
-- **Fix:** Remove "Save for later" and "Delete" → keep Cancel + Download
-
-🔴 **#7. Primary + Destructive in same modal**
-- **Location:** Lines 221, 223
-- **Issue:** Both Download (primary) and Delete (destructive)
-- **Fix:** Remove destructive button for export modal
+| # | Issue | Description | Impact | Fix |
+|---|-------|-------------|--------|-----|
+| 30 | Modal has 4 buttons | Exceeds max of 3 | Too many choices, confusing | Remove 2 buttons, keep Cancel + Primary |
+| 31 | Primary + Destructive in same modal | Both Download and Delete present | Conflicting actions | Remove destructive, keep primary |
 
 ### ♿ Accessibility ([#] issues)
 
-🔴 **#8. Non-semantic trigger element**
-- **Location:** Line 187
-- **Issue:** `<div onclick="openModal()">`
-- **Fix:** `<button type="button">`
-
-🔴 **#9. Missing ARIA attributes**
-- **Location:** Lines 190-192
-- **Issue:** No `role="dialog"`, `aria-modal`, `aria-labelledby`
-- **Fix:** Add all required ARIA attributes
-
-🔴 **#10. Missing focus state**
-- **Location:** Lines 114-125
-- **Issue:** Select element has no `:focus` styles
-- **Fix:** Add focus styles with border-color and box-shadow
-
-### 🔗 Cross-Component Composition ([#] issues)
-
-🟡 **#11. Undocumented composition**
-- **Location:** Modal component
-- **Issue:** Modal uses Button but not documented
-- **Fix:** Document in `rules/components/modal.rules.mdc`
+| # | Issue | Description | Impact | Fix |
+|---|-------|-------------|--------|-----|
+| 40 | Non-semantic trigger | Using `<div onclick>` instead of button | Not keyboard accessible | Change to `<button type="button">` |
+| 41 | Missing ARIA attributes | No `role="dialog"`, `aria-modal` | Screen readers won't identify modal | Add all required ARIA attributes |
+| 42 | Missing focus state | Select has no `:focus` styles | Keyboard users can't see focus | Add focus border and ring |
 
 ---
 
-## Summary by Severity
+## 🟡 Warnings ([#] total)
 
-### 🔴 Critical Issues ([#] total)
-Quick list of must-fix issues for easy tracking
+### 🔗 Cross-Component Composition ([#] issues)
 
-### 🟡 Warnings ([#] total)
-Should-fix issues that improve quality
+| # | Issue | Description | Impact | Fix |
+|---|-------|-------------|--------|-----|
+| 50 | Undocumented composition | Modal uses Button but not documented | Team doesn't know relationship | Document in modal.rules.mdc |
 
-### 🟢 Suggestions ([#] total)
-Nice-to-have improvements
+---
+
+## 🟢 Suggestions ([#] total)
+
+*(If any suggestions found)*
+
+---
+
+## Summary by Category
+
+| Category | Critical | Warnings | Suggestions | Total |
+|----------|----------|----------|-------------|-------|
+| 🎨 Colors | [#] | [#] | [#] | [#] |
+| ✏️ Typography | [#] | [#] | [#] | [#] |
+| 📏 Spacing | [#] | [#] | [#] | [#] |
+| 🧩 Component Rules | [#] | [#] | [#] | [#] |
+| ♿ Accessibility | [#] | [#] | [#] | [#] |
+| 🔗 Composition | [#] | [#] | [#] | [#] |
+| **Total** | **[#]** | **[#]** | **[#]** | **[#]** |
+
+---
+
+## What To Do Next
+
+[Fix options and commands as before]
 ```
+
+**Note:** Location information (file:line) is tracked internally but not shown in tables for cleaner readability.
 
 ## Review Examples
 

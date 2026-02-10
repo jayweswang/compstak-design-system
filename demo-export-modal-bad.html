@@ -3,39 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Export map file – Modal demo (BAD VERSION)</title>
+  <title>Export map file – Modal demo (MIXED - realistic violations)</title>
   <style>
-    /* BAD VERSION - Multiple design system violations for comparison */
+    /* MIXED VERSION - Some things correct, some violations (more realistic) */
+    
+    :root {
+      /* Correctly defined tokens */
+      --color-content-primary-text: #303441;
+      --color-content-on-dark: #FFFFFF;
+      --color-surface-canvas: #FFFFFF;
+      --color-surface-raised: #F8F8F8;
+      --color-action-cancel-default: #F4F5F7;
+      --color-action-cancel-hovered: #EBECF0;
+      --color-action-primary-default: #228FFF;
+      --color-action-primary-hovered: #257FF6;
+      --color-action-destructive-default: #F44336;
+      --color-action-destructive-hovered: #D32F2F;
+      --space-2: 0.5rem;
+      --space-4: 1rem;
+      --space-6: 1.5rem;
+      --radius-sm: 0.5rem;
+      --radius-md: 0.75rem;
+      --font-family-text: Gotham, Arial, sans-serif;
+      --font-body-size: 1rem;
+      --font-body-weight: 400;
+      --font-body-height: 1.5rem;
+    }
     
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Arial;  /* WRONG: Missing Gotham, missing fallback chain */
-      font-size: 16px;     /* WRONG: Hard-coded px instead of token */
-      background: #F5F5F5; /* WRONG: Hard-coded hex */
-      padding: 20px;       /* WRONG: Hard-coded px */
+      font-family: var(--font-family-text);  /* ✓ CORRECT */
+      font-size: var(--font-body-size);      /* ✓ CORRECT */
+      background: var(--color-surface-raised); /* ✓ CORRECT */
+      padding: var(--space-4);               /* ✓ CORRECT */
     }
 
     /* Trigger button */
     .trigger {
-      padding: 12px 24px;          /* WRONG: Hard-coded spacing */
-      font-size: 15px;             /* WRONG: Hard-coded size */
-      font-weight: 600;            /* WRONG: Should be 500 for buttons */
-      color: white;                /* WRONG: Generic color name */
-      background: #0066CC;         /* WRONG: Hard-coded hex */
+      padding: var(--space-2) var(--space-4);  /* ✓ CORRECT */
+      font-size: var(--font-body-size);        /* ✓ CORRECT */
+      font-weight: 500;                        /* ✓ CORRECT */
+      color: var(--color-content-on-dark);     /* ✓ CORRECT */
+      background: var(--color-action-primary-default); /* ✓ CORRECT */
       border: none;
-      border-radius: 4px;          /* WRONG: Hard-coded */
+      border-radius: var(--radius-sm);         /* ✓ CORRECT */
       cursor: pointer;
-      font-family: Helvetica;      /* WRONG: Wrong font entirely */
+      font-family: var(--font-family-text);    /* ✓ CORRECT */
     }
-    .trigger:hover { background: #0052A3; } /* WRONG: Hard-coded hex */
+    .trigger:hover { 
+      background: var(--color-action-primary-hovered); /* ✓ CORRECT */
+    }
 
     /* Overlay */
     .overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);  /* WRONG: Hard-coded, too dark */
+      background: rgba(0, 0, 0, 0.5);  /* ✗ WRONG: Hard-coded rgba, should define as token */
       align-items: center;
       justify-content: center;
       z-index: 1000;
@@ -44,166 +69,164 @@
 
     /* Modal */
     .modal {
-      width: 500px;                /* WRONG: Hard-coded, not using max-width pattern */
-      background: white;           /* WRONG: Generic color name */
-      border-radius: 8px;          /* WRONG: Hard-coded */
-      box-shadow: 0 10px 30px #000000; /* WRONG: Hard-coded colors */
-      padding: 30px;               /* WRONG: Hard-coded spacing */
+      width: 500px;                            /* ✓ OK: Fixed width appropriate for modal */
+      background: var(--color-surface-canvas); /* ✓ CORRECT */
+      border-radius: var(--radius-md);         /* ✓ CORRECT */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* ✗ WRONG: Hard-coded shadow, should be token */
+      padding: var(--space-6);                 /* ✓ CORRECT */
     }
 
     .modal__header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;         /* WRONG: Hard-coded spacing */
-      border-bottom: 2px solid #CCCCCC; /* WRONG: Hard-coded, also modal shouldn't have border */
-      padding-bottom: 15px;        /* WRONG: Hard-coded */
+      margin-bottom: var(--space-4);   /* ✓ CORRECT */
     }
     
-    /* WRONG: Using Display style instead of Heading for modal title */
+    /* ✗ WRONG: Using Display style instead of Heading for modal title */
     .modal__title {
       margin: 0;
-      font-family: Gotham, sans-serif; /* WRONG: Missing Arial fallback */
-      font-size: 32px;             /* WRONG: Display Large, should be Heading Large (24px) */
-      font-weight: 700;            /* WRONG: Display weight, should be 500 */
-      color: #000000;              /* WRONG: Hard-coded hex */
-      line-height: 1.2;            /* WRONG: Hard-coded */
+      font-family: var(--font-family-text);  /* ✓ CORRECT */
+      font-size: 32px;             /* ✗ WRONG: Display Large (32px/700), should be Heading Large (24px/500) */
+      font-weight: 700;            /* ✗ WRONG: Too bold, should be 500 */
+      color: var(--color-content-primary-text); /* ✓ CORRECT */
+      line-height: 1.2;            /* ✗ WRONG: Hard-coded line height */
     }
     
     .modal__close {
-      width: 40px;                 /* WRONG: Hard-coded */
+      width: 40px;
       height: 40px;
       padding: 0;
-      border: 1px solid #999;      /* WRONG: Hard-coded, close button shouldn't have border */
-      background: #EEEEEE;         /* WRONG: Hard-coded */
-      color: #333;                 /* WRONG: Hard-coded */
-      font-size: 24px;             /* WRONG: Hard-coded */
+      border: none;                                /* ✓ CORRECT */
+      background: var(--color-action-cancel-default); /* ✓ CORRECT */
+      color: var(--color-content-primary-text);    /* ✓ CORRECT */
+      font-size: 24px;
       cursor: pointer;
-      border-radius: 50%;          /* WRONG: Should be subtle radius */
+      border-radius: var(--radius-sm);             /* ✓ CORRECT */
     }
-    .modal__close:hover { background: #DDDDDD; } /* WRONG: Hard-coded */
+    .modal__close:hover { 
+      background: var(--color-action-cancel-hovered); /* ✓ CORRECT */
+    }
 
     .modal__body {
-      font-family: Arial, sans-serif; /* WRONG: Missing Gotham */
-      font-size: 14px;             /* WRONG: Hard-coded, also too small */
-      font-weight: 500;            /* WRONG: Body text should be 400 */
-      line-height: 1.4;            /* WRONG: Hard-coded */
-      color: #666666;              /* WRONG: Hard-coded hex */
-      margin: 0 0 20px;            /* WRONG: Hard-coded spacing */
+      font-family: var(--font-family-text);      /* ✓ CORRECT */
+      font-size: var(--font-body-size);          /* ✓ CORRECT */
+      font-weight: var(--font-body-weight);      /* ✓ CORRECT */
+      line-height: var(--font-body-height);      /* ✓ CORRECT */
+      color: var(--color-content-primary-text);  /* ✓ CORRECT */
+      margin: 0 0 var(--space-4);                /* ✓ CORRECT */
     }
     
     .modal__body p { 
-      margin: 0 0 12px;            /* WRONG: Hard-coded */
-      color: #555;                 /* WRONG: Hard-coded */
+      margin: 0 0 var(--space-2);                /* ✓ CORRECT */
+      color: var(--color-content-primary-text);  /* ✓ CORRECT */
     }
     
     .modal__form {
       display: flex;
       flex-direction: column;
-      gap: 10px;                   /* WRONG: Hard-coded spacing */
-      margin-top: 25px;            /* WRONG: Hard-coded spacing, excessive gap */
+      gap: var(--space-2);         /* ✓ CORRECT */
+      margin-top: var(--space-4);  /* ✓ CORRECT */
     }
     
     .modal__label {
-      font-size: 13px;             /* WRONG: Hard-coded */
-      font-weight: 600;            /* WRONG: Should be 500 */
-      color: #444;                 /* WRONG: Hard-coded */
-      margin: 0 0 8px;             /* WRONG: Hard-coded spacing */
+      font-size: 0.875rem;         /* ✓ CORRECT */
+      font-weight: 500;            /* ✓ CORRECT */
+      color: var(--color-content-primary-text); /* ✓ CORRECT */
+      margin: 0 0 var(--space-2);  /* ✓ CORRECT */
     }
     
     .modal__select {
       width: 100%;
-      padding: 10px 15px;          /* WRONG: Hard-coded spacing */
-      font-size: 15px;             /* WRONG: Hard-coded */
-      color: #222;                 /* WRONG: Hard-coded */
-      background: #FAFAFA;         /* WRONG: Hard-coded, should be white */
-      border: 2px solid #CCCCCC;   /* WRONG: Hard-coded, border too thick */
-      border-radius: 6px;          /* WRONG: Hard-coded */
+      padding: var(--space-2) var(--space-4);      /* ✓ CORRECT */
+      font-size: var(--font-body-size);            /* ✓ CORRECT */
+      color: var(--color-content-primary-text);    /* ✓ CORRECT */
+      background: var(--color-surface-canvas);     /* ✓ CORRECT */
+      border: 1px solid #B0B7C3;                   /* ✗ WRONG: Hard-coded border color */
+      border-radius: var(--radius-sm);             /* ✓ CORRECT */
       cursor: pointer;
     }
-    .modal__select:hover { border-color: #0066CC; } /* WRONG: Hard-coded */
-    /* WRONG: Missing focus state entirely - accessibility issue */
+    .modal__select:hover { 
+      border-color: var(--color-action-primary-default); /* ✓ CORRECT */
+    }
+    /* ✗ WRONG: Missing :focus state - accessibility issue */
 
-    /* WRONG: Footer has 4 buttons, violates 3-button max rule */
-    /* WRONG: Buttons not properly grouped on right */
+    /* ✗ WRONG: Footer has 4 buttons (violates 3-button max rule) */
+    /* ✗ WRONG: Buttons not properly grouped on right */
     .modal__footer {
       display: flex;
-      justify-content: space-between; /* WRONG: Should be flex-end for modal */
-      gap: 10px;                   /* WRONG: Hard-coded spacing */
-      margin-top: 25px;            /* WRONG: Hard-coded spacing */
-      padding-top: 20px;           /* WRONG: Hard-coded */
-      border-top: 1px solid #E0E0E0; /* WRONG: Hard-coded, footer shouldn't have border */
+      justify-content: space-between; /* ✗ WRONG: Should be flex-end for modal (buttons on right) */
+      gap: var(--space-2);         /* ✓ CORRECT */
+      margin-top: var(--space-6);  /* ✓ CORRECT */
     }
     
     .btn {
-      padding: 10px 20px;          /* WRONG: Hard-coded spacing */
-      font-size: 14px;             /* WRONG: Hard-coded */
-      font-weight: 600;            /* WRONG: Should be 500 */
-      border-radius: 5px;          /* WRONG: Hard-coded */
+      padding: var(--space-2) var(--space-4);  /* ✓ CORRECT */
+      font-size: var(--font-body-size);        /* ✓ CORRECT */
+      font-weight: 500;                        /* ✓ CORRECT */
+      border-radius: var(--radius-sm);         /* ✓ CORRECT */
       cursor: pointer;
       border: none;
-      font-family: Arial;          /* WRONG: Missing Gotham, wrong fallback */
+      font-family: var(--font-family-text);    /* ✓ CORRECT */
     }
     
     .btn--save {
-      background: #28A745;         /* WRONG: Hard-coded green, wrong semantic meaning */
-      color: white;
+      background: #10B981;         /* ✗ WRONG: Hard-coded color (though "save" is questionable action) */
+      color: var(--color-content-on-dark);
     }
-    .btn--save:hover { background: #218838; } /* WRONG: Hard-coded */
+    .btn--save:hover { 
+      background: #059669;         /* ✗ WRONG: Hard-coded hover */
+    }
     
     .btn--cancel {
-      background: #6C757D;         /* WRONG: Hard-coded, wrong semantic token */
-      color: white;                /* WRONG: Cancel should have dark text on light bg */
+      background: var(--color-action-cancel-default); /* ✓ CORRECT */
+      color: var(--color-content-primary-text);       /* ✓ CORRECT */
     }
-    .btn--cancel:hover { background: #5A6268; } /* WRONG: Hard-coded */
+    .btn--cancel:hover { 
+      background: var(--color-action-cancel-hovered); /* ✓ CORRECT */
+    }
     
-    /* WRONG: Both primary and destructive in same modal - prohibited! */
+    /* ✗ WRONG: Both primary and destructive in same modal - prohibited! */
     .btn--primary {
-      background: #007BFF;         /* WRONG: Hard-coded hex */
-      color: white;
+      background: var(--color-action-primary-default); /* ✓ CORRECT */
+      color: var(--color-content-on-dark);             /* ✓ CORRECT */
     }
-    .btn--primary:hover { background: #0056B3; } /* WRONG: Hard-coded */
+    .btn--primary:hover { 
+      background: var(--color-action-primary-hovered); /* ✓ CORRECT */
+    }
     
     .btn--destructive {
-      background: #DC3545;         /* WRONG: Hard-coded hex, also shouldn't be with primary */
-      color: white;
+      background: var(--color-action-destructive-default); /* ✓ CORRECT */
+      color: var(--color-content-on-dark);                 /* ✓ CORRECT */
     }
-    .btn--destructive:hover { background: #C82333; } /* WRONG: Hard-coded */
-    
-    /* WRONG: Ghost button with disabled state - prohibited! */
-    .btn--ghost {
-      background: transparent;
-      color: #007BFF;              /* WRONG: Hard-coded */
-      border: 1px solid #007BFF;   /* WRONG: Ghost shouldn't have border */
-    }
-    .btn--ghost:disabled {         /* WRONG: Ghost buttons cannot be disabled */
-      opacity: 0.5;
-      cursor: not-allowed;
+    .btn--destructive:hover { 
+      background: var(--color-action-destructive-hovered); /* ✓ CORRECT */
     }
   </style>
 </head>
 <body>
-  <!-- WRONG: Using div instead of button -->
-  <div class="trigger" id="open-modal" onclick="openModal()">Export map file</div>
+  <!-- ✓ CORRECT: Using semantic button element -->
+  <button type="button" class="trigger" id="open-modal">Export map file</button>
 
-  <!-- WRONG: Missing aria-hidden attribute -->
+  <!-- ✗ WRONG: Missing aria-hidden="true" attribute -->
   <div class="overlay" id="overlay">
-    <!-- WRONG: Missing role="dialog", aria-labelledby, aria-modal -->
+    <!-- ✗ WRONG: Missing role="dialog" and aria-modal="true" -->
+    <!-- ✗ WRONG: Missing aria-labelledby to reference title -->
     <div class="modal">
       <div class="modal__header">
-        <!-- WRONG: Using h1 for modal title (should be h2) -->
-        <!-- WRONG: Missing id for aria-labelledby -->
-        <h1 class="modal__title">Export map file</h1>
-        <!-- WRONG: Missing aria-label on close button -->
+        <!-- ✓ CORRECT: Using h2 for modal title -->
+        <!-- ✗ WRONG: Missing id="modal-title" for aria-labelledby reference -->
+        <h2 class="modal__title">Export map file</h2>
+        <!-- ✗ WRONG: Missing aria-label="Close" on close button -->
         <button type="button" class="modal__close" id="close-modal">✕</button>
       </div>
       <div class="modal__body">
         <p>You are about to download a map file. Choose which map file you want to download below.</p>
-        <!-- WRONG: Form has no id, making form attribute on submit button problematic -->
-        <form class="modal__form">
-          <!-- WRONG: Label missing 'for' attribute -->
-          <label class="modal__label">Map file</label>
-          <select class="modal__select" name="mapFile" required>
+        <form class="modal__form" id="export-form">
+          <!-- ✓ CORRECT: Label has 'for' attribute -->
+          <label class="modal__label" for="map-file">Map file</label>
+          <!-- ✓ CORRECT: Select has matching id -->
+          <select class="modal__select" id="map-file" name="mapFile" required>
             <option value="">Select map file</option>
             <option value="downtown-2024">Downtown 2024</option>
             <option value="submarket-a">Submarket A</option>
@@ -212,14 +235,12 @@
           </select>
         </form>
       </div>
-      <!-- WRONG: 4 buttons exceeds 3-button max -->
-      <!-- WRONG: Both primary and destructive in same modal -->
-      <!-- WRONG: Layout doesn't follow modal rules (should group on right) -->
+      <!-- ✗ WRONG: 4 buttons (exceeds 3-button max) -->
+      <!-- ✗ WRONG: Both primary and destructive in same modal (prohibited) -->
       <div class="modal__footer">
         <button type="button" class="btn btn--save" id="save-btn">Save for later</button>
         <button type="button" class="btn btn--cancel" id="cancel-btn">Cancel</button>
         <button type="button" class="btn btn--primary" id="download-btn">Download</button>
-        <!-- WRONG: Destructive action without clear purpose, with primary in same modal -->
         <button type="button" class="btn btn--destructive" id="delete-btn">Delete</button>
       </div>
     </div>
@@ -232,29 +253,31 @@
     const cancelBtn = document.getElementById('cancel-btn');
     const downloadBtn = document.getElementById('download-btn');
     const deleteBtn = document.getElementById('delete-btn');
-    const select = document.querySelector('.modal__select');
+    const select = document.getElementById('map-file');
 
     function openModal() {
       overlay.classList.add('is-open');
-      // WRONG: Not setting aria-hidden
-      // WRONG: Not preventing body scroll
-      // WRONG: Not managing focus properly
+      // ✗ WRONG: Not setting aria-hidden on overlay
+      // ✗ WRONG: Not preventing body scroll
+      select.focus(); // ✓ CORRECT: Focus input on open
     }
 
     function closeModal() {
       overlay.classList.remove('is-open');
-      // WRONG: Not restoring focus to trigger
-      // WRONG: Not restoring body scroll
+      // ✗ WRONG: Not restoring focus to trigger
+      // ✗ WRONG: Not restoring body scroll
+      // ✗ WRONG: Not resetting aria-hidden
     }
 
-    // WRONG: Using onclick in HTML instead of addEventListener
+    // ✓ CORRECT: Using addEventListener
+    openTrigger.addEventListener('click', openModal);
     closeBtn.addEventListener('click', closeModal);
     cancelBtn.addEventListener('click', closeModal);
     
     downloadBtn.addEventListener('click', function() {
       const value = select.value;
       if (!value) {
-        alert('Please select a map file'); // WRONG: Using alert for validation
+        alert('Please select a map file');
         return;
       }
       alert('Download started: ' + select.options[select.selectedIndex].text);
@@ -262,13 +285,18 @@
     });
     
     deleteBtn.addEventListener('click', function() {
-      // WRONG: Destructive action with no confirmation, no clear purpose
       alert('Delete clicked');
     });
 
-    // WRONG: Click outside doesn't work
-    // WRONG: Escape key doesn't work
-    // WRONG: No focus trap
+    // ✓ CORRECT: Click outside to close
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) {
+        closeModal();
+      }
+    });
+
+    // ✗ WRONG: Missing Escape key handler
+    // ✗ WRONG: No focus trap (focus can leave modal)
   </script>
 </body>
 </html>
