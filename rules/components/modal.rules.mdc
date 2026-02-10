@@ -1,0 +1,44 @@
+---
+description: Modal component rules — button count, layout, primary vs destructive
+alwaysApply: false
+---
+
+# Modal Component Rules
+
+See `rules/components.rules.mdc` for tiered overrides and cross-component policy. Button usage in modals must also follow `rules/components/button.rules.mdc` (e.g. destructive always paired with Cancel; primary and destructive not in same interaction).
+
+## Typography
+
+- **Modal title (header):** Use **type/heading/lg** (heading large). See `rules/typography.rules.mdc` — component headers use heading large.
+
+## Button Count
+
+- A modal may have **1, 2, or 3** buttons — never more than 3.
+- **Most often:** 2 buttons (both on the right: Cancel + Primary, or Cancel + Destructive icon).
+- **Sometimes:** 1 button (e.g. single “OK” or primary on the right).
+- **When 3:** Secondary outline on the left (alone); Cancel + Primary (or Destructive icon) grouped on the right.
+
+## Button Layout (left to right)
+
+- **Right side:** Primary actions live on the right. When there are 2 buttons, **both** are on the right (e.g. Cancel + Primary, or Cancel + Destructive icon). When there is 1 button, it is on the right.
+- **Left side (optional):** When there are **3** buttons, the left side has a **single** secondary outline button, alone. The secondary outline is **not required** — many modals have only 1 or 2 buttons with no left-side button.
+- **When 3 buttons:** Structure is `[ Secondary outline ] … [ Cancel | Primary ]` or `[ Secondary outline ] … [ Cancel | Destructive icon ]`. Do not place secondary outline in the same visual group as the right-side buttons.
+- **Very right:** May be Primary or Destructive icon. Never both primary and destructive in the same modal footer.
+
+## Summary
+
+| Button count | Layout |
+|--------------|--------|
+| 1 | Single button on the right (e.g. OK, Primary) |
+| 2 (most common) | Both on the right: Cancel \| Primary, or Cancel \| Destructive icon |
+| 3 | Left: one Secondary outline (alone). Right: Cancel \| Primary, or Cancel \| Destructive icon |
+
+- Do not exceed 3 buttons total in the modal.
+
+## Prohibited
+
+- ❌ More than 3 buttons in a modal
+- ❌ Primary and destructive in the same modal (use one or the other on the right, with Cancel)
+- ❌ Destructive action without a Cancel button (see button.rules.mdc)
+- ❌ When using 3 buttons: grouping secondary outline with the right-side buttons, or more than one button on the left
+- ❌ Right side without Cancel when there is a primary or destructive action (destructive must be paired with Cancel)

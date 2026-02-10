@@ -28,7 +28,12 @@ alwaysApply: true
 - `rules/colors.rules.mdc` - Color token usage rules
 - `rules/spacing.rules.mdc` - Spacing token usage rules
 - `rules/typography.rules.mdc` - Typography token usage rules
-- `rules/components.rules.mdc` - Component token usage rules
+- `rules/components.rules.mdc` - Component rules hub (tiered overrides, cross-component policy)
+- `rules/components/*.rules.mdc` - Per-component rules (Button, Input, Modal, etc.); reference each other and the hub
+
+## Platform font stack
+
+Font stack (in order): **Gotham → Arial → sans-serif**. See `rules/typography.rules.mdc` for details.
 
 ## Global Enforcement
 
@@ -92,5 +97,10 @@ features/design-system/
     ├── colors.rules.mdc
     ├── spacing.rules.mdc
     ├── typography.rules.mdc
-    └── components.rules.mdc
+    ├── components.rules.mdc       (hub: tiered overrides, cross-component)
+    └── components/
+        ├── button.rules.mdc
+        ├── input.rules.mdc
+        ├── modal.rules.mdc
+        └── <name>.rules.mdc       (add per component)
 ```

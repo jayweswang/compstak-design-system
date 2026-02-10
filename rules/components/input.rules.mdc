@@ -1,0 +1,33 @@
+---
+description: Input (form field) component rules — states, composition, overrides
+alwaysApply: false
+---
+
+# Input Component Rules
+
+See `rules/components.rules.mdc` for tiered overrides and cross-component policy.
+
+## Token Source
+
+- `tokens/components.tokens.json` → `components.input` (if present)
+- Semantic: `context/form/input/*` for typography (label, value, placeholder, helper); semantics.colors for states; semantics.layout for spacing (label-to-input, field-to-field)
+
+## Allowed States
+
+- Default, Hover, Focus, Error, Disabled — map to semantic surface/status/action tokens (e.g. surface/canvas, surface/error, accent/highlight, status/disabled)
+
+## Composition
+
+- Input may contain placeholder and helper text; use semantic typography `context/form/input/*`.
+- Input is composed by Form; Form rules document “contains Input, Button”.
+
+## Overrides
+
+- **Instance override:** Exception states (e.g. readonly, success) must use semantic tokens or new component tokens; no ad-hoc values.
+- Spacing between label and input must use `spacing/form/label-to-input` (or component override if defined).
+
+## Prohibited
+
+- ❌ Direct primitive tokens in input token definitions
+- ❌ Arbitrary padding, radius, or font sizes; use layout and typography tokens
+- ❌ New states not mapped to semantic or component tokens

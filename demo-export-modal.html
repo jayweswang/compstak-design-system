@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Export map file – Modal demo</title>
+  <style>
+    /*
+      Design tokens — references:
+      - tokens/primitives.colors.json, tokens/semantics.colors.json
+      - tokens/primitives.typography.json, tokens/semantics.typography.json
+      - tokens/primitives.spacing.json, tokens/semantics.layout.json
+      - tokens/components.tokens.json (button base, modal dialog, form/input)
+    */
+    :root {
+      /* Content (semantics.colors → primitives) */
+      --color-content-primary-text: #303441;   /* content/primary/text → neutral/600 */
+      --color-content-tertiary-text: #A8B0BE;  /* content/tertiary/text → neutral/70 */
+      --color-content-primary-border: #606581; /* content/primary/border → neutral/100 */
+      --color-content-on-dark: #FFFFFF;        /* content/on-dark → neutral/0 */
+      /* Surfaces & actions (semantics.colors) */
+      --color-surface-canvas: #FFFFFF;
+      --color-surface-raised: #F8F8F8;
+      --color-action-cancel-default: #F4F5F7;   /* action/cancel/default → neutral/20 */
+      --color-action-cancel-hovered: #EBECF0;   /* action/cancel/hovered → neutral/30 */
+      --color-action-cancel-pressed: #DFE1E6;   /* action/cancel/pressed → neutral/40 */
+      --color-action-primary-default: #228FFF;   /* action/primary/default → blue/500 */
+      --color-action-primary-hovered: #257FF6;  /* action/primary/hovered → blue/600 */
+      --color-action-primary-pressed: #1E71ED;   /* action/primary/pressed → blue/700 */
+      /* Spacing — primitives.spacing, semantics.layout (spacing/form, spacing/text, spacing/layout, constraints) */
+      --space-1: 0.25rem;   /* space/1 — spacing/form/label-to-input, input-to-header */
+      --space-2: 0.5rem;    /* space/2 — spacing/text/heading-to-body, paragraph-to-paragraph; button padding-y; footer gap */
+      --space-4: 1rem;     /* space/4 — spacing/form/field-to-field, section-to-section; button padding-x */
+      --space-6: 1.5rem;   /* space/6 — modal padding (constraints/modal/dialog); spacing/layout/card-gap, page-padding-x */
+      --space-8: 2rem;     /* space/8 — spacing/layout/page-padding-y; modal header close size */
+      /* Radius — primitives.spacing radius/xs, radius/sm */
+      --radius-xs: 0.25rem;  /* radius/xs — components.modal.dialog.container.radius */
+      --radius-sm: 0.5rem;  /* radius/sm — button, input, select */
+      /* Typography — semantics.typography + primitives.typography */
+      /* Platform font stack: Gotham → Arial → sans-serif (rules/typography.rules.mdc) */
+      --font-family-text: Gotham, Arial, sans-serif;
+      /* type/heading/lg — component headers (modal, dialog, card title); primitives font-size/5, line-height/5 */
+      --font-heading-lg-size: 1.5rem;     /* 24px */
+      --font-heading-lg-weight: 500;      /* font-weight/500 — headers use 500 */
+      --font-heading-lg-height: 2rem;    /* 32px */
+      /* type/body/default — body copy */
+      --font-body-size: 1rem;             /* font-size/3 = 16px */
+      --font-body-weight: 400;            /* font-weight/400 = Book */
+      --font-body-height: 1.5rem;         /* line-height/3 = 24px */
+      /* type/label/default — form label + button (components.button.base) */
+      --font-label-size: 0.875rem;        /* font-size/2 = 14px */
+      --font-label-weight: 500;           /* font-weight/500 — labels/actions use 500 */
+      --font-label-height: 1.25rem;       /* line-height/2 = 20px */
+      /* context/form/input — select value/placeholder */
+      --font-form-value-size: 1rem;       /* context/form/input/value font-size */
+      --font-form-value-height: 1.5rem;
+      /* Shadow and overlay tokens */
+      --color-overlay-background: rgba(0, 0, 0, 0.4);
+      --shadow-modal: 0 20px 40px rgba(0, 0, 0, 0.15);
+      --color-focus-ring: rgba(34, 143, 255, 0.2);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-family-text);
+      font-size: var(--font-body-size);
+      font-weight: var(--font-body-weight);
+      line-height: var(--font-body-height);
+      color: var(--color-content-primary-text);
+      background: var(--color-surface-raised);
+      min-height: 100vh;
+      padding: var(--space-8) var(--space-6);  /* spacing/layout/page-padding-y, page-padding-x */
+    }
+
+    /* Trigger — primary button (type/action/label, components.button) */
+    .trigger {
+      padding: var(--space-2) var(--space-4);  /* components.button.size.default padding-y, padding-x */
+      font-family: var(--font-family-text);
+      font-size: var(--font-label-size);
+      font-weight: var(--font-label-weight);
+      line-height: var(--font-label-height);
+      min-height: 2.5rem;  /* 40px — components.button min-height */
+      color: var(--color-content-on-dark);
+      background: var(--color-action-primary-default);
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+    .trigger:hover { background: var(--color-action-primary-hovered); }
+    .trigger:active { background: var(--color-action-primary-pressed); }
+
+    /* Overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--color-overlay-background);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .overlay.is-open { display: flex; }
+
+    /* Modal — components.modal.dialog.container (constraints, padding; spacing per semantics.layout) */
+    .modal {
+      width: 100%;
+      max-width: 480px;
+      min-width: 400px;
+      background: var(--color-surface-canvas);
+      border-radius: var(--radius-xs);  /* components.modal.dialog.container.radius = radius/xs */
+      box-shadow: var(--shadow-modal);
+      padding: var(--space-6);  /* constraints/modal/dialog/padding-x, padding-y */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-4);  /* components.modal.dialog/header/gap */
+      margin-bottom: var(--space-2);  /* spacing/text/heading-to-body */
+    }
+    .modal__title {
+      margin: 0;
+      font-family: var(--font-family-text);
+      font-size: var(--font-heading-lg-size);   /* type/heading/lg — component headers */
+      font-weight: var(--font-heading-lg-weight);
+      line-height: var(--font-heading-lg-height);
+      color: var(--color-content-primary-text); /* components.modal.dialog.header.title.color */
+    }
+    .modal__close {
+      flex-shrink: 0;
+      width: var(--space-8);   /* space/8 — components.modal.dialog/header/close size */
+      height: var(--space-8);
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: var(--color-content-tertiary-text);
+      font-size: 1.25rem;
+      line-height: 1;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+    }
+    .modal__close:hover { color: var(--color-content-primary-text); background: var(--color-action-cancel-hovered); }
+    .modal__close:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--color-focus-ring);
+    }
+
+    .modal__body {
+      font-family: var(--font-family-text);
+      font-size: var(--font-body-size);
+      font-weight: var(--font-body-weight);
+      line-height: var(--font-body-height);
+      color: var(--color-content-primary-text);
+      margin: 0 0 var(--space-4);  /* spacing/form/section-to-section (body to footer) */
+    }
+    .modal__body p { margin: 0 0 var(--space-4); }  /* spacing/form/section-to-section (paragraph to form) */
+    .modal__body p + p { margin-top: var(--space-2); }  /* spacing/text/paragraph-to-paragraph */
+    .modal__form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);  /* spacing/form/label-to-input (rules/spacing.rules.mdc) */
+    }
+    .modal__label {
+      font-family: var(--font-family-text);
+      font-size: var(--font-label-size);   /* type/label/default, context/form/input/label */
+      font-weight: var(--font-label-weight);
+      line-height: var(--font-label-height);
+      color: var(--color-content-primary-text);
+      margin: 0 0 var(--space-1);
+    }
+    .modal__select {
+      width: 100%;
+      padding: var(--space-2) var(--space-4);  /* components.input padding-y, padding-x */
+      font-family: var(--font-family-text);
+      font-size: var(--font-form-value-size);  /* context/form/input/value */
+      line-height: var(--font-form-value-height);
+      color: var(--color-content-primary-text);
+      background: var(--color-surface-canvas);
+      border: 1px solid var(--color-content-primary-border);
+      border-radius: var(--radius-sm);
+      min-height: 2.5rem;  /* components.input min-height */
+      cursor: pointer;
+    }
+    .modal__select:hover { border-color: var(--color-action-primary-default); }
+    .modal__select:focus {
+      outline: none;
+      border-color: var(--color-action-primary-default);
+      box-shadow: 0 0 0 2px var(--color-focus-ring);
+    }
+
+    /* Footer — 2 buttons on the right; no border or extra padding */
+    .modal__footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-2);  /* components.modal.dialog/footer/gap (space/2) */
+    }
+    .btn {
+      padding: var(--space-2) var(--space-4);  /* components.button.size.default */
+      font-family: var(--font-family-text);
+      font-size: var(--font-label-size);       /* components.button.base = type/label/default */
+      font-weight: var(--font-label-weight);
+      line-height: var(--font-label-height);
+      min-height: 2.5rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      border: none;
+    }
+    .btn--cancel {
+      background: var(--color-action-cancel-default);
+      color: var(--color-content-primary-text);
+    }
+    .btn--cancel:hover { background: var(--color-action-cancel-hovered); }
+    .btn--cancel:active { background: var(--color-action-cancel-pressed); }
+    .btn--primary {
+      background: var(--color-action-primary-default);
+      color: var(--color-content-on-dark);
+    }
+    .btn--primary:hover { background: var(--color-action-primary-hovered); }
+    .btn--primary:active { background: var(--color-action-primary-pressed); }
+    .btn--primary:disabled {
+      background: var(--color-action-cancel-default);
+      color: var(--color-content-tertiary-text);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    .btn--primary:disabled:hover {
+      background: var(--color-action-cancel-default);
+    }
+  </style>
+</head>
+<body>
+  <button type="button" class="trigger" id="open-modal">Export map file</button>
+
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+      <div class="modal__header">
+        <h2 id="modal-title" class="modal__title">Export map file</h2>
+        <button type="button" class="modal__close" id="close-modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal__body">
+        <p>You are about to download a map file. Choose which map file you want to download below.</p>
+        <form class="modal__form" id="export-form">
+          <label class="modal__label" for="map-file">Map file</label>
+          <select id="map-file" class="modal__select" name="mapFile" required>
+            <option value="">Select map file</option>
+            <option value="downtown-2024">Downtown 2024</option>
+            <option value="submarket-a">Submarket A</option>
+            <option value="portfolio-overview">Portfolio overview</option>
+            <option value="metro-region">Metro region</option>
+          </select>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button type="button" class="btn btn--cancel" id="cancel-btn">Cancel</button>
+        <button type="submit" form="export-form" class="btn btn--primary" id="download-btn" disabled title="Select a map file to enable download">Download</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    const openBtn = document.getElementById('open-modal');
+    const closeBtn = document.getElementById('close-modal');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const form = document.getElementById('export-form');
+    const select = document.getElementById('map-file');
+    const downloadBtn = document.getElementById('download-btn');
+
+    function updateDownloadButton() {
+      downloadBtn.disabled = !select.value;
+    }
+
+    function openModal() {
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      updateDownloadButton();
+      select.focus();
+    }
+
+    function closeModal() {
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      openBtn.focus();
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+    select.addEventListener('change', updateDownloadButton);
+
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeModal();
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const value = select.value;
+      if (!value) return;
+      const text = select.options[select.selectedIndex].text;
+      alert('Download started: ' + text + ' (demo)');
+      closeModal();
+    });
+  </script>
+</body>
+</html>

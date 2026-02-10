@@ -1,0 +1,73 @@
+---
+description: Button component rules — variants, composition, overrides, usage limits, modals, responsive
+alwaysApply: false
+---
+
+# Button Component Rules
+
+See `rules/components.rules.mdc` for tiered overrides and cross-component policy.
+
+## Token Source
+
+- `tokens/components.tokens.json` → `components.button`
+
+## Allowed Variants
+
+- **Intent:** primary, secondary, tertiary, cancel, destructive (and unlock where applicable)
+- **Variant (surface):** solid, outline, ghost, link per intent
+- **State:** default, hovered, pressed, disabled — map to semantic action/status tokens
+
+## Composition
+
+- Button does not compose other components. It may be used inside Form, Card, Modal (those components’ rules document “contains Button”).
+
+---
+
+## Page Usage
+
+- **Primary button limit:** A page must never have more than **three** primary buttons.
+- **Exception:** Export/Download is always a primary button and does **not** count toward the three-primary limit (i.e. a page can have up to three other primary actions plus one primary Export/Download).
+- **Primary and destructive in same interaction:** A primary button and a destructive button **cannot** exist in the same interaction (e.g. same form, same modal footer, same inline action group). They may exist on the same page but must reference **different** things (e.g. primary for “Save” in one section, destructive for “Delete account” in another). Never present “Confirm” (primary) and “Delete” (destructive) as two choices in the same decision.
+- **Destructive always paired with Cancel:** A destructive button is **always** paired with a cancel button so the user can choose not to take the destructive action. Never show a destructive action as the only option without a cancel/escape.
+
+## State Rules
+
+- **Ghost buttons are never disabled.** Ghost buttons must always be enabled. If the action is not available, use a different variant (e.g. secondary outline) and disable that, or hide the button.
+- **Disabled buttons:** Every disabled button **must** have a hover tooltip that states (1) why it is disabled and (2) what the user needs to do to enable it (or when it will become available).
+
+## Responsive (narrow width → icon-only)
+
+- When content width shrinks, buttons with a descriptive icon may switch to **icon-only** to save space.
+- **Order of conversion to icon-only** (first to last): **tertiary** → **secondary** → **primary**. Tertiary buttons become icon-only first; primary buttons last. This keeps the most important action (primary) visible as a full label longest so the user always knows the primary action.
+
+---
+
+## Modals
+
+Modal button rules (count, layout, primary vs destructive) are in **`rules/components/modal.rules.mdc`**. Summary:
+- Up to 3 buttons. Most often 2 (both on the right: Cancel + Primary or Cancel + Destructive icon). Optional: when 3 buttons, left = one secondary outline (alone), right = Cancel + Primary or Destructive icon. See modal.rules.mdc for full rules.
+
+## Export Button Placement
+
+- Export buttons on **tables** and **pages** should typically be **top right** unless the design system or context specifies otherwise.
+- If an export button is placed elsewhere (e.g. top left, bottom), **ask the user to confirm** before implementing.
+
+---
+
+## Overrides
+
+- **Instance override:** A specific button instance may use a different semantic token for fill/ink only when the design system documents an exception (e.g. “hero CTA” alias). Prefer component tokens for consistency.
+- Do not introduce new intents or surface variants without adding them to `components.tokens.json` and this file.
+
+## Prohibited
+
+- ❌ Direct primitive tokens in button token definitions
+- ❌ New intents/variants not defined in component tokens
+- ❌ Hard-coded colors, spacing, or typography for button
+- ❌ More than three primary buttons on a page (excluding Export/Download)
+- ❌ Disabled ghost buttons
+- ❌ Disabled buttons without a hover tooltip (reason + how to enable)
+- ❌ Primary and destructive in the same interaction (same form, modal footer, or action group)
+- ❌ Destructive button without a paired cancel button
+- ❌ More than three buttons in a modal (see `rules/components/modal.rules.mdc`)
+- ❌ Modal button layout that deviates from modal.rules.mdc (secondary outline left; Cancel + Primary or Destructive right)

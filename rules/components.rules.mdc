@@ -1,37 +1,51 @@
 ---
-description: Component token usage rules and enforcement
+description: Component token usage, tiered overrides, and cross-component rules
 alwaysApply: false
 ---
 
-# Component Token Rules
+# Component Rules (Hub)
+
+This file defines **global** component rules: tiered overrides, how components reference each other, and conventions. Per-component rules live in `rules/components/*.rules.mdc`.
 
 ## Token Hierarchy
 
-1. **Primitives** (`tokens/primitives.*.json`) - Raw values only
-2. **Semantic** (`tokens/semantic.*.json`) - Meaningful mappings
-3. **Components** (`tokens/components.tokens.json`) - Component-specific assignments
+1. **Primitives** (`tokens/primitives.*.json`) — Raw values only
+2. **Semantic** (`tokens/semantics.*.json`) — Meaningful mappings
+3. **Component** (`tokens/components.tokens.json`) — Component-specific assignments; may override semantic for that component only
+
+## Tiered Override System
+
+- **Tier 1 — Semantic default:** Use semantic tokens when no component override exists. Example: `content/primary/text/on-light` for body text.
+- **Tier 2 — Component token:** When a component needs a specific mapping, define it under `tokens/components.tokens.json` for that component (e.g. `components.button.intent.primary.solid.fill-default` → `action/primary/default`). Component tokens MUST reference semantic (or other component) tokens only.
+- **Tier 3 — Instance override:** In code/design, an instance may override a component token (e.g. a specific button using a different semantic token). Document allowed overrides in the component’s rule file (`rules/components/<name>.rules.mdc`).
+
+When in doubt: **semantic wins unless a component token explicitly overrides it** for that component.
+
+## Cross-Component References
+
+- Components MAY reference other components’ tokens only when there is a **composition** relationship (e.g. a form field component that contains a button). Prefer semantic tokens for shared behavior.
+- Use semantic tokens for **shared** behavior (e.g. all primary actions use `action/primary/default`). Use component tokens when one component needs to **diverge** from that.
+- Document composition and “uses component X” in the **parent** component’s rule file (e.g. `rules/components/form.rules.mdc` lists that it uses Input, Button).
 
 ## Naming Conventions
 
-### Component Tokens
-- Use component name as prefix (e.g., `button.primary.bg`, `card.padding`)
-- Must reference semantic tokens, never primitives directly
-- Group by component, then by variant/state
+- Component token path: `components.<component>.<category>.<variant?>.<property>` (e.g. `components.button.intent.primary.solid.fill-default`)
+- Must reference semantic tokens only; no direct primitives in component tokens
+- Group by component → category (intent, size, state) → variant → property
 
-## Allowed Usage
+## Global Rules
 
-- Component tokens MUST reference semantic tokens only
-- Component tokens provide component-specific overrides or compositions
-- Use semantic tokens as the default; component tokens for exceptions
+- Component tokens MUST reference semantic tokens (or other component tokens where composition is documented)
+- No hard-coded values in component token definitions
+- Prefer semantic tokens; add component tokens only when the component needs a unique composition or override
+- Overrides are tiered: semantic → component → instance; document allowed instance overrides per component
 
-## Prohibited Usage
+## Per-Component Rules
 
-- ❌ No direct primitive token references in component tokens
-- ❌ No hard-coded values in component tokens
-- ❌ No component tokens that duplicate semantic token functionality
+Detailed rules per component (allowed variants, composition, overrides) live in:
 
-## Enforcement
+- `rules/components/button.rules.mdc`
+- `rules/components/input.rules.mdc`
+- `rules/components/<name>.rules.mdc` (add as you add components)
 
-- All component tokens must reference `tokens/semantic.*.json`
-- Component tokens are optional - prefer semantic tokens when possible
-- Component tokens should only exist when component needs unique token composition
+Each of those files can reference this hub and other component files when they reference each other.

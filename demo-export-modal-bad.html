@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Export map file – Modal demo (BAD VERSION)</title>
+  <style>
+    /* BAD VERSION - Multiple design system violations for comparison */
+    
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial;  /* WRONG: Missing Gotham, missing fallback chain */
+      font-size: 16px;     /* WRONG: Hard-coded px instead of token */
+      background: #F5F5F5; /* WRONG: Hard-coded hex */
+      padding: 20px;       /* WRONG: Hard-coded px */
+    }
+
+    /* Trigger button */
+    .trigger {
+      padding: 12px 24px;          /* WRONG: Hard-coded spacing */
+      font-size: 15px;             /* WRONG: Hard-coded size */
+      font-weight: 600;            /* WRONG: Should be 500 for buttons */
+      color: white;                /* WRONG: Generic color name */
+      background: #0066CC;         /* WRONG: Hard-coded hex */
+      border: none;
+      border-radius: 4px;          /* WRONG: Hard-coded */
+      cursor: pointer;
+      font-family: Helvetica;      /* WRONG: Wrong font entirely */
+    }
+    .trigger:hover { background: #0052A3; } /* WRONG: Hard-coded hex */
+
+    /* Overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);  /* WRONG: Hard-coded, too dark */
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .overlay.is-open { display: flex; }
+
+    /* Modal */
+    .modal {
+      width: 500px;                /* WRONG: Hard-coded, not using max-width pattern */
+      background: white;           /* WRONG: Generic color name */
+      border-radius: 8px;          /* WRONG: Hard-coded */
+      box-shadow: 0 10px 30px #000000; /* WRONG: Hard-coded colors */
+      padding: 30px;               /* WRONG: Hard-coded spacing */
+    }
+
+    .modal__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;         /* WRONG: Hard-coded spacing */
+      border-bottom: 2px solid #CCCCCC; /* WRONG: Hard-coded, also modal shouldn't have border */
+      padding-bottom: 15px;        /* WRONG: Hard-coded */
+    }
+    
+    /* WRONG: Using Display style instead of Heading for modal title */
+    .modal__title {
+      margin: 0;
+      font-family: Gotham, sans-serif; /* WRONG: Missing Arial fallback */
+      font-size: 32px;             /* WRONG: Display Large, should be Heading Large (24px) */
+      font-weight: 700;            /* WRONG: Display weight, should be 500 */
+      color: #000000;              /* WRONG: Hard-coded hex */
+      line-height: 1.2;            /* WRONG: Hard-coded */
+    }
+    
+    .modal__close {
+      width: 40px;                 /* WRONG: Hard-coded */
+      height: 40px;
+      padding: 0;
+      border: 1px solid #999;      /* WRONG: Hard-coded, close button shouldn't have border */
+      background: #EEEEEE;         /* WRONG: Hard-coded */
+      color: #333;                 /* WRONG: Hard-coded */
+      font-size: 24px;             /* WRONG: Hard-coded */
+      cursor: pointer;
+      border-radius: 50%;          /* WRONG: Should be subtle radius */
+    }
+    .modal__close:hover { background: #DDDDDD; } /* WRONG: Hard-coded */
+
+    .modal__body {
+      font-family: Arial, sans-serif; /* WRONG: Missing Gotham */
+      font-size: 14px;             /* WRONG: Hard-coded, also too small */
+      font-weight: 500;            /* WRONG: Body text should be 400 */
+      line-height: 1.4;            /* WRONG: Hard-coded */
+      color: #666666;              /* WRONG: Hard-coded hex */
+      margin: 0 0 20px;            /* WRONG: Hard-coded spacing */
+    }
+    
+    .modal__body p { 
+      margin: 0 0 12px;            /* WRONG: Hard-coded */
+      color: #555;                 /* WRONG: Hard-coded */
+    }
+    
+    .modal__form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;                   /* WRONG: Hard-coded spacing */
+      margin-top: 25px;            /* WRONG: Hard-coded spacing, excessive gap */
+    }
+    
+    .modal__label {
+      font-size: 13px;             /* WRONG: Hard-coded */
+      font-weight: 600;            /* WRONG: Should be 500 */
+      color: #444;                 /* WRONG: Hard-coded */
+      margin: 0 0 8px;             /* WRONG: Hard-coded spacing */
+    }
+    
+    .modal__select {
+      width: 100%;
+      padding: 10px 15px;          /* WRONG: Hard-coded spacing */
+      font-size: 15px;             /* WRONG: Hard-coded */
+      color: #222;                 /* WRONG: Hard-coded */
+      background: #FAFAFA;         /* WRONG: Hard-coded, should be white */
+      border: 2px solid #CCCCCC;   /* WRONG: Hard-coded, border too thick */
+      border-radius: 6px;          /* WRONG: Hard-coded */
+      cursor: pointer;
+    }
+    .modal__select:hover { border-color: #0066CC; } /* WRONG: Hard-coded */
+    /* WRONG: Missing focus state entirely - accessibility issue */
+
+    /* WRONG: Footer has 4 buttons, violates 3-button max rule */
+    /* WRONG: Buttons not properly grouped on right */
+    .modal__footer {
+      display: flex;
+      justify-content: space-between; /* WRONG: Should be flex-end for modal */
+      gap: 10px;                   /* WRONG: Hard-coded spacing */
+      margin-top: 25px;            /* WRONG: Hard-coded spacing */
+      padding-top: 20px;           /* WRONG: Hard-coded */
+      border-top: 1px solid #E0E0E0; /* WRONG: Hard-coded, footer shouldn't have border */
+    }
+    
+    .btn {
+      padding: 10px 20px;          /* WRONG: Hard-coded spacing */
+      font-size: 14px;             /* WRONG: Hard-coded */
+      font-weight: 600;            /* WRONG: Should be 500 */
+      border-radius: 5px;          /* WRONG: Hard-coded */
+      cursor: pointer;
+      border: none;
+      font-family: Arial;          /* WRONG: Missing Gotham, wrong fallback */
+    }
+    
+    .btn--save {
+      background: #28A745;         /* WRONG: Hard-coded green, wrong semantic meaning */
+      color: white;
+    }
+    .btn--save:hover { background: #218838; } /* WRONG: Hard-coded */
+    
+    .btn--cancel {
+      background: #6C757D;         /* WRONG: Hard-coded, wrong semantic token */
+      color: white;                /* WRONG: Cancel should have dark text on light bg */
+    }
+    .btn--cancel:hover { background: #5A6268; } /* WRONG: Hard-coded */
+    
+    /* WRONG: Both primary and destructive in same modal - prohibited! */
+    .btn--primary {
+      background: #007BFF;         /* WRONG: Hard-coded hex */
+      color: white;
+    }
+    .btn--primary:hover { background: #0056B3; } /* WRONG: Hard-coded */
+    
+    .btn--destructive {
+      background: #DC3545;         /* WRONG: Hard-coded hex, also shouldn't be with primary */
+      color: white;
+    }
+    .btn--destructive:hover { background: #C82333; } /* WRONG: Hard-coded */
+    
+    /* WRONG: Ghost button with disabled state - prohibited! */
+    .btn--ghost {
+      background: transparent;
+      color: #007BFF;              /* WRONG: Hard-coded */
+      border: 1px solid #007BFF;   /* WRONG: Ghost shouldn't have border */
+    }
+    .btn--ghost:disabled {         /* WRONG: Ghost buttons cannot be disabled */
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <!-- WRONG: Using div instead of button -->
+  <div class="trigger" id="open-modal" onclick="openModal()">Export map file</div>
+
+  <!-- WRONG: Missing aria-hidden attribute -->
+  <div class="overlay" id="overlay">
+    <!-- WRONG: Missing role="dialog", aria-labelledby, aria-modal -->
+    <div class="modal">
+      <div class="modal__header">
+        <!-- WRONG: Using h1 for modal title (should be h2) -->
+        <!-- WRONG: Missing id for aria-labelledby -->
+        <h1 class="modal__title">Export map file</h1>
+        <!-- WRONG: Missing aria-label on close button -->
+        <button type="button" class="modal__close" id="close-modal">✕</button>
+      </div>
+      <div class="modal__body">
+        <p>You are about to download a map file. Choose which map file you want to download below.</p>
+        <!-- WRONG: Form has no id, making form attribute on submit button problematic -->
+        <form class="modal__form">
+          <!-- WRONG: Label missing 'for' attribute -->
+          <label class="modal__label">Map file</label>
+          <select class="modal__select" name="mapFile" required>
+            <option value="">Select map file</option>
+            <option value="downtown-2024">Downtown 2024</option>
+            <option value="submarket-a">Submarket A</option>
+            <option value="portfolio-overview">Portfolio overview</option>
+            <option value="metro-region">Metro region</option>
+          </select>
+        </form>
+      </div>
+      <!-- WRONG: 4 buttons exceeds 3-button max -->
+      <!-- WRONG: Both primary and destructive in same modal -->
+      <!-- WRONG: Layout doesn't follow modal rules (should group on right) -->
+      <div class="modal__footer">
+        <button type="button" class="btn btn--save" id="save-btn">Save for later</button>
+        <button type="button" class="btn btn--cancel" id="cancel-btn">Cancel</button>
+        <button type="button" class="btn btn--primary" id="download-btn">Download</button>
+        <!-- WRONG: Destructive action without clear purpose, with primary in same modal -->
+        <button type="button" class="btn btn--destructive" id="delete-btn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    const openTrigger = document.getElementById('open-modal');
+    const closeBtn = document.getElementById('close-modal');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const downloadBtn = document.getElementById('download-btn');
+    const deleteBtn = document.getElementById('delete-btn');
+    const select = document.querySelector('.modal__select');
+
+    function openModal() {
+      overlay.classList.add('is-open');
+      // WRONG: Not setting aria-hidden
+      // WRONG: Not preventing body scroll
+      // WRONG: Not managing focus properly
+    }
+
+    function closeModal() {
+      overlay.classList.remove('is-open');
+      // WRONG: Not restoring focus to trigger
+      // WRONG: Not restoring body scroll
+    }
+
+    // WRONG: Using onclick in HTML instead of addEventListener
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+    
+    downloadBtn.addEventListener('click', function() {
+      const value = select.value;
+      if (!value) {
+        alert('Please select a map file'); // WRONG: Using alert for validation
+        return;
+      }
+      alert('Download started: ' + select.options[select.selectedIndex].text);
+      closeModal();
+    });
+    
+    deleteBtn.addEventListener('click', function() {
+      // WRONG: Destructive action with no confirmation, no clear purpose
+      alert('Delete clicked');
+    });
+
+    // WRONG: Click outside doesn't work
+    // WRONG: Escape key doesn't work
+    // WRONG: No focus trap
+  </script>
+</body>
+</html>

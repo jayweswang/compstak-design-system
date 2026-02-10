@@ -12,9 +12,10 @@
       "text": "Gotham"
     },
     "font-weight": {
-      "700": "Bold",
       "400": "Book",
-      "600": "Medium"
+      "500": "Medium",
+      "600": "Semibold",
+      "700": "Bold"
     },
     "font-style": {
       "italic": "italic",

@@ -5,6 +5,16 @@ alwaysApply: false
 
 # Typography Token Rules
 
+## Platform font stack
+
+The platform font stack (in order of preference) is:
+
+**Gotham → Arial → sans-serif**
+
+- Use for all UI text unless a component or context specifies otherwise (e.g. numeric may use Open Sans per primitives).
+- Implement as: `font-family: Gotham, Arial, sans-serif;`
+- Gotham is the primary brand typeface; Arial is the fallback for environments where Gotham is not available; sans-serif is the generic fallback.
+
 ## Token Hierarchy
 
 1. **Primitives** (`tokens/primitives.typography.json`) - Raw typography properties only
@@ -16,7 +26,7 @@ alwaysApply: false
 ### Primitive Typography
 - Font families: descriptive names (e.g., `sans`, `mono`)
 - Font sizes: numeric scale or descriptive (e.g., `xs`, `sm`, `base`, `lg`, `xl`)
-- Font weights: numeric or descriptive (e.g., `400`, `normal`, `medium`, `bold`)
+- Font weights: numeric or descriptive (e.g., `400`, `500`, `normal`, `medium`, `bold`). **Headers use 500; body and other text use 400.** (Previously 600 → 500, 500 → 400.)
 - Line heights: numeric or ratio (e.g., `1.5`, `tight`, `normal`, `relaxed`)
 
 ### Semantic Typography
@@ -26,7 +36,8 @@ alwaysApply: false
 
 ## Heading vs Display
 
-- **Heading** (`type/heading/sm|md|lg`): Use for product UI—section titles, page titles, card titles, prominent metrics, table headers. Font-weight 600; less bold.
+- **Heading** (`type/heading/sm|md|lg`): Use for product UI—section titles, page titles, card titles, prominent metrics, table headers. **Font-weight 500** (headers); body and other text **400**.
+- **Component headers** (e.g. modal title, dialog title, card title, sheet title): Use **type/heading/lg** (heading large). Use type/heading/sm or md for in-page subheadings only.
 - **Display** (`type/display/sm|md|lg`): Use only for hero/marketing (e.g. landing pages, large campaign stats). Heavier weight; avoid in app UI.
 - **Prefer heading over display** for a lighter, more readable product interface.
 
