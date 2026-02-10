@@ -5,7 +5,114 @@ description: Review design files and code implementation against the Compstak de
 
 # Design Review
 
-Review both design files (Figma) and code implementation (HTML/CSS/JS) against the Compstak design system for token compliance, component rules, and accessibility.
+Review both design files (Figma) and code implementation (HTML/CSS/JS) against the Compstak design system. Violations are **categorized by type** (colors, typography, spacing, component rules, accessibility) for easy understanding and targeted fixing.
+
+## How It Works
+
+**1. Run Review** → Get categorized violation report  
+**2. Choose Workflow** → Quick fix all, or step-by-step by category  
+**3. Apply Fixes** → Automatic with progress tracking
+
+**⚡ New to this skill?** See [QUICK-START.md](QUICK-START.md) for 30-second setup
+
+---
+
+## Two Workflows: Quick vs Step-by-Step
+
+Choose your approach based on time, learning goals, and file importance:
+
+<comparison>
+| | 🚀 Quick Fix | 🔍 Step-by-Step |
+|---|---|---|
+| **Command** | `fix all violations` | `fix [category] violations` × 5 |
+| **Time** | ~2 minutes | ~15 minutes |
+| **Control** | All or nothing | Pause between categories |
+| **Learning** | Minimal | High - see each change |
+| **Testing** | Test at end | Test after each category |
+| **Best For** | Demos, prototypes | Production, learning, teams |
+</comparison>
+
+---
+
+### 🚀 Quick Fix Workflow
+
+```
+/design-review @file.html       # See violations
+fix all violations              # Fix everything at once
+```
+
+**Output:**
+```
+Applying all 72 fixes...
+✅ 100% complete in 2 minutes!
+```
+
+---
+
+### 🔍 Step-by-Step Workflow
+
+```
+/design-review @file.html                # See violations by category
+
+fix color violations                     # Fix 🎨 (28 issues)
+# [Test changes]
+
+fix spacing violations                   # Fix 📏 (20 issues)
+# [Test changes]
+
+fix typography violations                # Fix ✏️ (11 issues)
+# [Test changes]
+
+fix component rule violations            # Fix 🧩 (5 issues)
+# [Test changes]
+
+fix accessibility violations             # Fix ♿ (8 issues)
+# [Test changes]
+```
+
+**Output with Progress Tracking:**
+```
+After each category fix:
+
+Progress:
+  🎨 Colors:          ████████████████████ 100% ✅
+  📏 Spacing:         ████████████████████ 100% ✅
+  ✏️ Typography:      ░░░░░░░░░░░░░░░░░░░░   0%
+  🧩 Component Rules: ░░░░░░░░░░░░░░░░░░░░   0%
+  ♿ Accessibility:    ░░░░░░░░░░░░░░░░░░░░   0%
+
+Overall: 67% complete (48/72)
+Next: fix typography violations
+```
+
+---
+
+### 📋 Review-Only (No Changes)
+
+```
+/design-review @file.html          # Full categorized report
+review color violations            # Show color issues only
+review accessibility violations    # Show a11y issues only
+```
+
+Use for:
+- Sharing findings with team before fixing
+- Understanding scope before committing
+- Learning about violation types
+
+---
+
+## Example Output
+
+**See [OUTPUT-EXAMPLE.md](OUTPUT-EXAMPLE.md) for complete example showing:**
+- Full categorized report with 72 violations
+- Progress tracking through step-by-step workflow
+- Quick fix vs step-by-step comparison
+
+**See [WORKFLOW-EXAMPLE.md](WORKFLOW-EXAMPLE.md) for:**
+- Detailed walkthrough of both workflows
+- Time comparisons
+- Use case recommendations
 
 ## Quick Start Checklist
 
@@ -13,14 +120,27 @@ Use this checklist for any design or code review:
 
 ```
 Design System Review:
-- [ ] Token hierarchy followed (primitives → semantic → component)
-- [ ] No hard-coded color values (hex, rgb)
-- [ ] Typography uses semantic tokens only
-- [ ] Component rules followed (button limits, modal layout, etc.)
-- [ ] Spacing uses token values
-- [ ] Accessibility requirements met
-- [ ] Cross-component composition documented
+- [ ] 🎨 Token hierarchy followed (primitives → semantic → component)
+- [ ] 🎨 No hard-coded color values (hex, rgb)
+- [ ] ✏️ Typography uses semantic tokens only
+- [ ] 🧩 Component rules followed (button limits, modal layout, etc.)
+- [ ] 📏 Spacing uses token values
+- [ ] ♿ Accessibility requirements met
+- [ ] 🔗 Cross-component composition documented
 ```
+
+## Violation Category Icons
+
+When reporting violations, use these category icons for clarity:
+
+| Icon | Category | Examples |
+|------|----------|----------|
+| 🎨 | **Token Hierarchy & Colors** | Hard-coded hex, rgba, primitive tokens in components |
+| ✏️ | **Typography** | Font stack, weights, sizes, heading vs display |
+| 📏 | **Spacing** | Hard-coded padding, margins, gaps, border-radius |
+| 🧩 | **Component Rules** | Button limits, modal layout, disabled states |
+| ♿ | **Accessibility** | ARIA, focus states, semantic HTML, keyboard nav |
+| 🔗 | **Cross-Component** | Undocumented composition, direct token usage |
 
 ## Read Order
 
@@ -314,24 +434,76 @@ Read in order:
 
 ### Step 3: Systematic Review
 
-Go through Quick Start Checklist section by section:
+Go through Quick Start Checklist section by section and **categorize each violation**:
 
-1. **Token hierarchy:** Check no primitives in components, no hard-coded values
-2. **Colors:** Search for violations (hex, rgb, primitive tokens)
-3. **Typography:** Check font stack, weights, semantic token usage, heading vs display
-4. **Component rules:** Count buttons, check layouts, verify states
-5. **Spacing:** Verify token usage
-6. **Accessibility:** Check contrast, focus states, keyboard nav, semantic HTML
+## Violation Categories
+
+### 🎨 **Token Hierarchy & Colors**
+- Hard-coded hex, rgb, rgba, hsl values
+- Using primitive tokens directly in components
+- Missing color token definitions
+- Wrong semantic color mapping
+
+### ✏️ **Typography**
+- Missing/incomplete font stack
+- Hard-coded font sizes, weights, line-heights
+- Wrong font weights (should be 500 for headers, 400 for body)
+- Using Display styles in app UI (should use Heading)
+- Modal/component titles not using correct style
+
+### 📏 **Spacing**
+- Hard-coded px, rem, em values
+- Missing spacing token usage
+- Hard-coded border-radius
+- Inconsistent spacing patterns
+
+### 🧩 **Component Rules**
+- Too many buttons (modal >3, page >3 primary)
+- Primary + Destructive in same interaction
+- Wrong button layouts (modal footer)
+- Ghost buttons with disabled state
+- Missing button tooltips on disabled state
+- Destructive without Cancel pairing
+
+### ♿ **Accessibility**
+- Non-semantic HTML (`<div onclick>` vs `<button>`)
+- Missing ARIA attributes (role, aria-label, aria-labelledby, etc.)
+- Missing focus states (`:focus` styles)
+- Form labels not associated (`for` attribute)
+- Wrong heading hierarchy
+- Missing keyboard support (Escape, Tab, Enter)
+- Incomplete focus management (JavaScript)
+- Color contrast issues
+
+### 🔗 **Cross-Component Composition**
+- Undocumented component relationships
+- Direct child token usage without documentation
+- Missing composition rules
+
+---
+
+**Review Process:**
+
+1. **Token hierarchy:** Check no primitives in components, no hard-coded values → Category: 🎨
+2. **Colors:** Search for violations (hex, rgb, primitive tokens) → Category: 🎨
+3. **Typography:** Check font stack, weights, semantic token usage, heading vs display → Category: ✏️
+4. **Component rules:** Count buttons, check layouts, verify states → Category: 🧩
+5. **Spacing:** Verify token usage → Category: 📏
+6. **Accessibility:** Check contrast, focus states, keyboard nav, semantic HTML → Category: ♿
+7. **Composition:** Verify documented relationships → Category: 🔗
 
 ### Step 4: Document Findings
 
 For each violation found:
-- Location (file:line or Figma layer path)
-- Issue description
-- Severity (🔴 Must fix | 🟡 Should fix | 🟢 Nice to have)
-- Fix recommendation with correct token/pattern
+- **Category** (Token Hierarchy, Colors, Typography, Spacing, Component Rules, Accessibility, Composition)
+- **Location** (file:line or Figma layer path)
+- **Issue description**
+- **Severity** (🔴 Must fix | 🟡 Should fix | 🟢 Nice to have)
+- **Fix recommendation** with correct token/pattern
 
 ### Step 5: Provide Summary
+
+Organize violations by category for clarity:
 
 ```markdown
 ## Design Review Summary
@@ -344,14 +516,89 @@ For each violation found:
 - 🟡 [# warnings]
 - 🟢 [# suggestions]
 
-### Critical Issues
-1. [Issue with location and fix]
+---
 
-### Warnings
-1. [Issue with location and fix]
+## Violations by Category
 
-### Suggestions
-1. [Issue with location and fix]
+### 🎨 Token Hierarchy & Colors ([#] issues)
+
+🔴 **#1. Hard-coded hex color: Button background**
+- **Location:** Line 25
+- **Issue:** `background: #0066CC;`
+- **Fix:** `background: var(--color-action-primary-default);`
+
+🔴 **#2. Hard-coded rgba: Overlay**
+- **Location:** Line 38
+- **Issue:** `background: rgba(0, 0, 0, 0.6);`
+- **Fix:** Define as token and use `var(--color-overlay-background);`
+
+### ✏️ Typography ([#] issues)
+
+🔴 **#3. Wrong font stack**
+- **Location:** Line 13
+- **Issue:** `font-family: Arial;` (missing Gotham, fallback)
+- **Fix:** `font-family: Gotham, Arial, sans-serif;`
+
+🔴 **#4. Modal title using Display style**
+- **Location:** Lines 67-68
+- **Issue:** 32px/700 weight (Display Large)
+- **Fix:** Use Heading Large: 24px/500 weight
+
+### 📏 Spacing ([#] issues)
+
+🔴 **#5. Hard-coded padding**
+- **Location:** Line 21
+- **Issue:** `padding: 12px 24px;`
+- **Fix:** `padding: var(--space-2) var(--space-4);`
+
+### 🧩 Component Rules ([#] issues)
+
+🔴 **#6. Modal has 4 buttons (exceeds max 3)**
+- **Location:** Lines 218-224
+- **Issue:** Save, Cancel, Download, Delete buttons
+- **Fix:** Remove "Save for later" and "Delete" → keep Cancel + Download
+
+🔴 **#7. Primary + Destructive in same modal**
+- **Location:** Lines 221, 223
+- **Issue:** Both Download (primary) and Delete (destructive)
+- **Fix:** Remove destructive button for export modal
+
+### ♿ Accessibility ([#] issues)
+
+🔴 **#8. Non-semantic trigger element**
+- **Location:** Line 187
+- **Issue:** `<div onclick="openModal()">`
+- **Fix:** `<button type="button">`
+
+🔴 **#9. Missing ARIA attributes**
+- **Location:** Lines 190-192
+- **Issue:** No `role="dialog"`, `aria-modal`, `aria-labelledby`
+- **Fix:** Add all required ARIA attributes
+
+🔴 **#10. Missing focus state**
+- **Location:** Lines 114-125
+- **Issue:** Select element has no `:focus` styles
+- **Fix:** Add focus styles with border-color and box-shadow
+
+### 🔗 Cross-Component Composition ([#] issues)
+
+🟡 **#11. Undocumented composition**
+- **Location:** Modal component
+- **Issue:** Modal uses Button but not documented
+- **Fix:** Document in `rules/components/modal.rules.mdc`
+
+---
+
+## Summary by Severity
+
+### 🔴 Critical Issues ([#] total)
+Quick list of must-fix issues for easy tracking
+
+### 🟡 Warnings ([#] total)
+Should-fix issues that improve quality
+
+### 🟢 Suggestions ([#] total)
+Nice-to-have improvements
 ```
 
 ## Review Examples
@@ -380,9 +627,11 @@ For each violation found:
 
 ## Additional Resources
 
+- **[Categories Reference](CATEGORIES.md)** - Complete guide to violation categories
 - [Fix Patterns](fix-patterns.md) - Detailed patterns for fixing violations
-- [Examples](examples.md) - QA examples with findings and fixes
+- [Examples](examples.md) - Review examples with findings and fixes
 - [Token Reference](token-reference.md) - Quick token lookup
+- [Fix Guide](FIX-GUIDE.md) - Auto-fix command reference
 - [Design System Index](../design-system.index.mdc) - Source of truth
 - [Color Rules](../rules/colors.rules.mdc) - Color token usage
 - [Typography Rules](../rules/typography.rules.mdc) - Typography guidelines
@@ -398,20 +647,64 @@ After completing a design review, you can automatically apply fixes for violatio
 
 User can request fixes in several ways:
 
-1. **Fix all issues:**
-   - "Fix all violations"
-   - "Apply all fixes"
-   - "Fix everything"
+#### **Quick Fix (All-at-Once)**
+```
+fix all violations
+apply all fixes
+fix everything
+```
 
-2. **Fix with exclusions:**
-   - "Fix all except #3 and #7"
-   - "Fix everything but keep #12"
-   - "Apply fixes, skip #5, #8, #15"
+#### **Step-by-Step (By Category)**
+```
+fix color violations           # 🎨 Fix token & color issues
+fix typography violations      # ✏️ Fix font stack, weights, sizes
+fix spacing violations         # 📏 Fix padding, margins, gaps
+fix component rule violations  # 🧩 Fix button limits, layouts
+fix accessibility violations   # ♿ Fix ARIA, focus, semantic HTML
+```
 
-3. **Fix specific category:**
-   - "Fix all color violations"
-   - "Fix typography issues only"
-   - "Apply spacing fixes"
+**Category order recommended:**
+1. Colors (usually most violations, safest to fix)
+2. Spacing (mechanical replacements)
+3. Typography (mechanical replacements)
+4. Component Rules (may remove elements, review carefully)
+5. Accessibility (changes HTML structure, review carefully)
+
+#### **Review Without Fixing**
+```
+review color violations        # Just show, don't fix
+review typography violations   # Show violations only
+review [category] violations   # Preview before fixing
+```
+
+#### **Selective Exclusions**
+```
+fix all except #3, #7          # Skip specific issues
+fix colors except #5           # Fix category, skip some
+fix all except accessibility   # Fix everything but one category
+```
+
+### Review vs Fix Commands
+
+**Review commands** show violations without making changes:
+```
+review color violations          # Show color issues, no changes
+review typography violations     # Show typography issues, no changes
+review [category] violations     # Show any category
+```
+
+**Fix commands** apply changes:
+```
+fix color violations            # Apply color fixes
+fix typography violations       # Apply typography fixes
+fix [category] violations       # Apply any category
+```
+
+**Use review first** when you want to:
+- Understand what will change before committing
+- Share findings with team before fixing
+- Prioritize which categories to fix first
+- Learn about specific violation types
 
 ### Fix Application Process
 
@@ -421,6 +714,7 @@ When user requests fixes:
 - Review which issues will be fixed
 - List any exclusions explicitly
 - Show issue numbers and brief descriptions
+- Show category breakdown if fixing by category
 - Ask for confirmation if scope is unclear
 
 **Step 2: Apply fixes systematically**

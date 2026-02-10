@@ -485,42 +485,70 @@ This example demonstrates the complete workflow for automatically fixing violati
 **Scope:** demo-button.html
 
 **Results:**
+- ✅ 3 passed checks
 - 🔴 8 critical issues
-- 🟡 2 warnings
+- 🟡 0 warnings
+- 🟢 0 suggestions
 
-### Critical Issues
+---
 
-🔴 1. Hard-coded color: Button background (line 15)
-   - Issue: `background: #0066CC;`
-   - Fix: `background: var(--color-action-primary-default);`
+## Violations by Category
 
-🔴 2. Hard-coded color: Button hover (line 16)
-   - Issue: `background: #0052A3;`
-   - Fix: `background: var(--color-action-primary-hovered);`
+### 🎨 Token Hierarchy & Colors (2 issues)
 
-🔴 3. Hard-coded spacing: Button padding (line 17)
-   - Issue: `padding: 12px 24px;`
-   - Fix: `padding: var(--space-2) var(--space-4);`
+🔴 **#1. Hard-coded color: Button background**
+   - **Location:** Line 15
+   - **Issue:** `background: #0066CC;`
+   - **Fix:** `background: var(--color-action-primary-default);`
 
-🔴 4. Wrong font weight (line 18)
-   - Issue: `font-weight: 600;`
-   - Fix: `font-weight: 500;`
+🔴 **#2. Hard-coded color: Button hover**
+   - **Location:** Line 16
+   - **Issue:** `background: #0052A3;`
+   - **Fix:** `background: var(--color-action-primary-hovered);`
 
-🔴 5. Missing font fallback (line 19)
-   - Issue: `font-family: Gotham;`
-   - Fix: `font-family: Gotham, Arial, sans-serif;`
+### ✏️ Typography (3 issues)
 
-🔴 6. Hard-coded font size (line 20)
-   - Issue: `font-size: 14px;`
-   - Fix: `font-size: var(--font-label-size);`
+🔴 **#4. Wrong font weight**
+   - **Location:** Line 18
+   - **Issue:** `font-weight: 600;` (buttons should be 500)
+   - **Fix:** `font-weight: 500;`
 
-🔴 7. Hard-coded border radius (line 21)
-   - Issue: `border-radius: 6px;`
-   - Fix: `border-radius: var(--radius-sm);`
+🔴 **#5. Missing font fallback**
+   - **Location:** Line 19
+   - **Issue:** `font-family: Gotham;`
+   - **Fix:** `font-family: Gotham, Arial, sans-serif;`
 
-🔴 8. Non-semantic element (line 30)
-   - Issue: `<div onclick="...">`
-   - Fix: `<button type="button">`
+🔴 **#6. Hard-coded font size**
+   - **Location:** Line 20
+   - **Issue:** `font-size: 14px;`
+   - **Fix:** `font-size: var(--font-label-size);`
+
+### 📏 Spacing (2 issues)
+
+🔴 **#3. Hard-coded padding**
+   - **Location:** Line 17
+   - **Issue:** `padding: 12px 24px;`
+   - **Fix:** `padding: var(--space-2) var(--space-4);`
+
+🔴 **#7. Hard-coded border radius**
+   - **Location:** Line 21
+   - **Issue:** `border-radius: 6px;`
+   - **Fix:** `border-radius: var(--radius-sm);`
+
+### ♿ Accessibility (1 issue)
+
+🔴 **#8. Non-semantic element**
+   - **Location:** Line 30
+   - **Issue:** `<div onclick="...">`
+   - **Fix:** `<button type="button">`
+
+---
+
+## Summary by Severity
+
+🔴 **Critical Issues (8 total):** #1, #2, #3, #4, #5, #6, #7, #8
+🟡 **Warnings (0 total):** None
+🟢 **Suggestions (0 total):** None
 ```
 
 ### User Requests Fix with Exclusions

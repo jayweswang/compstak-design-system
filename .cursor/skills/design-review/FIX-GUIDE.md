@@ -109,18 +109,34 @@ Agent: [Applies #1 and #2 only]
 
 ## What Gets Fixed Automatically
 
-### ✅ Automatically Fixable
+### ✅ Automatically Fixable (by Category)
 
-- **Colors:** Hard-coded hex/rgb → semantic tokens
-- **Typography:** Font stack, weights, sizes → tokens
-- **Spacing:** Hard-coded px → spacing tokens
-- **Border radius:** Hard-coded values → radius tokens
-- **Semantic HTML:** `<div onclick>` → `<button>`
-- **ARIA attributes:** Add missing attributes
-- **Focus states:** Add missing focus styles
-- **Form labels:** Add `for` attributes and `id`s
-- **Heading levels:** Wrong h-level → correct level
-- **Event listeners:** Move from inline to JavaScript
+**🎨 Token Hierarchy & Colors:**
+- Hard-coded hex/rgb/rgba → semantic tokens
+- Primitive tokens → semantic tokens
+- Missing token definitions → add to :root
+
+**✏️ Typography:**
+- Font stack → `Gotham, Arial, sans-serif`
+- Font weights → 500 for headers, 400 for body
+- Hard-coded sizes → semantic tokens
+
+**📏 Spacing:**
+- Hard-coded px/rem → spacing tokens
+- Border radius → radius tokens
+
+**🧩 Component Rules:**
+- Remove excess buttons (modal >3)
+- Fix button layouts (flex-end)
+- Remove conflicting buttons (primary+destructive)
+
+**♿ Accessibility:**
+- Semantic HTML: `<div onclick>` → `<button>`
+- ARIA attributes: Add missing attributes
+- Focus states: Add missing `:focus` styles
+- Form labels: Add `for` attributes and `id`s
+- Heading levels: Fix hierarchy
+- Event listeners: Move inline to JavaScript
 
 ### ⚠️ Requires Confirmation
 
