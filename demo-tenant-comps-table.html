@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tenant Comps Table - Design System Demo</title>
+  
+  <!-- Material Symbols Outlined - from primitives.icons.md -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  
+  <style>
+    /*
+      Design System Tokens Reference:
+      - tokens/components.tokens.md (table tokens)
+      - tokens/semantics.colors.md
+      - tokens/semantics.typography.md
+      - tokens/primitives.spacing.md
+    */
+    :root {
+      /* Colors - from semantics.colors.md */
+      --color-surface-base: #FFFFFF;
+      --color-surface-muted: #F4F5F7;
+      --color-surface-soft: #F8F8F8;
+      --color-surface-interactive-hovered: #F2F8FF;
+      --color-surface-interactive-selected: #EBF4FF;
+      --color-surface-emphasis: #DFE1E6;
+      
+      --color-content-primary-text: #303441;
+      --color-content-secondary-text: #606581;
+      --color-content-tertiary-border: #EBECF0;
+      
+      --color-accent-brand: #228FFF;
+      --color-action-primary-default: #228FFF;
+      --color-action-primary-hovered: #257FF6;
+      
+      /* Typography - from semantics.typography.md */
+      --font-family-text: Gotham, Arial, sans-serif;
+      --font-family-table: 'Open Sans', Arial, sans-serif;
+      
+      --font-body-size: 14px;
+      --font-body-weight: 400;
+      --font-body-line-height: 20px;
+      
+      --font-label-size: 14px;
+      --font-label-weight: 500;
+      --font-label-line-height: 20px;
+      
+      /* Spacing - from primitives.spacing.md */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-6: 24px;
+      
+      /* Table tokens - from components.tokens.md */
+      --table-cell-padding-x: 8px;
+      --table-cell-content-gap: 8px;
+      --table-container-padding-x: 8px;
+      
+      /* Density: default (will be updated dynamically) */
+      --table-row-min-height: 40px;
+      --table-header-min-height: 40px;
+      --table-padding-y: 8px;
+      
+      /* Density variants */
+      --table-compact-row-height: 32px;
+      --table-compact-header-height: 32px;
+      --table-compact-padding-y: 4px;
+      
+      --table-default-row-height: 40px;
+      --table-default-header-height: 40px;
+      --table-default-padding-y: 8px;
+      
+      --table-comfortable-row-height: 48px;
+      --table-comfortable-header-height: 48px;
+      --table-comfortable-padding-y: 12px;
+      
+      --table-row-divider-width: 1px;
+      --table-row-divider-color: #EBECF0;
+      
+      --radius-xs: 4px;
+      
+      /* Modal tokens */
+      --modal-overlay-background: rgba(0, 0, 0, 0.4);
+      --shadow-modal: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    * { box-sizing: border-box; }
+    
+    body {
+      margin: 0;
+      font-family: var(--font-family-text);
+      font-size: var(--font-body-size);
+      font-weight: var(--font-body-weight);
+      line-height: var(--font-body-line-height);
+      color: var(--color-content-primary-text);
+      background: var(--color-surface-soft);
+      padding: var(--space-6);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-6);
+      gap: var(--space-4);
+    }
+
+    .header-left h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 32px;
+      color: var(--color-content-primary-text);
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      align-items: flex-end;
+    }
+
+    .actions {
+      display: flex;
+      gap: var(--space-2);
+    }
+
+    .density-toggle {
+      display: flex;
+      gap: 2px;
+      background: var(--color-surface-muted);
+      border-radius: var(--radius-xs);
+      padding: 2px;
+    }
+
+    .density-btn {
+      padding: 6px 12px;
+      font-family: var(--font-family-text);
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 16px;
+      background: transparent;
+      color: var(--color-content-secondary-text);
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .density-btn:hover {
+      background: rgba(34, 143, 255, 0.1);
+      color: var(--color-content-primary-text);
+    }
+
+    .density-btn.active {
+      background: var(--color-surface-base);
+      color: var(--color-accent-brand);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn {
+      padding: var(--space-2) var(--space-4);
+      font-family: var(--font-family-text);
+      font-size: var(--font-label-size);
+      font-weight: var(--font-label-weight);
+      line-height: var(--font-label-line-height);
+      min-height: 40px;
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .btn--primary {
+      background: var(--color-action-primary-default);
+      color: #FFFFFF;
+    }
+
+    .btn--primary:hover:not(:disabled) {
+      background: var(--color-action-primary-hovered);
+    }
+
+    .btn--primary:disabled {
+      background: #C1C7D0;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .btn .material-symbols-outlined {
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+    
+    /* Material Symbols styling */
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: 'liga';
+    }
+
+    .stats {
+      font-size: var(--font-body-size);
+      color: var(--color-content-secondary-text);
+      margin-bottom: var(--space-4);
+    }
+
+    /* Table container */
+    .table-container {
+      background: var(--color-surface-base);
+      border: 1px solid var(--color-content-tertiary-border);
+      border-radius: var(--radius-xs);
+      overflow: hidden;
+    }
+
+    /* Table wrapper for horizontal scroll */
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums; /* Aligns numbers properly */
+    }
+
+    /* Table header - from table/header tokens */
+    thead {
+      background: var(--color-surface-muted);
+    }
+
+    th {
+      padding: var(--table-padding-y) var(--table-cell-padding-x);
+      min-height: var(--table-header-min-height);
+      text-align: left;
+      font-family: var(--font-family-text);
+      font-size: var(--font-label-size);
+      font-weight: var(--font-label-weight);
+      line-height: var(--font-label-line-height);
+      color: var(--color-content-primary-text);
+      border-bottom: var(--table-row-divider-width) solid var(--table-row-divider-color);
+      position: sticky;
+      top: 0;
+      background: var(--color-surface-muted);
+      z-index: 10;
+    }
+
+    th.sortable {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    th.sortable:hover {
+      background: var(--color-surface-soft);
+    }
+
+    th.sortable.sorted {
+      color: var(--color-accent-brand);
+    }
+
+    /* Column alignment - Following design system guidelines */
+    th.align-left,
+    td.align-left {
+      text-align: left;
+    }
+
+    th.align-right,
+    td.align-right {
+      text-align: right;
+    }
+
+    th.align-center,
+    td.align-center {
+      text-align: center;
+    }
+
+    /* Checkbox column */
+    th.col-checkbox,
+    td.col-checkbox {
+      width: 48px;
+      text-align: center;
+    }
+
+    /* Table body rows - from table/row tokens */
+    tbody tr {
+      background: var(--color-surface-base);
+      border-bottom: var(--table-row-divider-width) solid var(--table-row-divider-color);
+      transition: background-color 0.15s ease;
+    }
+
+    tbody tr:hover {
+      background: var(--color-surface-interactive-hovered);
+    }
+
+    tbody tr.selected {
+      background: var(--color-surface-interactive-selected);
+    }
+
+    tbody tr.selected:hover {
+      background: var(--color-surface-interactive-selected);
+    }
+
+    td {
+      padding: var(--table-padding-y) var(--table-cell-padding-x);
+      min-height: var(--table-row-min-height);
+      font-family: var(--font-family-table); /* All table values use Open Sans */
+      font-size: var(--font-body-size);
+      font-weight: var(--font-body-weight);
+      line-height: var(--font-body-line-height);
+      color: var(--color-content-primary-text);
+    }
+
+    /* Checkbox styling */
+    input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: var(--color-accent-brand);
+    }
+
+    /* Summary footer row */
+    tfoot tr {
+      background: var(--color-surface-emphasis);
+      font-weight: 500;
+    }
+
+    tfoot td {
+      padding: var(--table-padding-y) var(--table-cell-padding-x);
+      border-top: 2px solid var(--table-row-divider-color);
+    }
+
+    /* Sort indicator */
+    .sort-indicator {
+      display: inline-block;
+      margin-left: 4px;
+      font-size: 18px;
+      color: var(--color-content-secondary-text);
+      vertical-align: middle;
+    }
+
+    .sorted .sort-indicator {
+      color: var(--color-accent-brand);
+    }
+
+    /* Empty state */
+    .empty-state {
+      padding: var(--space-6);
+      text-align: center;
+      color: var(--color-content-secondary-text);
+    }
+
+    /* Modal styles - from components.tokens.md */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--modal-overlay-background);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      animation: fadeIn 0.15s ease;
+    }
+    
+    .overlay.is-open {
+      display: flex;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 480px;
+      min-width: 400px;
+      background: var(--color-surface-base);
+      border-radius: var(--radius-xs);
+      box-shadow: var(--shadow-modal);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      animation: slideUp 0.2s ease;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-2);
+    }
+
+    .modal__title {
+      margin: 0;
+      font-family: var(--font-family-text);
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 32px;
+      color: var(--color-content-primary-text);
+    }
+
+    .modal__close {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: var(--color-content-secondary-text);
+      cursor: pointer;
+      border-radius: var(--radius-xs);
+      transition: background-color 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal__close .material-symbols-outlined {
+      font-size: 24px;
+    }
+
+    .modal__close:hover {
+      color: var(--color-content-primary-text);
+      background: var(--color-surface-muted);
+    }
+
+    .modal__close:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(34, 143, 255, 0.2);
+    }
+
+    .modal__body {
+      font-family: var(--font-family-text);
+      font-size: var(--font-body-size);
+      font-weight: var(--font-body-weight);
+      line-height: var(--font-body-line-height);
+      color: var(--color-content-primary-text);
+      margin: 0 0 var(--space-6);
+    }
+
+    .modal__body p {
+      margin: 0 0 var(--space-4);
+    }
+
+    .modal__body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .export-summary {
+      background: var(--color-surface-muted);
+      padding: var(--space-4);
+      border-radius: var(--radius-xs);
+      margin: var(--space-4) 0;
+    }
+
+    .export-summary__item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-family-table);
+    }
+
+    .export-summary__item + .export-summary__item {
+      margin-top: var(--space-2);
+      padding-top: var(--space-2);
+      border-top: 1px solid var(--color-content-tertiary-border);
+    }
+
+    .export-summary__label {
+      font-size: var(--font-body-size);
+      color: var(--color-content-secondary-text);
+    }
+
+    .export-summary__value {
+      font-size: var(--font-body-size);
+      font-weight: 500;
+      color: var(--color-content-primary-text);
+    }
+
+    .modal__footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-2);
+    }
+
+    .btn--cancel {
+      background: #F4F5F7;
+      color: var(--color-content-primary-text);
+    }
+
+    .btn--cancel:hover {
+      background: #EBECF0;
+    }
+
+    .btn--cancel:active {
+      background: #DFE1E6;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: var(--space-4);
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-4);
+      }
+      
+      .modal {
+        min-width: 320px;
+        max-width: calc(100vw - 32px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-left">
+        <h1>Tenant Comps</h1>
+        <p class="stats">
+          <span id="total-rows">0</span> properties · 
+          <span id="selected-count">0</span> selected
+        </p>
+      </div>
+      <div class="header-right">
+        <div class="density-toggle" role="group" aria-label="Table density">
+          <button type="button" class="density-btn" data-density="compact">Compact</button>
+          <button type="button" class="density-btn active" data-density="default">Default</button>
+          <button type="button" class="density-btn" data-density="comfortable">Comfortable</button>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn--primary" id="download-btn" disabled>
+            <span class="material-symbols-outlined">file_download</span>
+            Export
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <div class="table-wrapper">
+        <table id="tenant-table">
+          <thead>
+            <tr>
+              <th class="col-checkbox">
+                <input type="checkbox" id="select-all" aria-label="Select all rows">
+              </th>
+              <th class="align-left sortable" data-column="tenant" data-type="string">
+                Tenant
+                <span class="material-symbols-outlined sort-indicator">unfold_more</span>
+              </th>
+              <th class="align-left sortable" data-column="address" data-type="string">
+                Address
+                <span class="material-symbols-outlined sort-indicator">unfold_more</span>
+              </th>
+              <th class="align-left sortable" data-column="floor" data-type="string">
+                Floor
+                <span class="material-symbols-outlined sort-indicator">unfold_more</span>
+              </th>
+              <th class="align-right sortable" data-column="startingRent" data-type="number">
+                Starting Rent ($/SF)
+                <span class="material-symbols-outlined sort-indicator">unfold_more</span>
+              </th>
+              <th class="align-left sortable" data-column="tenantIndustry" data-type="string">
+                Industry
+                <span class="material-symbols-outlined sort-indicator">unfold_more</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- Rows will be populated by JavaScript -->
+          </tbody>
+          <tfoot>
+            <tr>
+              <td class="col-checkbox"></td>
+              <td class="align-left" colspan="3"><strong>Average</strong></td>
+              <td class="align-right" id="avg-rent"><strong>—</strong></td>
+              <td class="align-left"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Export Confirmation Modal -->
+  <div class="overlay" id="export-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+      <div class="modal__header">
+        <h2 id="modal-title" class="modal__title">Export Comps</h2>
+        <button type="button" class="modal__close" id="close-modal" aria-label="Close">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <div class="modal__body">
+        <p>You are about to export <strong id="export-count">0</strong> selected tenant comp(s) to a CSV file.</p>
+        
+        <div class="export-summary">
+          <div class="export-summary__item">
+            <span class="export-summary__label">Properties selected</span>
+            <span class="export-summary__value" id="summary-count">0</span>
+          </div>
+          <div class="export-summary__item">
+            <span class="export-summary__label">File format</span>
+            <span class="export-summary__value">CSV</span>
+          </div>
+          <div class="export-summary__item">
+            <span class="export-summary__label">Average rent</span>
+            <span class="export-summary__value" id="summary-avg-rent">—</span>
+          </div>
+        </div>
+        
+        <p>Do you want to continue?</p>
+      </div>
+      
+      <div class="modal__footer">
+        <button type="button" class="btn btn--cancel" id="cancel-export">Cancel</button>
+        <button type="button" class="btn btn--primary" id="confirm-export">
+          <span class="material-symbols-outlined">file_download</span>
+          Export
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mock data
+    const data = [
+      { "id": 1, "startingRent": 72.5, "tenant": "WeWork", "address": "575 Broadway, New York, NY", "floor": "5", "tenantIndustry": "Coworking" },
+      { "id": 2, "startingRent": 68.0, "tenant": "Stripe", "address": "155 6th Ave, New York, NY", "floor": "10", "tenantIndustry": "Fintech" },
+      { "id": 3, "startingRent": 85.25, "tenant": "Warby Parker", "address": "233 Spring St, New York, NY", "floor": "Ground", "tenantIndustry": "Retail" },
+      { "id": 4, "startingRent": 61.75, "tenant": "MongoDB", "address": "1633 Broadway, New York, NY", "floor": "12", "tenantIndustry": "Technology" },
+      { "id": 5, "startingRent": 95.0, "tenant": "Nike", "address": "650 5th Ave, New York, NY", "floor": "Ground", "tenantIndustry": "Retail" },
+      { "id": 6, "startingRent": 58.5, "tenant": "CBRE", "address": "200 Park Ave, New York, NY", "floor": "20", "tenantIndustry": "Commercial Real Estate" },
+      { "id": 7, "startingRent": 64.0, "tenant": "Hinge Health", "address": "295 Lafayette St, New York, NY", "floor": "8", "tenantIndustry": "Healthcare Tech" },
+      { "id": 8, "startingRent": 73.9, "tenant": "Peloton", "address": "441 9th Ave, New York, NY", "floor": "Mezzanine", "tenantIndustry": "Fitness Tech" },
+      { "id": 9, "startingRent": 69.3, "tenant": "Notion", "address": "114 5th Ave, New York, NY", "floor": "7", "tenantIndustry": "Software" },
+      { "id": 10, "startingRent": 88.4, "tenant": "Lululemon", "address": "520 Broadway, New York, NY", "floor": "Ground", "tenantIndustry": "Retail" },
+      { "id": 11, "startingRent": 62.2, "tenant": "Compass", "address": "90 5th Ave, New York, NY", "floor": "15", "tenantIndustry": "Real Estate Brokerage" },
+      { "id": 12, "startingRent": 77.0, "tenant": "DoorDash", "address": "60 Madison Ave, New York, NY", "floor": "9", "tenantIndustry": "Food Delivery" },
+      { "id": 13, "startingRent": 54.8, "tenant": "Bain & Co.", "address": "1114 6th Ave, New York, NY", "floor": "23", "tenantIndustry": "Consulting" },
+      { "id": 14, "startingRent": 91.6, "tenant": "Apple", "address": "401 W 14th St, New York, NY", "floor": "Ground", "tenantIndustry": "Retail" },
+      { "id": 15, "startingRent": 66.1, "tenant": "Zillow", "address": "125 W 25th St, New York, NY", "floor": "6", "tenantIndustry": "PropTech" },
+      { "id": 16, "startingRent": 59.4, "tenant": "Salesforce", "address": "1095 6th Ave, New York, NY", "floor": "18", "tenantIndustry": "Software" },
+      { "id": 17, "startingRent": 70.0, "tenant": "Spotify", "address": "4 World Trade Center, New York, NY", "floor": "62", "tenantIndustry": "Media Tech" },
+      { "id": 18, "startingRent": 63.75, "tenant": "Dropbox", "address": "135 W 18th St, New York, NY", "floor": "11", "tenantIndustry": "Cloud Storage" },
+      { "id": 19, "startingRent": 83.2, "tenant": "Allbirds", "address": "73 Spring St, New York, NY", "floor": "Ground", "tenantIndustry": "Retail" },
+      { "id": 20, "startingRent": 57.9, "tenant": "EY", "address": "1 Manhattan West, New York, NY", "floor": "30", "tenantIndustry": "Accounting" },
+      { "id": 21, "startingRent": 74.3, "tenant": "OpenAI", "address": "575 5th Ave, New York, NY", "floor": "14", "tenantIndustry": "Artificial Intelligence" },
+      { "id": 22, "startingRent": 65.5, "tenant": "Brex", "address": "114 W 41st St, New York, NY", "floor": "16", "tenantIndustry": "Fintech" },
+      { "id": 23, "startingRent": 60.2, "tenant": "KPMG", "address": "345 Park Ave, New York, NY", "floor": "27", "tenantIndustry": "Accounting" },
+      { "id": 24, "startingRent": 92.75, "tenant": "Adidas", "address": "610 Broadway, New York, NY", "floor": "Ground", "tenantIndustry": "Retail" },
+      { "id": 25, "startingRent": 55.6, "tenant": "JLL", "address": "330 Madison Ave, New York, NY", "floor": "22", "tenantIndustry": "Commercial Real Estate" },
+      { "id": 26, "startingRent": 71.8, "tenant": "Figma", "address": "175 Varick St, New York, NY", "floor": "13", "tenantIndustry": "Design Software" },
+      { "id": 27, "startingRent": 58.9, "tenant": "HBO", "address": "30 Hudson Yards, New York, NY", "floor": "45", "tenantIndustry": "Media" },
+      { "id": 28, "startingRent": 79.0, "tenant": "Tesla", "address": "860 Washington St, New York, NY", "floor": "Ground", "tenantIndustry": "Automotive Retail" },
+      { "id": 29, "startingRent": 67.45, "tenant": "Robinhood", "address": "85 10th Ave, New York, NY", "floor": "19", "tenantIndustry": "Fintech" },
+      { "id": 30, "startingRent": 64.8, "tenant": "Blue Bottle Coffee", "address": "76 N 4th St, Brooklyn, NY", "floor": "PH", "tenantIndustry": "Food & Beverage" }
+    ];
+
+    let currentData = [...data];
+    let selectedIds = new Set();
+    let currentSort = { column: null, direction: 'asc' };
+    let currentDensity = 'default';
+
+    // Initialize
+    function init() {
+      renderTable();
+      updateStats();
+      attachEventListeners();
+    }
+
+    // Set table density
+    function setDensity(density) {
+      currentDensity = density;
+      const root = document.documentElement;
+      
+      switch (density) {
+        case 'compact':
+          root.style.setProperty('--table-row-min-height', 'var(--table-compact-row-height)');
+          root.style.setProperty('--table-header-min-height', 'var(--table-compact-header-height)');
+          root.style.setProperty('--table-padding-y', 'var(--table-compact-padding-y)');
+          break;
+        case 'comfortable':
+          root.style.setProperty('--table-row-min-height', 'var(--table-comfortable-row-height)');
+          root.style.setProperty('--table-header-min-height', 'var(--table-comfortable-header-height)');
+          root.style.setProperty('--table-padding-y', 'var(--table-comfortable-padding-y)');
+          break;
+        default: // default
+          root.style.setProperty('--table-row-min-height', 'var(--table-default-row-height)');
+          root.style.setProperty('--table-header-min-height', 'var(--table-default-header-height)');
+          root.style.setProperty('--table-padding-y', 'var(--table-default-padding-y)');
+      }
+      
+      // Update active button
+      document.querySelectorAll('.density-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.density === density);
+      });
+    }
+
+    // Render table rows
+    function renderTable() {
+      const tbody = document.getElementById('table-body');
+      tbody.innerHTML = '';
+
+      currentData.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.dataset.id = row.id;
+        if (selectedIds.has(row.id)) {
+          tr.classList.add('selected');
+        }
+
+        tr.innerHTML = `
+          <td class="col-checkbox align-center">
+            <input type="checkbox" 
+                   class="row-checkbox" 
+                   data-id="${row.id}" 
+                   ${selectedIds.has(row.id) ? 'checked' : ''}
+                   aria-label="Select ${row.tenant}">
+          </td>
+          <td class="align-left">${row.tenant}</td>
+          <td class="align-left">${row.address}</td>
+          <td class="align-left">${row.floor}</td>
+          <td class="align-right">$${row.startingRent.toFixed(2)}</td>
+          <td class="align-left">${row.tenantIndustry}</td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+
+      calculateAverage();
+    }
+
+    // Calculate and display average rent
+    function calculateAverage() {
+      const avg = currentData.reduce((sum, row) => sum + row.startingRent, 0) / currentData.length;
+      document.getElementById('avg-rent').innerHTML = `<strong>$${avg.toFixed(2)}</strong>`;
+    }
+
+    // Update stats
+    function updateStats() {
+      document.getElementById('total-rows').textContent = currentData.length;
+      document.getElementById('selected-count').textContent = selectedIds.size;
+      
+      const downloadBtn = document.getElementById('download-btn');
+      downloadBtn.disabled = selectedIds.size === 0;
+    }
+
+    // Sort table
+    function sortTable(column, type) {
+      const direction = currentSort.column === column && currentSort.direction === 'asc' ? 'desc' : 'asc';
+      
+      currentData.sort((a, b) => {
+        let valA = a[column];
+        let valB = b[column];
+
+        if (type === 'number') {
+          valA = parseFloat(valA);
+          valB = parseFloat(valB);
+        } else {
+          valA = String(valA).toLowerCase();
+          valB = String(valB).toLowerCase();
+        }
+
+        if (valA < valB) return direction === 'asc' ? -1 : 1;
+        if (valA > valB) return direction === 'asc' ? 1 : -1;
+        return 0;
+      });
+
+      currentSort = { column, direction };
+      updateSortIndicators(column, direction);
+      renderTable();
+    }
+
+    // Update sort indicators
+    function updateSortIndicators(column, direction) {
+      document.querySelectorAll('th.sortable').forEach(th => {
+        th.classList.remove('sorted');
+        const indicator = th.querySelector('.sort-indicator');
+        indicator.textContent = 'unfold_more';
+      });
+
+      const activeTh = document.querySelector(`th[data-column="${column}"]`);
+      if (activeTh) {
+        activeTh.classList.add('sorted');
+        const indicator = activeTh.querySelector('.sort-indicator');
+        indicator.textContent = direction === 'asc' ? 'arrow_upward' : 'arrow_downward';
+      }
+    }
+
+    // Attach event listeners
+    function attachEventListeners() {
+      // Select all checkbox
+      document.getElementById('select-all').addEventListener('change', (e) => {
+        if (e.target.checked) {
+          currentData.forEach(row => selectedIds.add(row.id));
+        } else {
+          selectedIds.clear();
+        }
+        renderTable();
+        updateStats();
+      });
+
+      // Row checkboxes
+      document.getElementById('table-body').addEventListener('change', (e) => {
+        if (e.target.classList.contains('row-checkbox')) {
+          const id = parseInt(e.target.dataset.id);
+          if (e.target.checked) {
+            selectedIds.add(id);
+          } else {
+            selectedIds.delete(id);
+          }
+          
+          const row = e.target.closest('tr');
+          row.classList.toggle('selected', e.target.checked);
+          
+          // Update select-all checkbox
+          document.getElementById('select-all').checked = selectedIds.size === currentData.length;
+          
+          updateStats();
+        }
+      });
+
+      // Sortable headers
+      document.querySelectorAll('th.sortable').forEach(th => {
+        th.addEventListener('click', () => {
+          const column = th.dataset.column;
+          const type = th.dataset.type;
+          sortTable(column, type);
+        });
+      });
+
+      // Export button - opens modal instead of direct download
+      document.getElementById('download-btn').addEventListener('click', showExportModal);
+
+      // Density toggle buttons
+      document.querySelectorAll('.density-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          setDensity(btn.dataset.density);
+        });
+      });
+
+      // Modal controls
+      document.getElementById('close-modal').addEventListener('click', closeExportModal);
+      document.getElementById('cancel-export').addEventListener('click', closeExportModal);
+      document.getElementById('confirm-export').addEventListener('click', downloadSelected);
+
+      // Close modal on overlay click
+      document.getElementById('export-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'export-modal') {
+          closeExportModal();
+        }
+      });
+
+      // Close modal on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.getElementById('export-modal').classList.contains('is-open')) {
+          closeExportModal();
+        }
+      });
+    }
+
+    // Show export confirmation modal
+    function showExportModal() {
+      if (selectedIds.size === 0) return;
+
+      const selectedData = currentData.filter(row => selectedIds.has(row.id));
+      const avgRent = selectedData.reduce((sum, row) => sum + row.startingRent, 0) / selectedData.length;
+
+      // Update modal content
+      document.getElementById('export-count').textContent = selectedIds.size;
+      document.getElementById('summary-count').textContent = selectedIds.size;
+      document.getElementById('summary-avg-rent').textContent = `$${avgRent.toFixed(2)}`;
+
+      // Open modal
+      const modal = document.getElementById('export-modal');
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+
+      // Focus on cancel button for accessibility
+      document.getElementById('cancel-export').focus();
+    }
+
+    // Close export modal
+    function closeExportModal() {
+      const modal = document.getElementById('export-modal');
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+
+      // Return focus to export button
+      document.getElementById('download-btn').focus();
+    }
+
+    // Download selected rows as CSV
+    function downloadSelected() {
+      if (selectedIds.size === 0) return;
+
+      const selectedData = currentData.filter(row => selectedIds.has(row.id));
+      
+      // Create CSV content
+      const headers = ['Tenant', 'Address', 'Floor', 'Starting Rent ($/SF)', 'Industry'];
+      const rows = selectedData.map(row => [
+        row.tenant,
+        row.address,
+        row.floor,
+        row.startingRent.toFixed(2),
+        row.tenantIndustry
+      ]);
+
+      const csvContent = [
+        headers.join(','),
+        ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+      ].join('\n');
+
+      // Create and trigger download
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `tenant-comps-${new Date().toISOString().split('T')[0]}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      // Close modal and clear selection
+      closeExportModal();
+      selectedIds.clear();
+      document.getElementById('select-all').checked = false;
+      renderTable();
+      updateStats();
+    }
+
+    // Initialize on load
+    init();
+  </script>
+</body>
+</html>

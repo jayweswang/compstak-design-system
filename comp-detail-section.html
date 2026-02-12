@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comp Detail Section - Pixel Perfect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+  <style>
+    /* CSS Custom Properties - Exact Token References from Figma */
+    :root {
+      /* Primitive Colors */
+      --neutral-0: #FFFFFF;
+      --neutral-20: #F4F5F7;
+      --neutral-30: #EBECF0;
+      --neutral-50: #C1C7D0;
+      --neutral-70: #A8B0BE;
+      --neutral-100: #606581;
+      --neutral-600: #303441;
+      --neutral-800: #262931;
+      --blue-10: #F2F8FF;
+      --blue-500: #228FFF;
+      --blue-600: #257FF6;
+      --violet-400: #8B5CF6;
+      --green-500: #6CB584;
+      
+      /* Component Tokens */
+      --comp-overview-container-background: white;
+      --comp-overview-container-padding-x: 16px;
+      --comp-overview-container-padding-y: 16px;
+      
+      --surface-callout-info: #f4f5f7;
+      
+      --content-secondary-border-on-light: #c1c7d0;
+      --content-primary-border: #303441;
+      --content-primary-border-on-light: #606581;
+      --content-primary-text-on-light: #303441;
+      --content-primary-text-on-dark: white;
+      --content-secondary-text-on-light: #606581;
+      --content-tertiary-text-on-light: #a8b0be;
+      
+      --comp-overview-identity-tenant: #228fff;
+      --comp-overview-identity-subtitle: #303441;
+      
+      --action-secondary-default: #606581;
+      --action-primary-default: #228fff;
+      
+      --attribute-list-row-divider-border: #606581;
+      --attribute-list-row-divider-width: 0.5px;
+      --attribute-list-row-label-text: #606581;
+      --attribute-list-row-value-text: #303441;
+      --attribute-list-row-value-link-text: #228fff;
+      --attribute-list-section-default-border: #606581;
+      --attribute-list-section-default-text: #303441;
+      --attribute-list-section-ai-border: #8b5cf6;
+      --attribute-list-section-ai-text: #8b5cf6;
+      --attribute-list-section-layout-width: 1px;
+      
+      --button-intent-primary-solid-fill-default: #228fff;
+      --button-intent-primary-solid-on-fill: white;
+      --button-intent-primary-outline-border: #228fff;
+      --button-intent-primary-outline-ink: #228fff;
+      --button-intent-tertiary-fill-default: white;
+      --button-intent-tertiary-on-fill: #303441;
+      
+      --button-size-sm-gap: 4px;
+      --button-size-sm-padding-x: 8px;
+      --button-size-sm-padding-y: 4px;
+      --button-base-radius: 4px;
+      --button-base-font-family: 'Gotham', sans-serif;
+      --button-base-font-size: 12px;
+      --button-base-font-weight: normal;
+      --button-base-letter-spacing: 0.32px;
+      --button-base-line-height: 16px;
+      --button-style-outline-border-width: 1px;
+      
+      --spacing-layout-inline-gap: 16px;
+      --spacing-layout-section-gap: 40px;
+      --spacing-layout-row-gap: 24px;
+      --spacing-text-label-to-value: 8px;
+      --spacing-text-label-to-metric: 0px;
+      --spacing-text-label-to-helper: 4px;
+      --spacing-text-content-to-divider: 4px;
+      
+      --type-heading-sm-font-family: 'Gotham', sans-serif;
+      --type-heading-sm-font-size: 24px;
+      --type-heading-sm-font-weight: 500;
+      --type-heading-sm-line-height: 36px;
+      --type-heading-sm-letter-spacing: 0px;
+      
+      --type-heading-sm-section-font-size: 16px;
+      --type-heading-sm-section-line-height: 24px;
+      
+      --type-label-sm-font-family: 'Gotham', sans-serif;
+      --type-label-sm-font-size: 14px;
+      --type-label-sm-font-weight: normal;
+      --type-label-sm-line-height: 24px;
+      --type-label-sm-letter-spacing: 0.32px;
+      
+      --type-action-label-default-font-family: 'Gotham', sans-serif;
+      --type-action-label-default-font-size: 14px;
+      --type-action-label-default-font-weight: normal;
+      --type-action-label-default-line-height: 20px;
+      --type-action-label-default-letter-spacing: 0.32px;
+      
+      --context-attribute-label-font-family: 'Gotham', sans-serif;
+      --context-attribute-label-font-size: 14px;
+      --context-attribute-label-font-weight: normal;
+      --context-attribute-label-line-height: 24px;
+      --context-attribute-label-letter-spacing: 0px;
+      
+      --context-attribute-value-font-family: 'Gotham', sans-serif;
+      --context-attribute-value-font-size: 14px;
+      --context-attribute-value-font-weight: normal;
+      --context-attribute-value-line-height: 24px;
+      --context-attribute-value-letter-spacing: 0px;
+      
+      --context-data-metric-value-font-family: 'Gotham', sans-serif;
+      --context-data-metric-value-font-size: 16px;
+      --context-data-metric-value-font-weight: 500;
+      --context-data-metric-value-line-height: 24px;
+      --context-data-metric-value-letter-spacing: 0px;
+      
+      --context-data-metric-subtext-font-family: 'Gotham', sans-serif;
+      --context-data-metric-subtext-font-size: 14px;
+      --context-data-metric-subtext-font-weight: normal;
+      --context-data-metric-subtext-line-height: 20px;
+      --context-data-metric-subtext-letter-spacing: 0.32px;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: var(--type-label-sm-font-family);
+      background: var(--neutral-20);
+    }
+    
+    /* Page Container */
+    .page-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    /* Secondary Navigation */
+    .secondary-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-callout-info);
+      border-bottom: 1px solid var(--content-secondary-border-on-light);
+      height: 56px;
+      gap: 16px;
+    }
+    
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .btn-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 4px;
+      background: transparent;
+      border: none;
+      border-radius: 4px;
+      font-family: var(--button-base-font-family);
+      font-size: var(--button-base-font-size);
+      font-weight: var(--button-base-font-weight);
+      letter-spacing: var(--button-base-letter-spacing);
+      line-height: var(--button-base-line-height);
+      color: var(--button-intent-primary-outline-ink);
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    
+    .btn-nav:hover {
+      background: var(--blue-10);
+    }
+    
+    .nav-text {
+      font-family: var(--type-label-sm-font-family);
+      font-size: var(--type-label-sm-font-size);
+      color: var(--content-secondary-text-on-light);
+    }
+    
+    /* Main Layout */
+    .main-layout {
+      display: flex;
+      flex: 1;
+    }
+    
+    /* Property Sidebar */
+    .property-sidebar {
+      width: 214px;
+      flex-shrink: 0;
+      background: white;
+      border-right: 1px solid var(--content-secondary-border-on-light);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .property-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--content-secondary-border-on-light);
+    }
+    
+    .property-location {
+      font-family: var(--type-label-sm-font-family);
+      font-size: 12px;
+      line-height: 20px;
+      color: var(--content-secondary-text-on-light);
+      text-transform: uppercase;
+      letter-spacing: var(--type-label-sm-letter-spacing);
+      margin-bottom: 4px;
+    }
+    
+    .property-name {
+      font-family: var(--type-heading-sm-font-family);
+      font-size: 14px;
+      font-weight: var(--type-heading-sm-font-weight);
+      line-height: 20px;
+      color: var(--comp-overview-identity-tenant);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 4px;
+    }
+    
+    .property-name:hover {
+      text-decoration: underline;
+    }
+    
+    .property-address {
+      font-family: var(--type-label-sm-font-family);
+      font-size: 12px;
+      line-height: 20px;
+      color: var(--content-secondary-text-on-light);
+    }
+    
+    .property-metrics {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+    }
+    
+    .property-metric {
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+      margin-bottom: 16px;
+    }
+    
+    .property-metric-label {
+      font-family: var(--type-action-label-default-font-family);
+      font-size: var(--type-action-label-default-font-size);
+      font-weight: var(--type-action-label-default-font-weight);
+      line-height: var(--type-action-label-default-line-height);
+      letter-spacing: var(--type-action-label-default-letter-spacing);
+      color: var(--content-secondary-text-on-light);
+    }
+    
+    .property-metric-value {
+      font-family: var(--context-data-metric-value-font-family);
+      font-size: var(--context-data-metric-value-font-size);
+      font-weight: var(--context-data-metric-value-font-weight);
+      line-height: var(--context-data-metric-value-line-height);
+      letter-spacing: var(--context-data-metric-value-letter-spacing);
+      color: var(--content-primary-text-on-light);
+    }
+    
+    .property-image {
+      width: 100%;
+      height: 240px;
+      background: var(--neutral-20);
+      position: relative;
+    }
+    
+    .property-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .property-details {
+      padding: 16px;
+    }
+    
+    /* Comp Content */
+    .comp-content {
+      flex: 1;
+      background: white;
+      overflow-y: auto;
+    }
+    
+    /* Comp Overview Header */
+    .comp-overview-header {
+      padding: var(--comp-overview-container-padding-y) var(--comp-overview-container-padding-x);
+      border-bottom: 1px solid var(--content-secondary-border-on-light);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-layout-inline-gap);
+    }
+    
+    /* Verification Banner */
+    .verification-banner {
+      background: var(--surface-callout-info);
+      border: 1px solid var(--content-secondary-border-on-light);
+      border-radius: 3px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    
+    .verification-counter {
+      background: var(--action-secondary-default);
+      color: var(--content-primary-text-on-dark);
+      width: 24px;
+      height: 24px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Gotham', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+      text-transform: uppercase;
+    }
+    
+    .verification-text {
+      flex: 1 0 0;
+      min-width: 0;
+      font-family: var(--type-label-sm-font-family);
+      font-size: var(--type-label-sm-font-size);
+      font-weight: var(--type-label-sm-font-weight);
+      line-height: var(--type-label-sm-line-height);
+      letter-spacing: var(--type-label-sm-letter-spacing);
+      color: var(--content-primary-text-on-light);
+    }
+    
+    /* Comp Title Row */
+    .comp-title-row {
+      display: flex;
+      gap: 8px;
+      height: 36px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .comp-title-left {
+      display: flex;
+      flex: 1 0 0;
+      gap: 4px;
+      align-items: center;
+      font-family: var(--type-heading-sm-font-family);
+      font-size: var(--type-heading-sm-font-size);
+      font-weight: var(--type-heading-sm-font-weight);
+      line-height: var(--type-heading-sm-line-height);
+      letter-spacing: var(--type-heading-sm-letter-spacing);
+      white-space: nowrap;
+    }
+    
+    .comp-tenant-name {
+      color: var(--comp-overview-identity-tenant);
+      text-decoration: none;
+    }
+    
+    .comp-tenant-name:hover {
+      text-decoration: underline;
+    }
+    
+    .comp-date {
+      color: var(--comp-overview-identity-subtitle);
+    }
+    
+    .button-set {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    
+    /* Buttons */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--button-size-sm-gap);
+      height: 32px;
+      min-width: 40px;
+      padding: var(--button-size-sm-padding-y) var(--button-size-sm-padding-x);
+      border-radius: var(--button-base-radius);
+      font-family: var(--button-base-font-family);
+      font-size: var(--button-base-font-size);
+      font-weight: var(--button-base-font-weight);
+      line-height: var(--button-base-line-height);
+      letter-spacing: var(--button-base-letter-spacing);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    
+    .btn-primary {
+      background: var(--button-intent-primary-solid-fill-default);
+      border: none;
+      color: var(--button-intent-primary-solid-on-fill);
+    }
+    
+    .btn-primary:hover {
+      background: var(--blue-600);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: var(--button-style-outline-border-width) solid var(--button-intent-primary-outline-border);
+      color: var(--button-intent-primary-outline-ink);
+    }
+    
+    .btn-outline:hover {
+      background: var(--blue-10);
+    }
+    
+    .btn-tertiary {
+      background: var(--button-intent-tertiary-fill-default);
+      border: 1px solid var(--content-primary-border);
+      color: var(--button-intent-tertiary-on-fill);
+    }
+    
+    .btn-tertiary:hover {
+      background: var(--surface-callout-info);
+    }
+    
+    .btn-icon {
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+    }
+    
+    /* Metrics Row */
+    .metrics-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-layout-inline-gap) var(--spacing-layout-section-gap);
+      align-items: flex-start;
+    }
+    
+    .metric {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-text-label-to-metric);
+    }
+    
+    .metric-label {
+      font-family: var(--type-action-label-default-font-family);
+      font-size: var(--type-action-label-default-font-size);
+      font-weight: var(--type-action-label-default-font-weight);
+      line-height: var(--type-action-label-default-line-height);
+      letter-spacing: var(--type-action-label-default-letter-spacing);
+      color: var(--content-secondary-text-on-light);
+      white-space: nowrap;
+    }
+    
+    .metric-value {
+      display: flex;
+      gap: var(--spacing-text-label-to-helper);
+      align-items: center;
+      font-family: var(--context-data-metric-value-font-family);
+      font-size: var(--context-data-metric-value-font-size);
+      font-weight: var(--context-data-metric-value-font-weight);
+      line-height: var(--context-data-metric-value-line-height);
+      letter-spacing: var(--context-data-metric-value-letter-spacing);
+      color: var(--content-primary-text-on-light);
+    }
+    
+    .metric-subtext {
+      font-family: var(--context-data-metric-subtext-font-family);
+      font-size: var(--context-data-metric-subtext-font-size);
+      font-weight: var(--context-data-metric-subtext-font-weight);
+      line-height: var(--context-data-metric-subtext-line-height);
+      letter-spacing: var(--context-data-metric-subtext-letter-spacing);
+      color: var(--content-tertiary-text-on-light);
+    }
+    
+    .metric-ai .metric-label {
+      color: var(--attribute-list-section-ai-text);
+    }
+    
+    .metric-positive {
+      color: var(--green-500);
+    }
+    
+    .ai-icon {
+      width: 10px;
+      height: 10px;
+    }
+    
+    /* Details Grid */
+    .comp-details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 24px;
+      row-gap: 40px;
+      padding: 16px;
+      background: white;
+      overflow-x: clip;
+      overflow-y: auto;
+    }
+    
+    .details-column {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-layout-row-gap);
+    }
+    
+    /* Attribute Section */
+    .attribute-section {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    
+    .section-header {
+      font-family: var(--type-heading-sm-font-family);
+      font-size: var(--type-heading-sm-section-font-size);
+      font-weight: var(--type-heading-sm-font-weight);
+      line-height: var(--type-heading-sm-section-line-height);
+      letter-spacing: var(--type-heading-sm-letter-spacing);
+      color: var(--attribute-list-section-default-text);
+      padding-bottom: var(--spacing-text-content-to-divider);
+      border-bottom: var(--attribute-list-section-layout-width) solid var(--attribute-list-section-default-border);
+    }
+    
+    .section-header-ai {
+      font-family: var(--type-heading-sm-font-family);
+      font-size: var(--type-heading-sm-section-font-size);
+      font-weight: var(--type-heading-sm-font-weight);
+      line-height: var(--type-heading-sm-section-line-height);
+      letter-spacing: var(--type-heading-sm-letter-spacing);
+      color: var(--attribute-list-section-ai-text);
+      padding-bottom: var(--spacing-text-content-to-divider);
+      border-bottom: var(--attribute-list-section-layout-width) solid var(--attribute-list-section-ai-border);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    /* Attribute Row */
+    .attribute-row {
+      display: flex;
+      gap: var(--spacing-text-label-to-value);
+      align-items: flex-start;
+      padding-bottom: var(--spacing-text-content-to-divider);
+      border-bottom: var(--attribute-list-row-divider-width) solid var(--attribute-list-row-divider-border);
+    }
+    
+    .attribute-row-center {
+      align-items: center;
+    }
+    
+    .attribute-label {
+      flex: 1 0 0;
+      min-width: 0;
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      font-family: var(--context-attribute-label-font-family);
+      font-size: var(--context-attribute-label-font-size);
+      font-weight: var(--context-attribute-label-font-weight);
+      line-height: var(--context-attribute-label-line-height);
+      letter-spacing: var(--context-attribute-label-letter-spacing);
+      color: var(--attribute-list-row-label-text);
+      white-space: nowrap;
+    }
+    
+    .attribute-value {
+      flex: 1 0 0;
+      min-width: 0;
+      font-family: var(--context-attribute-value-font-family);
+      font-size: var(--context-attribute-value-font-size);
+      font-weight: var(--context-attribute-value-font-weight);
+      line-height: var(--context-attribute-value-line-height);
+      letter-spacing: var(--context-attribute-value-letter-spacing);
+      color: var(--attribute-list-row-value-text);
+      text-align: right;
+    }
+    
+    .attribute-value-link {
+      color: var(--attribute-list-row-value-link-text);
+      text-decoration: none;
+    }
+    
+    .attribute-value-link:hover {
+      text-decoration: underline;
+    }
+    
+    .attribute-notes {
+      flex: 1 0 0;
+      font-family: var(--context-attribute-value-font-family);
+      font-size: var(--context-attribute-value-font-size);
+      font-weight: var(--context-attribute-value-font-weight);
+      line-height: var(--context-attribute-value-line-height);
+      letter-spacing: var(--context-attribute-value-letter-spacing);
+      color: var(--attribute-list-row-value-text);
+      white-space: pre-wrap;
+    }
+    
+    /* Footer */
+    .comp-footer {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 24px 16px;
+      border-top: 1px solid var(--content-secondary-border-on-light);
+      background: white;
+    }
+    
+    .footer-item {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      font-family: var(--type-label-sm-font-family);
+      font-size: 12px;
+      line-height: 20px;
+      color: var(--content-secondary-text-on-light);
+      text-transform: uppercase;
+      letter-spacing: 0.14px;
+    }
+    
+    .footer-divider {
+      width: 0px;
+      height: 13px;
+      border-left: 1px solid var(--content-tertiary-text-on-light);
+      transform: rotate(90deg);
+    }
+    
+    .material-icons {
+      font-family: 'Material Icons';
+      font-weight: normal;
+      font-style: normal;
+      display: inline-block;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-container">
+    <!-- Secondary Navigation -->
+    <nav class="secondary-nav">
+      <div class="nav-left">
+        <button class="btn-nav">
+          <span class="material-icons" style="font-size: 16px;">chevron_left</span>
+          <span>Previous Result</span>
+        </button>
+        <span class="nav-text">Viewing Lease 1 of 15</span>
+        <a href="#" class="btn-nav">Back to List</a>
+        <button class="btn-nav">
+          <span>Next Result</span>
+          <span class="material-icons" style="font-size: 16px;">chevron_right</span>
+        </button>
+      </div>
+      <div class="nav-right">
+        <button class="btn btn-outline">
+          <span class="material-icons btn-icon">folder</span>
+          <span>Add to Portfolio</span>
+        </button>
+        <button class="btn btn-outline">
+          <span class="material-icons btn-icon">bookmark</span>
+          <span>Add to Saved</span>
+        </button>
+        <button class="btn btn-outline">
+          <span class="material-icons btn-icon">history</span>
+          <span>Recently Reopen</span>
+        </button>
+        <button class="btn btn-primary">
+          <span class="material-icons btn-icon">download</span>
+          <span>Export</span>
+        </button>
+      </div>
+    </nav>
+    
+    <!-- Main Layout -->
+    <div class="main-layout">
+      <!-- Property Overview Sidebar -->
+      <aside class="property-sidebar">
+        <div class="property-header">
+          <div class="property-location">NEW YORK CITY (CHELSEA)</div>
+          <a href="#" class="property-name">675 Avenue of the Americas</a>
+          <div class="property-address">New York, NY 10011</div>
+        </div>
+        
+        <div class="property-metrics">
+          <div class="property-metric">
+            <span class="property-metric-label">Property Type</span>
+            <span class="property-metric-value">Office</span>
+          </div>
+          <div class="property-metric">
+            <span class="property-metric-label">Property Subtype</span>
+            <span class="property-metric-value">Mixed-Use</span>
+          </div>
+          <div class="property-metric">
+            <span class="property-metric-label">Building Size</span>
+            <span class="property-metric-value">311,000 SqFt</span>
+          </div>
+          <div class="property-metric">
+            <span class="property-metric-label">Class</span>
+            <span class="property-metric-value">A</span>
+          </div>
+          <div class="property-metric">
+            <span class="property-metric-label">Year Built / Renovated</span>
+            <span class="property-metric-value">1901 / 2013</span>
+          </div>
+        </div>
+        
+        <div class="property-image">
+          <img src="https://via.placeholder.com/214x240/EBECF0/606581?text=Property" alt="Property">
+        </div>
+        
+        <div class="property-details">
+          <div class="attribute-section">
+            <h3 class="section-header">Additional Building Attributes</h3>
+            <div class="attribute-row attribute-row-center">
+              <span class="attribute-label">Number of Floors</span>
+              <span class="attribute-value">6</span>
+            </div>
+            <div class="attribute-row attribute-row-center">
+              <span class="attribute-label">Lot Size (Acres)</span>
+              <span class="attribute-value">0.907</span>
+            </div>
+            <div class="attribute-row attribute-row-center">
+              <span class="attribute-label">Zoning</span>
+              <span class="attribute-value">C6-2A</span>
+            </div>
+            <div class="attribute-row attribute-row-center">
+              <span class="attribute-label">Avg. Lease Size (SqFt)</span>
+              <span class="attribute-value">32,472</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+      
+      <!-- Comp Content -->
+      <main class="comp-content">
+        <!-- Comp Overview Header -->
+        <div class="comp-overview-header">
+          <!-- Verification Banner -->
+          <div class="verification-banner">
+            <div class="verification-counter">7</div>
+            <div class="verification-text">CompStak users have verified this lease data</div>
+            <button class="btn btn-tertiary">Suggest an Update</button>
+          </div>
+          
+          <!-- Title and Actions -->
+          <div class="comp-title-row">
+            <div class="comp-title-left">
+              <a href="#" class="comp-tenant-name">CompStak</a>
+              <span class="comp-date">|</span>
+              <span class="comp-date">Sep 9, 2022</span>
+            </div>
+            <div class="button-set">
+              <button class="btn btn-outline">
+                <span class="material-icons btn-icon">folder</span>
+                <span>Add to Portfolio</span>
+              </button>
+              <button class="btn btn-outline">
+                <span class="material-icons btn-icon">folder_open</span>
+                <span>Add to Folder</span>
+              </button>
+              <button class="btn btn-outline">
+                <span class="material-icons btn-icon">history</span>
+                <span>Property Report</span>
+              </button>
+              <button class="btn btn-primary">
+                <span class="material-icons btn-icon">download</span>
+                <span>Export</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Metrics Row -->
+          <div class="metrics-row">
+            <div class="metric">
+              <span class="metric-label">Size</span>
+              <span class="metric-value">25,644 SqFt</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Space Type</span>
+              <span class="metric-value">Office</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Starting Rent</span>
+              <span class="metric-value">$55.00 <span class="metric-subtext">(Ann.)</span></span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Net Effective Rent</span>
+              <span class="metric-value">$55.17 <span class="metric-subtext">(Ann.)</span></span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Term</span>
+              <span class="metric-value">5y</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Commencement Date</span>
+              <span class="metric-value">Oct 28, 2022</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Current Rent</span>
+              <span class="metric-value">$60.00 <span class="metric-subtext">(Ann.)</span></span>
+            </div>
+            <div class="metric metric-ai">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="metric-label">Est. Starting Rent Today*</span>
+                <svg class="ai-icon" viewBox="0 0 10 10" fill="currentColor">
+                  <path d="M0 4L5 0L10 4L9 5L5 2L1 5L0 4Z"/>
+                  <path d="M10 6L5 10L0 6L1 5L5 8L9 5L10 6Z"/>
+                </svg>
+                <span class="material-icons" style="font-size: 12px; color: var(--content-secondary-text-on-light);">help</span>
+              </div>
+              <span class="metric-value">$77.89 <span class="metric-subtext">(Ann.)</span> | <span class="metric-positive">+29.82%</span></span>
+              <span class="metric-subtext" style="font-size: 12px;">Calculated based on 283 comps</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Details Grid -->
+        <div class="comp-details-grid">
+          <!-- Column 1: Lease + Space -->
+          <div class="details-column">
+            <div class="attribute-section">
+              <h3 class="section-header">Lease</h3>
+              <div class="attribute-row attribute-row-center">
+                <span class="attribute-label">Tenant Name</span>
+                <span class="attribute-value">
+                  <a href="#" class="attribute-value-link">CompStak</a>
+                </span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Transaction Quarter</span>
+                <span class="attribute-value">2022 - Q3</span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Transaction SqFt</span>
+                <span class="attribute-value">25,644</span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Transaction Type</span>
+                <span class="attribute-value">New Lease</span>
+              </div>
+              <div class="attribute-row attribute-row-center">
+                <span class="attribute-label">Lease History</span>
+                <span class="attribute-value">
+                  Relocation from<br>
+                  <a href="#" class="attribute-value-link">36 Cooper Square</a>
+                </span>
+              </div>
+            </div>
+            
+            <div class="attribute-section">
+              <h3 class="section-header">Space</h3>
+              <div class="attribute-row">
+                <span class="attribute-label">Space Type</span>
+                <span class="attribute-value">Office</span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Space Subtype</span>
+                <span class="attribute-value">—</span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Floor(s) Occupied</span>
+                <span class="attribute-value">Partial 4</span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Suite</span>
+                <span class="attribute-value">—</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Column 2: Date + Notes + Est. Starting Rent Today -->
+          <div class="details-column">
+            <div class="attribute-section">
+              <h3 class="section-header">Date</h3>
+              <div class="attribute-row">
+                <span class="attribute-label">Execution Date</span>
+                <span class="attribute-value">Sep 9, 2022</span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Commencement Date</span>
+                <span class="attribute-value">Oct 28, 2022</span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Expiration Date</span>
+                <span class="attribute-value">Oct 27, 2027</span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Lease Term</span>
+                <span class="attribute-value">5y</span>
+              </div>
+            </div>
+            
+            <div class="attribute-section">
+              <h3 class="section-header">Notes</h3>
+              <div class="attribute-row">
+                <span class="attribute-notes">Space formerly occupied by Quartz. Relocation from 36 Cooper Square.</span>
+              </div>
+            </div>
+            
+            <div class="attribute-section">
+              <h3 class="section-header-ai">
+                Est. Starting Rent Today
+                <svg class="ai-icon" viewBox="0 0 10 10" fill="currentColor">
+                  <path d="M0 4L5 0L10 4L9 5L5 2L1 5L0 4Z"/>
+                  <path d="M10 6L5 10L0 6L1 5L5 8L9 5L10 6Z"/>
+                </svg>
+              </h3>
+              <div class="attribute-row">
+                <span class="attribute-label">Rent Spread</span>
+                <span class="attribute-value">+29.82%</span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Rent Saved</span>
+                <span class="attribute-value">+29.82%</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Column 3: Landlord + Tenant + Tenant Brokerage -->
+          <div class="details-column">
+            <div class="attribute-section">
+              <h3 class="section-header">Landlord</h3>
+              <div class="attribute-row attribute-row-center">
+                <span class="attribute-label">Current Landlord</span>
+                <span class="attribute-value">
+                  <a href="#" class="attribute-value-link">GFP Real Estate, Guidepoint</a>
+                </span>
+              </div>
+              <div class="attribute-row attribute-row-center">
+                <span class="attribute-label">Landlord Brokerage Firms</span>
+                <span class="attribute-value">
+                  <a href="#" class="attribute-value-link">Newmark</a>
+                </span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Landlord Brokers</span>
+                <span class="attribute-value">
+                  <a href="#" class="attribute-value-link">Anthony Sciscia, Robert Siver</a>
+                </span>
+              </div>
+            </div>
+            
+            <div class="attribute-section">
+              <h3 class="section-header">Tenant</h3>
+              <div class="attribute-row">
+                <span class="attribute-label">HQ Address *</span>
+                <span class="attribute-value">36 Cooper Sq 6th Floor New York, NY 10003, United States</span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Employees *</span>
+                <span class="attribute-value">39</span>
+              </div>
+              <div class="attribute-row attribute-row-center">
+                <span class="attribute-label">Website *</span>
+                <span class="attribute-value">
+                  <a href="#" class="attribute-value-link">www.compstak.com</a>
+                </span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Status *</span>
+                <span class="attribute-value">Operating</span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Ownership *</span>
+                <span class="attribute-value">Private</span>
+              </div>
+              <div class="attribute-row attribute-row-center">
+                <span class="attribute-label">Industry</span>
+                <span class="attribute-value">
+                  <a href="#" class="attribute-value-link">Software & Information</a>
+                </span>
+              </div>
+              <div class="attribute-row attribute-row-center">
+                <span class="attribute-label">Primary NAICS / SIC (US) *</span>
+                <span class="attribute-value">519130 / 7375</span>
+              </div>
+              <div style="padding-top: 4px;">
+                <span style="font-family: var(--type-label-sm-font-family); font-size: 12px; line-height: 20px; color: var(--content-tertiary-text-on-light); text-align: right; display: block;">* DATA PROVIDED BY DEMANDBASE</span>
+              </div>
+            </div>
+            
+            <div class="attribute-section">
+              <h3 class="section-header">Tenant Brokerage</h3>
+              <div class="attribute-row attribute-row-center">
+                <span class="attribute-label">Tenant Brokerage Firms</span>
+                <span class="attribute-value">
+                  <a href="#" class="attribute-value-link">Newmark</a>
+                </span>
+              </div>
+              <div class="attribute-row">
+                <span class="attribute-label">Tenant Brokers</span>
+                <span class="attribute-value">
+                  <a href="#" class="attribute-value-link">Todd Hershman, Josh Gosin</a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="comp-footer">
+          <div class="footer-item">
+            <span>COMP ID:</span>
+            <span>2600447</span>
+          </div>
+          <div class="footer-divider"></div>
+          <div class="footer-item">
+            <span>CREATED:</span>
+            <span>Dec 8, 2022</span>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
